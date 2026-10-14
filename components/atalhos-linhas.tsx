@@ -43,7 +43,11 @@ export function AtalhosLinhas({ excluir }: { excluir?: CategoriaSlug }) {
                     aria-hidden
                     className={clsx(
                       "absolute inset-0 -z-10 bg-gradient-to-t to-transparent",
-                      natal ? "from-noite/90 via-noite/30" : "from-verde-900/85 via-verde-900/20",
+                      // o degradê sobe até o rótulo: no cartão baixo do celular,
+                      // o "3 modelos" caía na parte clara da foto
+                      natal
+                        ? "from-noite/90 via-noite/50 via-55%"
+                        : "from-verde-900/90 via-verde-900/50 via-55%",
                     )}
                   />
                   <span className="flex w-full items-end justify-between gap-3">
@@ -51,7 +55,7 @@ export function AtalhosLinhas({ excluir }: { excluir?: CategoriaSlug }) {
                       <span
                         className={clsx(
                           "olho inline-flex items-center gap-1.5",
-                          natal ? "text-ouro-claro" : "text-papel/70",
+                          natal ? "text-ouro-claro" : "text-papel/85",
                         )}
                       >
                         {natal ? <IconeBrilho className="size-3" /> : null}

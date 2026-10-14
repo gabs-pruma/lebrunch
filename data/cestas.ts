@@ -93,7 +93,9 @@ export const categorias: Categoria[] = [
     chamada: "Para o carinho que não pode esperar",
     descricao:
       "O nosso presente menorzinho — caneca, café para coar e uma foto impressa de quem você ama. Pronto para sair no mesmo dia.",
-    foto: foto("cafe-coado-1"),
+    // de frente, a caixa inteira: a capa do modelo (cafe-coado-1) vem logo
+    // abaixo na página da linha, e a mesma foto duas vezes seguidas pesava
+    foto: foto("cafe-coado-3"),
     prontaEntrega: true,
     selo: "Sai hoje",
   },

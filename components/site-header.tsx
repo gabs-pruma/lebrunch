@@ -148,7 +148,7 @@ export function SiteHeader() {
           <LinkTransicao
             href="/"
             aria-label="Le Brunch — página inicial"
-            className="flex items-center gap-2.5"
+            className="flex min-h-11 items-center gap-2.5"
           >
             <Simbolo className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
             <Wordmark className="h-3.5 w-[6.5rem] sm:h-4 sm:w-[7.5rem]" />

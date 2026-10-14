@@ -70,7 +70,7 @@ export default async function CestaPage(
         <nav aria-label="Você está aqui" className="relative mb-8">
           <ol className="olho flex flex-wrap items-center gap-2 text-tinta-suave">
             <li>
-              <Link href="/cestas" className="hover:text-verde-900">
+              <Link href="/cestas" className="-my-3.5 inline-flex min-h-11 items-center hover:text-verde-900">
                 Modelos
               </Link>
             </li>
@@ -78,7 +78,7 @@ export default async function CestaPage(
             <li>
               <Link
                 href={hrefCategoria(categoria)}
-                className="hover:text-verde-900"
+                className="-my-3.5 inline-flex min-h-11 items-center hover:text-verde-900"
               >
                 {categoria.nome}
               </Link>

@@ -24,8 +24,10 @@ export function SiteFooter() {
       />
 
       <div className="relative mx-auto w-full max-w-6xl">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-10 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr] lg:gap-8">
-          <div className="flex flex-col gap-6">
+        {/* No celular, duas colunas (Modelos ao lado dos horários): numa
+            coluna só o rodapé passava de duas telas e meia. */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:gap-10 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr] lg:gap-8">
+          <div className="col-span-2 flex flex-col gap-6 md:col-span-1">
             <Logotipo className="h-24 w-[11rem] text-papel" />
             <p className="script max-w-xs text-2xl text-terra-400">
               {site.assinatura}
@@ -115,7 +117,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h2 className="olho text-papel/65">Le Brunch</h2>
             <ul className="mt-5 flex flex-col gap-1 text-[0.9375rem] text-papel/85">
               <li>

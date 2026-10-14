@@ -143,7 +143,7 @@ export function Hero() {
             href={site.google.perfil}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 rounded-full bg-papel/10 px-4 py-2 text-[0.8125rem] backdrop-blur-md ring-1 ring-papel/20 transition-colors hover:bg-papel/20"
+            className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-papel/10 px-4 py-2 text-[0.8125rem] backdrop-blur-md ring-1 ring-papel/20 transition-colors hover:bg-papel/20"
           >
             <span className="flex gap-0.5 text-ouro-claro" aria-hidden>
               {[1, 2, 3, 4, 5].map((i) => (

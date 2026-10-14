@@ -89,7 +89,13 @@ export function LinhaEditorial({
           href={hrefCategoria(categoria)}
           className="olho inline-flex min-h-11 w-fit items-center gap-2.5 border-b border-verde-900/25 pb-1 transition-colors duration-300 hover:border-verde-900"
         >
-          Ver {categoria.tema === "natal" ? "a coleção" : `a ${categoria.nomeCurto}`}
+          {/* "Ver a Presentes" não fecha a concordância em toda linha; o número
+              de modelos serve para qualquer uma */}
+          {categoria.tema === "natal"
+            ? "Ver a coleção"
+            : quantidade === 1
+              ? "Ver o modelo"
+              : `Ver os ${quantidade} modelos`}
           <IconeSeta className="size-4 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
         </LinkTransicao>
       </div>

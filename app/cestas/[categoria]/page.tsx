@@ -65,7 +65,7 @@ export default async function CategoriaPage(
         <nav aria-label="Você está aqui" className="relative mb-8">
           <ol className="olho flex items-center gap-2 text-tinta-suave">
             <li>
-              <Link href="/cestas" className="hover:text-verde-900">
+              <Link href="/cestas" className="-my-3.5 inline-flex min-h-11 items-center hover:text-verde-900">
                 Modelos
               </Link>
             </li>
