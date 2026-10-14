@@ -705,33 +705,35 @@ body {
 }
 
 /* Páginas de modelo da Coleção de Natal reaproveitam os componentes do
-   catálogo; dentro do tema, os tons do papel viram tons do veludo. */
-.natal-catalogo .text-tinta-suave {
+   catálogo; dentro do tema, os tons do papel viram tons do veludo.
+   O modal de pedido fica de fora: ele abre dentro da página, mas o fundo
+   dele é claro e precisa das cores de sempre. */
+.natal-catalogo .text-tinta-suave:not(.modal-pedido *) {
   color: color-mix(in srgb, var(--color-papel) 68%, transparent);
 }
 
-.natal-catalogo .text-terra-700,
-.natal-catalogo .text-verde-600,
-.natal-catalogo .text-sage-600 {
+.natal-catalogo .text-terra-700:not(.modal-pedido *),
+.natal-catalogo .text-verde-600:not(.modal-pedido *),
+.natal-catalogo .text-sage-600:not(.modal-pedido *) {
   color: var(--color-ouro);
 }
 
-.natal-catalogo .borda-fina {
+.natal-catalogo .borda-fina:not(.modal-pedido *) {
   border-color: color-mix(in srgb, var(--color-papel) 14%, transparent);
 }
 
-.natal-catalogo .bg-creme\/85 {
+.natal-catalogo .bg-creme\/85:not(.modal-pedido *) {
   background-color: color-mix(in srgb, var(--color-noite-alt) 70%, transparent);
 }
 
-.natal-catalogo .text-verde-900 {
+.natal-catalogo .text-verde-900:not(.modal-pedido *) {
   color: var(--color-papel);
 }
 
-.natal-catalogo .hover\:text-verde-900:hover {
+.natal-catalogo .hover\:text-verde-900:hover:not(.modal-pedido *) {
   color: var(--color-ouro-claro);
 }
 
-.tema-natal details summary {
+.tema-natal details summary:not(.modal-pedido *) {
   color: var(--color-papel);
 }

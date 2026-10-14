@@ -91,6 +91,15 @@ export function IconeSeta(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Divisa de carrossel, apontando para a direita (gire para a esquerda). */
+export function IconeDivisa(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...traco} {...props}>
+      <path d="m9 5 7 7-7 7" />
+    </svg>
+  );
+}
+
 export function IconeRelogio(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...traco} {...props}>

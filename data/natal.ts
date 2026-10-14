@@ -18,11 +18,7 @@ export const colecaoNatal = {
       titulo: "Para brindar",
       descricao:
         "Mini espumante na bolsa de acrílico, com tag Boas Festas — e um doce para acompanhar.",
-      slugs: [
-        "natal-espumante-e-panetone",
-        "natal-boas-festas",
-        "natal-espumante-e-lata",
-      ],
+      slugs: ["natal-espumante-e-panetone", "natal-boas-festas"],
     },
     {
       id: "para-adocar",

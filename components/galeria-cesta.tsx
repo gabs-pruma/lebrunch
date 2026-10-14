@@ -1,11 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { SetasFoto } from "@/components/setas-foto";
 import { clsx } from "@/lib/utils";
 
 /**
  * Galeria da cesta: foto grande em retrato 4:5 com trilha de miniaturas.
+ * Setas sobre a foto passam de uma em uma, e no celular dá para arrastar
+ * com o dedo para os lados.
  *
  * Todas as fotos ficam empilhadas na moldura e a escolhida entra com
  * fusão — nada de piscar branco ao trocar. Quando o modelo só tem uma
@@ -30,15 +33,33 @@ export function GaleriaCesta({
   semPrioridade?: boolean;
 }) {
   const [ativa, setAtiva] = useState(0);
+  const toque = useRef<{ x: number; y: number } | null>(null);
+  const n = fotos.length;
   const posicao = { objectPosition: foco ?? "50% 50%" };
 
   return (
     <div className="flex flex-col gap-3">
       <div
         className={clsx(
-          "relative aspect-4/5 w-full overflow-hidden rounded-2xl",
+          "relative aspect-4/5 w-full touch-pan-y overflow-hidden rounded-2xl",
           escuro ? "bg-noite-alt" : "bg-creme",
         )}
+        onPointerDown={(e) => {
+          if (e.pointerType === "touch") toque.current = { x: e.clientX, y: e.clientY };
+        }}
+        onPointerUp={(e) => {
+          const inicio = toque.current;
+          toque.current = null;
+          if (!inicio || n < 2) return;
+          const dx = e.clientX - inicio.x;
+          // arrasto horizontal de verdade, não uma rolagem torta
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(e.clientY - inicio.y)) {
+            setAtiva((ativa + (dx < 0 ? 1 : -1) + n) % n);
+          }
+        }}
+        onPointerCancel={() => {
+          toque.current = null;
+        }}
       >
         {fotos.map((foto, i) => (
           <Image
@@ -58,6 +79,7 @@ export function GaleriaCesta({
             )}
           />
         ))}
+        <SetasFoto total={n} ativa={ativa} aoMudar={setAtiva} nome={nome} escuro={escuro} />
       </div>
 
       {fotos.length > 1 ? (

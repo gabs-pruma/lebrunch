@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IconePessoas, IconeSeta } from "@/components/icones";
 import { Simbolo } from "@/components/marca";
 import { ModalPedido } from "@/components/modal-pedido";
+import { SetasFoto } from "@/components/setas-foto";
 import { clsx } from "@/lib/utils";
 import { categoriaDe, formatarPreco, type Cesta } from "@/data/cestas";
 
@@ -13,8 +14,10 @@ import { categoriaDe, formatarPreco, type Cesta } from "@/data/cestas";
  * levar para outra página — o cliente decide sem perder o contexto.
  *
  * Todos os cards têm o mesmo formato: retrato 4:5, canto de 16px e a foto
- * do ensaio enquadrada pelo `foco` da cesta. No desktop, passar o mouse
- * revela um segundo ângulo da mesma cesta.
+ * do ensaio enquadrada pelo `foco` da cesta. Quando o modelo tem mais de
+ * uma foto, setas sobre a foto passam pelos ângulos sem abrir o pedido.
+ * Só a capa carrega de saída; as outras entram quando a pessoa chega
+ * perto delas (a atual e a vizinha de cada lado).
  *
  * As cestas da Coleção de Natal saem na variante escura, sobre o veludo.
  */
@@ -38,11 +41,23 @@ export function CestaCard({
   // a linha manda: um card de Pronta Entrega fora da página dela continua
   // oferecendo entrega no mesmo dia
   const mesmoDia = prontaEntrega ?? linha.prontaEntrega;
-  const segunda = cesta.fotos?.[0];
+  const fotos = cesta.imagem ? [cesta.imagem, ...(cesta.fotos ?? [])] : [];
+  const [ativa, setAtiva] = useState(0);
+  const [carregadas, setCarregadas] = useState<ReadonlySet<number>>(() => new Set([0]));
   const foco = { objectPosition: cesta.foco ?? "50% 50%" };
 
+  const mudarFoto = (i: number) => {
+    const n = fotos.length;
+    setAtiva(i);
+    setCarregadas((antes) => new Set([...antes, i, (i + 1) % n, (i - 1 + n) % n]));
+  };
+
   return (
-    <article className="group flex w-full flex-col">
+    <article
+      className="group relative flex w-full flex-col"
+      // com mouse, a foto vizinha já começa a carregar antes da primeira seta
+      onPointerEnter={() => fotos.length > 1 && setCarregadas((antes) => new Set([...antes, 1, fotos.length - 1]))}
+    >
       <button
         type="button"
         onClick={() => setAberto(true)}
@@ -54,30 +69,26 @@ export function CestaCard({
             natal ? "bg-noite-alt" : "bg-creme",
           )}
         >
-          {cesta.imagem ? (
-            <>
-              <Image
-                src={cesta.imagem}
-                alt={`Cesta ${cesta.nome} da Le Brunch`}
-                width={800}
-                height={1200}
-                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 80vw"
-                loading={prioridade ? "eager" : "lazy"}
-                style={foco}
-                className="absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-[1400ms] ease-suave group-hover:scale-[1.05]"
-              />
-              {segunda ? (
+          {fotos.length ? (
+            fotos.map((foto, i) =>
+              carregadas.has(i) ? (
                 <Image
-                  src={segunda}
-                  alt=""
+                  key={foto}
+                  src={foto}
+                  alt={i === ativa ? `Cesta ${cesta.nome} da Le Brunch` : ""}
+                  aria-hidden={i !== ativa || undefined}
                   width={800}
                   height={1200}
-                  sizes="(min-width: 1024px) 30vw, 1px"
+                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 80vw"
+                  loading={i === 0 && prioridade ? "eager" : "lazy"}
                   style={foco}
-                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-[900ms] ease-suave group-hover:scale-[1.03] group-hover:opacity-100 lg:block"
+                  className={clsx(
+                    "absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-700 ease-suave group-hover:scale-[1.05]",
+                    i === ativa ? "opacity-100" : "opacity-0",
+                  )}
                 />
-              ) : null}
-            </>
+              ) : null,
+            )
           ) : (
             <span className="absolute inset-0 flex items-center justify-center">
               <Simbolo className="h-12 w-12 text-verde-900/15" />
@@ -193,6 +204,18 @@ export function CestaCard({
           </div>
         </div>
       </button>
+
+      {/* por cima da foto (mesma moldura 4:5 do topo do card), fora do botão */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 aspect-4/5">
+        <SetasFoto
+          total={fotos.length}
+          ativa={ativa}
+          aoMudar={mudarFoto}
+          nome={cesta.nome}
+          escuro={natal}
+          discreto
+        />
+      </div>
 
       <ModalPedido
         cesta={cesta}

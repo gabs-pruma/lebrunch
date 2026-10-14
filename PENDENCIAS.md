@@ -42,7 +42,7 @@ laranja só em `npm run dev`). Saíram do ensaio, mas não têm ficha oficial:
 | Premium | Caixa Verde Bentô · Cesta Flores do Campo · Cesta Bouquet |
 | Pronta Entrega | Caixa Café Coado |
 | Presentes & Mimos | Box Caneca com Inicial · Cesta Kids |
-| Natal | Caixa Tábua & Merlot · Caixa de Petiscos · Kit Brinde & Panetone · Kit Boas Festas · Kit Brinde Dourado · Lata de Brownies · Lata & Panetone · Kit Caneca de Natal · Saco de Noel |
+| Natal | Caixa Tábua & Merlot · Caixa de Petiscos · Kit Brinde & Panetone · Kit Boas Festas · Lata de Brownies · Lata & Panetone · Kit Caneca de Natal · Saco de Noel |
 
 Dúvidas específicas:
 
@@ -56,8 +56,10 @@ Dúvidas específicas:
 - **Caixa Tábua & Merlot**: a garrafa é **suco de uva** Casa Madeira (Suco
   Varietal Merlot), não vinho — por isso o nome. Se a versão vendida vier com
   vinho, é trocar o item e o nome
-- **Kit Brinde Dourado** e **Lata & Panetone**: o recheio da lata não aparece
-  na foto ("a confirmar")
+- **Kit Boas Festas**: o antigo "Kit Brinde Dourado" era o mesmo kit (lata
+  fechada com laço), então virou um modelo só, com as fotos dos dois.
+  Confirmar se a lata é sempre a dourada de frutas secas e castanhas
+- **Lata & Panetone**: o recheio da lata não aparece na foto ("a confirmar")
 - **Saco de Noel**: o recheio não aparece na foto
 - **Pronta Entrega**: voltou, com a **Caixa Café Coado** (caneca, café e
   foto impressa), como você indicou. No modal ela libera entrega para hoje e

@@ -576,14 +576,22 @@ const natal: Cesta[] = [
     ],
   },
   {
+    // As fotos 69/70/68 ("espumante-lata") são o mesmo kit, com a lata
+    // fechada e o laço — a Rebeca confirmou que é um modelo só.
     slug: "natal-boas-festas",
     nome: "Kit Boas Festas",
     categoria: "natal",
     chamada:
-      "Espumante e uma lata dourada de frutas secas e castanhas, com a tag Boas Festas.",
+      "Espumante e uma lata dourada de frutas secas e castanhas, fechada com laço de organza estrelado e a tag Boas Festas.",
     preco: null,
     imagem: foto("natal-boas-festas-1"),
-    fotos: [foto("natal-boas-festas-3"), foto("natal-boas-festas-2")],
+    fotos: [
+      foto("natal-espumante-lata-1"),
+      foto("natal-boas-festas-3"),
+      foto("natal-espumante-lata-2"),
+      foto("natal-boas-festas-2"),
+      foto("natal-espumante-lata-3"),
+    ],
     foco: "50% 65%",
     rascunho: true,
     secoes: [
@@ -594,27 +602,7 @@ const natal: Cesta[] = [
       },
       {
         titulo: "Para presentear",
-        itens: ["Lata Dourada", "Bolsa de Acrílico", "Tag Boas Festas"],
-      },
-    ],
-  },
-  {
-    slug: "natal-espumante-e-lata",
-    nome: "Kit Brinde Dourado",
-    categoria: "natal",
-    chamada:
-      "Espumante e lata cobre com laço de organza estrelado — o presente corporativo que impressiona.",
-    preco: null,
-    imagem: foto("natal-espumante-lata-1"),
-    fotos: [foto("natal-espumante-lata-2"), foto("natal-espumante-lata-3")],
-    foco: "50% 72%",
-    rascunho: true,
-    secoes: [
-      { titulo: "Bebida", itens: ["Espumante Freixenet Semi Seco — mini"] },
-      { titulo: "Na lata", itens: ["Doces finos (a confirmar)"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Lata Cobre", "Laço de Organza Estrelado", "Bolsa de Acrílico", "Tag Boas Festas"],
+        itens: ["Lata Dourada", "Laço de Organza Estrelado", "Bolsa de Acrílico", "Tag Boas Festas"],
       },
     ],
   },
