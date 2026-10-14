@@ -12,9 +12,10 @@ aparece antes do vídeo carregar.
 Os quadros são calculados em Python com reamostragem sub-pixel (o zoompan do
 ffmpeg arredonda para o pixel inteiro e o movimento treme).
 """
-import os, sys, subprocess
+import io, os, sys, subprocess
 from multiprocessing import Pool
-from PIL import Image, ImageOps
+from PIL import Image, ImageCms, ImageOps
+from cor import dar_vida
 
 ORIGEM = next((a for a in sys.argv[1:] if not a.startswith("--")),
               os.path.expanduser("~/LeBrunch/lebrunch-dev/ensaio-102026/Highlights"))
@@ -51,14 +52,23 @@ def achar(numero):
             return os.path.join(ORIGEM, nome)
     raise FileNotFoundError(numero)
 
+SRGB = ImageCms.createProfile("sRGB")
 _cache = {}
 def fonte(numero):
     if numero not in _cache:
         im = Image.open(achar(numero))
+        perfil = im.info.get("icc_profile")
         im.draft("RGB", (3600, 3600))
         im = ImageOps.exif_transpose(im).convert("RGB")
         escala = 3600 / max(im.size)
-        _cache[numero] = im.resize((round(im.width * escala), round(im.height * escala)), Image.LANCZOS)
+        im = dar_vida(im.resize((round(im.width * escala), round(im.height * escala)), Image.LANCZOS))
+        # vídeo não carrega perfil de cor: o ensaio (Display P3) vira sRGB
+        # aqui, senão o banner sai lavado
+        if perfil:
+            im = ImageCms.profileToProfile(
+                im, ImageCms.ImageCmsProfile(io.BytesIO(perfil)), SRGB,
+                renderingIntent=ImageCms.Intent.PERCEPTUAL)
+        _cache[numero] = im
     return _cache[numero]
 
 def suave(x):
@@ -114,7 +124,9 @@ def gerar(nome, largura, altura, coluna):
     ff = subprocess.Popen([
         "ffmpeg", "-y", "-loglevel", "error",
         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{largura}x{altura}", "-r", str(FPS), "-i", "-",
+        "-vf", "scale=out_color_matrix=bt709:out_range=tv",
         "-c:v", "libx264", "-preset", "slow", "-crf", "30", "-pix_fmt", "yuv420p",
+        "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
         "-profile:v", "high", "-movflags", "+faststart", "-an", saida,
     ], stdin=subprocess.PIPE)
     with Pool() as pool:

@@ -50,7 +50,6 @@ export function GaleriaCesta({
             height={2400}
             loading={i === 0 && !semPrioridade ? "eager" : "lazy"}
             fetchPriority={i === 0 && !semPrioridade ? "high" : undefined}
-            quality={90}
             sizes="(min-width: 1024px) 46vw, 92vw"
             style={posicao}
             className={clsx(

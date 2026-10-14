@@ -15,10 +15,11 @@ const nextConfig: NextConfig = {
   basePath,
   // /natal/ → natal/index.html: funciona em qualquer servidor de arquivos
   trailingSlash: true,
-  images: {
-    loader: "custom",
-    loaderFile: "./lib/carregador-imagem.ts",
-  },
+  // export estático não otimiza imagem: os WebP de public/ já saem no
+  // tamanho certo. Com subcaminho, o carregador só acrescenta o prefixo.
+  images: basePath
+    ? { loader: "custom", loaderFile: "./lib/carregador-imagem.ts" }
+    : { unoptimized: true },
 };
 
 export default nextConfig;

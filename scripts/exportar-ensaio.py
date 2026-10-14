@@ -6,10 +6,13 @@ Uso:  python3 scripts/exportar-ensaio.py [pasta-do-ensaio]
 O ensaio original (4000x6000, ~1,1 GB) fica fora do repositório. Aqui só
 entram as fotos usadas no site, em WebP de 1600px de largura. O número à
 esquerda é o prefixo do arquivo original ("151-1D7A1497.jpg").
+
+Arquivo que já existe é pulado: para reexportar, apague o .webp antes.
 """
 import os, sys
 from concurrent.futures import ProcessPoolExecutor
 from PIL import Image, ImageOps
+from cor import dar_vida
 
 ORIGEM = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser(
     "~/LeBrunch/lebrunch-dev/ensaio-102026/Highlights")
@@ -58,10 +61,15 @@ def exportar(item):
     saida = os.path.join(DESTINO, f"{destino}.webp")
     if os.path.exists(saida):
         return
-    im = ImageOps.exif_transpose(Image.open(achar(numero))).convert("RGB")
+    original = Image.open(achar(numero))
+    # o ensaio vem em Display P3: sem o perfil embutido o navegador lê as
+    # cores como sRGB e a foto sai lavada, sem contraste
+    perfil = original.info.get("icc_profile")
+    im = ImageOps.exif_transpose(original).convert("RGB")
     proporcao = MAIORES.get(destino, LARGURA) / im.width
     im = im.resize((round(im.width * proporcao), round(im.height * proporcao)), Image.LANCZOS)
-    im.save(saida, "WEBP", quality=80, method=6)
+    im = dar_vida(im)
+    im.save(saida, "WEBP", quality=80, method=6, icc_profile=perfil)
 
 if __name__ == "__main__":
     os.makedirs(DESTINO, exist_ok=True)

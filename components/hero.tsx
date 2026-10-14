@@ -86,7 +86,7 @@ export function Hero() {
   const atual = banner.cenas[cena];
 
   // pôster com direção de arte: paisagem no desktop, retrato no celular
-  const comum = { alt: "", sizes: "100vw", quality: 80 } as const;
+  const comum = { alt: "", sizes: "100vw" } as const;
   const {
     props: { srcSet: posterPaisagem },
   } = getImageProps({ ...comum, src: banner.paisagem.poster, width: 1920, height: 1080 });

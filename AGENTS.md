@@ -40,7 +40,9 @@ projete e verifique no celular primeiro.
   página.
 - **Fotos só do ensaio de outubro/2026** (`public/ensaio/`). As fotos antigas
   saíram e não voltam. Foto nova entra pelo `FOTOS` de
-  `scripts/exportar-ensaio.py`, nunca copiada à mão. Toda foto de cesta tem
+  `scripts/exportar-ensaio.py`, nunca copiada à mão — o script mantém o
+  perfil Display P3 do ensaio (sem ele a foto sai lavada) e aplica o acerto
+  de cor de `scripts/cor.py`, o mesmo do vídeo do banner. Toda foto de cesta tem
   `foco` (`object-position`) — o recorte é 4:5 sobre retrato 2:3.
 - **Links internos com `LinkTransicao`** (ou `BotaoLink`), não `next/link`
   direto — é ele que faz a transição entre páginas.
