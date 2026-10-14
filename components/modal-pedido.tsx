@@ -491,9 +491,9 @@ export function ModalPedido({
             </summary>
 
             <div className="px-5 pb-6 sm:px-6">
-              <div className="grid gap-x-7 gap-y-5 sm:grid-cols-2">
+              <div className="-mb-5 columns-1 gap-x-7 sm:columns-2">
                 {cesta.secoes.map((secao) => (
-                  <section key={secao.titulo}>
+                  <section key={secao.titulo} className="break-inside-avoid pb-5">
                     <h3 className="olho mb-2 text-terra-700">{secao.titulo}</h3>
                     <ul className="flex flex-col gap-1.5">
                       {secao.itens.map((item) => (

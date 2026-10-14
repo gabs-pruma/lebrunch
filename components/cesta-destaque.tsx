@@ -79,9 +79,9 @@ export function CestaDestaque({
           </ul>
         </div>
 
-        <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+        <div className="-mb-6 columns-1 gap-x-8 sm:columns-2">
           {cesta.secoes.map((secao) => (
-            <section key={secao.titulo} className="flex flex-col gap-3">
+            <section key={secao.titulo} className="flex break-inside-avoid flex-col gap-3 pb-6">
               <h3 className="olho text-terra-700">{secao.titulo}</h3>
               <ul className="flex flex-col gap-2">
                 {secao.itens.map((item) => (

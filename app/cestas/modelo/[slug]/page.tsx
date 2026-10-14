@@ -143,9 +143,11 @@ export default async function CestaPage(
             {/* o que vem dentro */}
             <div className="flex flex-col gap-6">
               <h2 className="titulo text-3xl">O que vem na cesta</h2>
-              <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+              {/* Colunas, não grade: numa grade, a seção curta herda a
+                  altura da vizinha comprida e abre um vão até a próxima. */}
+              <div className="-mb-7 columns-1 gap-x-8 sm:columns-2">
                 {cesta.secoes.map((secao) => (
-                  <section key={secao.titulo} className="flex flex-col gap-3">
+                  <section key={secao.titulo} className="flex break-inside-avoid flex-col gap-3 pb-7">
                     <h3 className="olho text-terra-700">{secao.titulo}</h3>
                     <ul className="flex flex-col gap-2">
                       {secao.itens.map((item) => (
