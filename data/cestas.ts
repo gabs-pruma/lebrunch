@@ -103,7 +103,7 @@ export const categorias: Categoria[] = [
     nomeCurto: "Essencial",
     chamada: "O nosso café da manhã de assinatura",
     descricao:
-      "As bandejas redondas de madeira que viraram a cara da Le Brunch, em três tamanhos: croissants, pães de queijo, queijos, charcutaria e frutas da estação, montados à mão.",
+      "As bandejas redondas de madeira que viraram a cara da Le Brunch, em quatro tamanhos: croissants, pães de queijo, queijos, charcutaria e frutas da estação, montados à mão.",
     foto: foto("cafe-m-1"),
   },
   {
@@ -182,6 +182,29 @@ const prontaEntrega: Cesta[] = [
 
 const essencial: Cesta[] = [
   {
+    // Fora do catálogo oficial (que começa no Café P): itens tirados da
+    // foto do ensaio, preço a confirmar com a Rebeca.
+    slug: "cafe-pp",
+    nome: "Café PP",
+    categoria: "essencial",
+    chamada:
+      "O menor da linha: croissant, suco, geleia, biscoitos e frutas frescas na bandeja de madeira.",
+    preco: null,
+    imagem: foto("cafe-pp-1"),
+    fotos: [foto("cafe-pp-2")],
+    foco: "50% 50%",
+    rascunho: true,
+    secoes: [
+      { titulo: "Salgados", itens: ["Croissant"] },
+      {
+        titulo: "Doces",
+        itens: ["Geleia", "Biscoito Biscoff", "Biscoitos Finos", "Castanhas Caramelizadas"],
+      },
+      { titulo: "Bebidas", itens: ["Suco de Tangerina Integral — 269ml"] },
+      { titulo: "Frutas", itens: ["Uvas", "Mirtilos", "Morango"] },
+    ],
+  },
+  {
     slug: "cafe-p",
     nome: "Café P",
     categoria: "essencial",
@@ -189,7 +212,7 @@ const essencial: Cesta[] = [
     preco: 243,
     serve: "1 a 2 pessoas",
     imagem: foto("cafe-p-1"),
-    fotos: [foto("cafe-p-2"), foto("cafe-p-3")],
+    fotos: [foto("cafe-p-2")],
     foco: "50% 55%",
     secoes: [
       {

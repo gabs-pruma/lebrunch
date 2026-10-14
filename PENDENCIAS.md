@@ -16,7 +16,7 @@ Atualizado em 13/10/2026 — **v2 do site, com o ensaio de outubro/2026**.
   dourado e vermelho. Aparece também na home, no `/cestas`, no menu e no
   rodapé
 - **Catálogo reorganizado**: Pronta Entrega (Caixa Café Coado), Linha
-  Essencial (Café P, M e G — as três bandejas de madeira), Linha Premium
+  Essencial (Café PP, P, M e G — as bandejas de madeira), Linha Premium
   (caixa verde e cestas com flores), Presentes & Mimos (novo) e Coleção de
   Natal
 - **Navegação**: transição animada entre páginas, cabeçalho que some ao
@@ -39,6 +39,7 @@ laranja só em `npm run dev`). Saíram do ensaio, mas não têm ficha oficial:
 
 | Linha | Modelos em rascunho |
 |---|---|
+| Essencial | Café PP |
 | Premium | Caixa Verde Bentô · Cesta Flores do Campo · Cesta Bouquet |
 | Pronta Entrega | Caixa Café Coado |
 | Presentes & Mimos | Box Caneca com Inicial · Cesta Kids |
@@ -47,7 +48,12 @@ laranja só em `npm run dev`). Saíram do ensaio, mas não têm ficha oficial:
 Dúvidas específicas:
 
 - **Qual bandeja é qual tamanho**: associei pela escala da bandeja na mesa —
-  fotos 221–224 = Café P, 186–197 = Café M, 147–164 = Café G. Confirmar
+  fotos 221–222 = Café P, 186–197 = Café M, 147–164 = Café G. Confirmar
+- **Café PP**: as fotos 223–224 (a bandeja menor, com suco em lata) são o
+  Café PP, um modelo à parte do Café P. Ele não está no catálogo oficial:
+  falta o **preço** (o site mostra "sob consulta") e confirmar os **itens**,
+  que tirei da foto (croissant, suco de tangerina 269ml, geleia, Biscoff,
+  biscoitos finos, castanhas caramelizadas, uvas, mirtilos e morango)
 - **Caixa Verde Bentô**: o disco branco com desenho verde no centro parece um
   bolinho bentô decorado. É a nova embalagem do **Café com Bentô Cake**
   (R$ 330)? Se for, dá para unir os dois

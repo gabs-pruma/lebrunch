@@ -23,7 +23,8 @@ MAIORES = {"natal-mesa": 2600}
 
 FOTOS = {
     # ——— linha do ano todo ———
-    "cafe-p-1": 222, "cafe-p-2": 224, "cafe-p-3": 223,
+    "cafe-pp-1": 224, "cafe-pp-2": 223,
+    "cafe-p-1": 222, "cafe-p-2": 221,
     "cafe-m-1": 189, "cafe-m-2": 194, "cafe-m-3": 196, "cafe-m-4": 187,
     "cafe-g-1": 151, "cafe-g-2": 155, "cafe-g-3": 161, "cafe-g-4": 148, "cafe-g-5": 147,
     "caixa-verde-1": 229, "caixa-verde-2": 232, "caixa-verde-3": 233, "caixa-verde-4": 225,
