@@ -15,7 +15,7 @@ ffmpeg arredonda para o pixel inteiro e o movimento treme).
 import io, os, sys, subprocess
 from multiprocessing import Pool
 from PIL import Image, ImageCms, ImageOps
-from cor import dar_vida
+from cor import aplicar_retoque, dar_vida
 
 ORIGEM = next((a for a in sys.argv[1:] if not a.startswith("--")),
               os.path.expanduser("~/LeBrunch/lebrunch-dev/ensaio-102026/Highlights"))
@@ -61,7 +61,8 @@ def fonte(numero):
         im.draft("RGB", (3600, 3600))
         im = ImageOps.exif_transpose(im).convert("RGB")
         escala = 3600 / max(im.size)
-        im = dar_vida(im.resize((round(im.width * escala), round(im.height * escala)), Image.LANCZOS))
+        im = im.resize((round(im.width * escala), round(im.height * escala)), Image.LANCZOS)
+        im = dar_vida(aplicar_retoque(numero, im))
         # vídeo não carrega perfil de cor: o ensaio (Display P3) vira sRGB
         # aqui, senão o banner sai lavado
         if perfil:

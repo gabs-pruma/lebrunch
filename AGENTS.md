@@ -42,7 +42,10 @@ projete e verifique no celular primeiro.
   saíram e não voltam. Foto nova entra pelo `FOTOS` de
   `scripts/exportar-ensaio.py`, nunca copiada à mão — o script mantém o
   perfil Display P3 do ensaio (sem ele a foto sai lavada) e aplica o acerto
-  de cor de `scripts/cor.py`, o mesmo do vídeo do banner. Toda foto de cesta tem
+  de cor de `scripts/cor.py`, o mesmo do vídeo do banner. Retoque pontual
+  (ex.: o interior verde da Caixa Verde Bentô) vira uma camada em
+  `scripts/retoques/<número>.png`, gerada por script e aplicada pelos dois
+  exportadores — nunca edite o WebP final à mão. Toda foto de cesta tem
   `foco` (`object-position`) — o recorte é 4:5 sobre retrato 2:3.
 - **Links internos com `LinkTransicao`** (ou `BotaoLink`), não `next/link`
   direto — é ele que faz a transição entre páginas.

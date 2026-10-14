@@ -12,7 +12,7 @@ Arquivo que já existe é pulado: para reexportar, apague o .webp antes.
 import os, sys
 from concurrent.futures import ProcessPoolExecutor
 from PIL import Image, ImageOps
-from cor import dar_vida
+from cor import aplicar_retoque, dar_vida
 
 ORIGEM = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser(
     "~/LeBrunch/lebrunch-dev/ensaio-102026/Highlights")
@@ -68,7 +68,7 @@ def exportar(item):
     im = ImageOps.exif_transpose(original).convert("RGB")
     proporcao = MAIORES.get(destino, LARGURA) / im.width
     im = im.resize((round(im.width * proporcao), round(im.height * proporcao)), Image.LANCZOS)
-    im = dar_vida(im)
+    im = dar_vida(aplicar_retoque(numero, im))
     im.save(saida, "WEBP", quality=80, method=6, icc_profile=perfil)
 
 if __name__ == "__main__":
