@@ -83,6 +83,9 @@ projete e verifique no celular primeiro.
   `@media (prefers-reduced-motion: no-preference)`.
 - **Prêmio**: sempre por `site.premio` e `components/selo-premio.tsx`. Não
   suba o selo preto e dourado do prêmio para o site.
+- **Na navegação, o catálogo se chama "Modelos"**, não "Cestas" (menu,
+  rodapé, breadcrumb, "Ver os modelos"). "Cesta de café da manhã" continua
+  valendo para descrever o produto, e o endereço segue `/cestas`.
 - **Grade de cesta usa `GradeCestas`**, nunca `<ul className="grid">` na mão:
   é ela que faz o carrossel no celular e a grade no desktop, com o rótulo
   acessível da região rolável.
