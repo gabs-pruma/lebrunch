@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import { notFound } from "next/navigation";
 import { LinkTransicao as Link } from "@/components/transicao";
 import { clsx } from "@/lib/utils";
@@ -17,6 +18,7 @@ import {
   hrefCategoria,
 } from "@/data/cestas";
 import { site } from "@/data/site";
+import { TrilhaEstruturada } from "@/components/dados-estruturados";
 
 export function generateStaticParams() {
   return cestas.map((c) => ({ slug: c.slug }));
@@ -29,13 +31,15 @@ export async function generateMetadata(
   const cesta = buscarCesta(slug);
   if (!cesta) return {};
 
-  return {
-    title: `Cesta ${cesta.nome}`,
-    description: `${cesta.chamada} ${
-      cesta.preco !== null ? `${formatarPreco(cesta.preco)} + frete.` : ""
+  const categoria = categoriaDe(cesta.categoria);
+  return metadadosPagina({
+    titulo: `${cesta.nome} · ${categoria.nome}`,
+    descricao: `${cesta.chamada}${
+      cesta.preco !== null ? ` ${formatarPreco(cesta.preco)} + frete.` : ""
     } Entrega em São Paulo e Grande ABC.`,
-    alternates: { canonical: `/cestas/modelo/${cesta.slug}` },
-  };
+    caminho: `/cestas/modelo/${cesta.slug}/`,
+    og: `modelo-${cesta.slug}`,
+  });
 }
 
 export default async function CestaPage(
@@ -55,6 +59,13 @@ export default async function CestaPage(
 
   return (
     <div className={clsx(natal && "tema-natal natal-catalogo")}>
+      <TrilhaEstruturada
+        itens={[
+          { nome: "Modelos", caminho: "/cestas/" },
+          { nome: categoria.nome, caminho: `${hrefCategoria(categoria)}/` },
+          { nome: cesta.nome, caminho: `/cestas/modelo/${cesta.slug}/` },
+        ]}
+      />
       <Secao className="!pb-12">
         <nav aria-label="Você está aqui" className="relative mb-8">
           <ol className="olho flex flex-wrap items-center gap-2 text-tinta-suave">

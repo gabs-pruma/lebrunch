@@ -1,9 +1,11 @@
 # Publica o site no GitHub Pages a cada push na branch de prévia.
 #
 # O export estático (`output: "export"` no next.config.ts) sai em `out/`.
-# `NEXT_PUBLIC_BASE_PATH` recebe "/<repositório>" porque a prévia mora em
-# usuario.github.io/<repositório>/. Quando o domínio próprio for apontado
-# para o Pages, troque para "" (e o site deixa de sair com noindex).
+# `NEXT_PUBLIC_BASE_PATH` vem do próprio Pages (`configure-pages`): é
+# "/<repositório>" enquanto o site mora em usuario.github.io/<repositório>/
+# — a prévia, com noindex — e fica vazio quando o domínio próprio está
+# configurado em Settings → Pages. Trocar o domínio não dispara build:
+# depois de configurá-lo, rode este workflow de novo (Actions → Run).
 name: GitHub Pages
 
 on:
@@ -30,9 +32,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - id: pages
+        uses: actions/configure-pages@v5
       - run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

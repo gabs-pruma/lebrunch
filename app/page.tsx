@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { descricaoInicio, metadadosPagina, tituloInicio } from "@/lib/metadados";
 import { Hero } from "@/components/hero";
 import { Secao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { LinhaEditorial } from "@/components/linha-editorial";
@@ -27,9 +28,12 @@ import {
 } from "@/data/cestas";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata: Metadata = metadadosPagina({
+  tituloSocial: tituloInicio,
+  descricao: descricaoInicio,
+  caminho: "/",
+  og: "inicio",
+});
 
 /** Palavras da faixa corrida — todas tiradas dos itens das cestas. */
 const FAIXA = [

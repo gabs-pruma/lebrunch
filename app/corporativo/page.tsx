@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import Image from "next/image";
 import { Secao, TituloSecao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { Revelar } from "@/components/revelar";
@@ -29,10 +30,13 @@ import { formatarPreco } from "@/data/cestas";
   e recolocar o item no menu (`components/site-header.tsx`) e no rodapé.
 */
 export const metadata: Metadata = {
-  title: "Brunch corporativo",
-  description:
-    "Coffee breaks, eventos e reuniões com a curadoria da Le Brunch. Montagem e desmontagem inclusas, a partir de 15 pessoas, em São Paulo e no Grande ABC.",
-  alternates: { canonical: "/corporativo" },
+  ...metadadosPagina({
+    titulo: "Brunch corporativo",
+    descricao:
+      "Coffee breaks, eventos e reuniões com a curadoria da Le Brunch. Montagem e desmontagem inclusas, a partir de 15 pessoas, em São Paulo e no Grande ABC.",
+    caminho: "/corporativo/",
+    og: "corporativo",
+  }),
   robots: { index: false, follow: false },
 };
 

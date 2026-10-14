@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import Image from "next/image";
 import { FotoParallax } from "@/components/foto-parallax";
 import { Secao, TituloSecao, Ornamento, BotaoLink } from "@/components/ui";
@@ -20,12 +21,13 @@ import {
 } from "@/data/cestas";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Cestas de café da manhã",
-  description:
-    "Conheça as linhas Pronta Entrega, Essencial, Premium e Presentes & Mimos e a Coleção de Natal da Le Brunch. Cestas de café da manhã montadas à mão e entregues em São Paulo e no Grande ABC.",
-  alternates: { canonical: "/cestas" },
-};
+export const metadata: Metadata = metadadosPagina({
+  titulo: "Cestas de café da manhã",
+  descricao:
+    "Todos os modelos da Le Brunch: Pronta Entrega, Linha Essencial, Linha Premium, Presentes & Mimos e Coleção de Natal. Montadas à mão e entregues em SP e no ABC.",
+  caminho: "/cestas/",
+  og: "modelos",
+});
 
 export default function CestasPage() {
   return (

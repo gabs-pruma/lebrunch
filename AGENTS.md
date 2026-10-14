@@ -83,6 +83,11 @@ projete e verifique no celular primeiro.
   `@media (prefers-reduced-motion: no-preference)`.
 - **Prêmio**: sempre por `site.premio` e `components/selo-premio.tsx`. Não
   suba o selo preto e dourado do prêmio para o site.
+- **SEO**: toda página declara os metadados por `metadadosPagina()`
+  (`lib/metadados.ts`), com `caminho` de barra final e a chave da imagem de
+  compartilhamento. Cesta ou linha nova pede `python3 scripts/gerar-og.py`
+  (gera `public/og/`). O `llms.txt` e o sitemap saem de `data/` sozinhos.
+  Endereço que deixar de existir entra em `data/enderecos-antigos.ts`.
 - **Na navegação, o catálogo se chama "Modelos"**, não "Cestas" (menu,
   rodapé, breadcrumb, "Ver os modelos"). "Cesta de café da manhã" continua
   valendo para descrever o produto, e o endereço segue `/cestas`.

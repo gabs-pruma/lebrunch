@@ -1,5 +1,6 @@
 import { site } from "@/data/site";
 import { cestas } from "@/data/cestas";
+import { imagemOg } from "@/lib/metadados";
 
 /**
  * JSON-LD de negócio local — ajuda o Google a ligar o site ao perfil da
@@ -17,7 +18,9 @@ export function DadosEstruturados() {
     "@id": `${site.url}/#negocio`,
     name: site.nomeCompleto,
     description: site.descricao,
-    url: site.url,
+    url: `${site.url}/`,
+    image: `${site.url}${imagemOg("inicio")}`,
+    logo: `${site.url}/marca/lebrunch.png`,
     telephone: `+${site.whatsapp}`,
     slogan: site.slogan,
     priceRange: `R$${menorPreco}+`,
@@ -67,13 +70,42 @@ export function DadosEstruturados() {
       { "@type": "City", name: "São Caetano do Sul" },
       { "@type": "AdministrativeArea", name: "Grande ABC" },
     ],
-    sameAs: [site.instagram.url],
+    hasMap: site.google.maps,
+    sameAs: [site.instagram.url, site.google.maps],
   };
 
   return (
     <script
       type="application/ld+json"
       // JSON gerado a partir de dados nossos, sem entrada de usuário.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(dados) }}
+    />
+  );
+}
+
+/**
+ * Trilha de navegação (BreadcrumbList) — o Google mostra "Le Brunch ›
+ * Linha Essencial › Café M" no resultado da busca, em vez da URL crua.
+ */
+export function TrilhaEstruturada({
+  itens,
+}: {
+  itens: Array<{ nome: string; caminho: string }>;
+}) {
+  const dados = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: itens.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.nome,
+      item: `${site.url}${item.caminho}`,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(dados) }}
     />
   );

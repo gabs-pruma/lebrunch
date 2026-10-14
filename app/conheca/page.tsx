@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import Image from "next/image";
 import { Secao, TituloSecao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { Revelar } from "@/components/revelar";
@@ -10,12 +11,14 @@ import { IconeWhatsApp, IconeInstagram } from "@/components/icones";
 import { historia } from "@/data/historia";
 import { site, linkWhatsApp, mensagens } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Conheça a Le Brunch",
-  description:
+export const metadata: Metadata = metadadosPagina({
+  titulo: "Nossa história",
+  tituloSocial: "Conheça a Le Brunch",
+  descricao:
     "A história da Le Brunch e da Rebeca Santana, que monta à mão cada cesta de café da manhã entregue em São Paulo e no Grande ABC.",
-  alternates: { canonical: "/conheca" },
-};
+  caminho: "/conheca/",
+  og: "conheca",
+});
 
 export default function ConhecaPage() {
   return (

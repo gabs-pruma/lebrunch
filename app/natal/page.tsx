@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import Image, { getImageProps } from "next/image";
 import { notFound } from "next/navigation";
 import { BotaoLink } from "@/components/ui";
@@ -22,11 +23,12 @@ import { buscarCesta, cestasDaCategoria, formatarPreco } from "@/data/cestas";
 import { colecaoNatal } from "@/data/natal";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: `Coleção de Natal ${colecaoNatal.ano}`,
-  description: `Presentes de Natal da Le Brunch: latas, caixa de petiscos, kits com espumante e panetone e a caixa Tábua & Merlot. Entrega em ${site.atendimento.regiao}.`,
-  alternates: { canonical: "/natal" },
-};
+export const metadata: Metadata = metadadosPagina({
+  titulo: `Coleção de Natal ${colecaoNatal.ano}`,
+  descricao: `Presentes de Natal da Le Brunch: latas, caixa de petiscos, kits com espumante e panetone e a caixa Tábua & Merlot. Entrega em ${site.atendimento.regiao}.`,
+  caminho: "/natal/",
+  og: "natal",
+});
 
 /** Filete dourado com a estrela ao centro. */
 function FileteOuro({ className }: { className?: string }) {

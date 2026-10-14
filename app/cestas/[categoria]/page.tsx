@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metadadosPagina } from "@/lib/metadados";
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import { LinkTransicao as Link } from "@/components/transicao";
@@ -15,6 +16,7 @@ import {
   type CategoriaSlug,
 } from "@/data/cestas";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
+import { TrilhaEstruturada } from "@/components/dados-estruturados";
 
 /** Uma rota estática por linha de cesta. */
 export function generateStaticParams() {
@@ -33,11 +35,12 @@ export async function generateMetadata(
   const encontrada = acharCategoria(categoria);
   if (!encontrada) return {};
 
-  return {
-    title: encontrada.nome,
-    description: encontrada.descricao,
-    alternates: { canonical: `/cestas/${encontrada.slug}` },
-  };
+  return metadadosPagina({
+    titulo: encontrada.nome,
+    descricao: encontrada.descricao,
+    caminho: `/cestas/${encontrada.slug}/`,
+    og: `linha-${encontrada.slug}`,
+  });
 }
 
 export default async function CategoriaPage(
@@ -52,6 +55,12 @@ export default async function CategoriaPage(
 
   return (
     <>
+      <TrilhaEstruturada
+        itens={[
+          { nome: "Modelos", caminho: "/cestas/" },
+          { nome: categoria.nome, caminho: `/cestas/${categoria.slug}/` },
+        ]}
+      />
       <Secao className="!pb-12">
         <nav aria-label="Você está aqui" className="relative mb-8">
           <ol className="olho flex items-center gap-2 text-tinta-suave">

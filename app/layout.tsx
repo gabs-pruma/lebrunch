@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { descricaoInicio, imagemOg, tituloInicio } from "@/lib/metadados";
 import type { CSSProperties } from "react";
 import { comBase, previa } from "@/lib/base";
 import { Cormorant_Garamond, Jost, Parisienne } from "next/font/google";
@@ -41,10 +42,10 @@ const parisienne = Parisienne({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.nomeCompleto} — Cestas de café da manhã premium em São Paulo e Grande ABC`,
+    default: tituloInicio,
     template: `%s · ${site.nome}`,
   },
-  description: `${site.descricao} Vencedora do ${site.premio.nome} ${site.premio.ano} na categoria ${site.premio.categoria}.`,
+  description: descricaoInicio,
   applicationName: site.nomeCompleto,
   keywords: [
     "cesta de café da manhã",
@@ -63,8 +64,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: site.nomeCompleto,
-    title: `${site.nomeCompleto} — ${site.assinatura}`,
-    description: `${site.descricao} Vencedora do ${site.premio.nome} ${site.premio.ano}.`,
+    title: tituloInicio,
+    description: descricaoInicio,
+    images: [{ url: imagemOg("inicio"), width: 1200, height: 630, alt: tituloInicio }],
   },
   twitter: { card: "summary_large_image" },
   robots: previa ? { index: false, follow: false } : { index: true, follow: true },
