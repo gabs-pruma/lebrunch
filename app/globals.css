@@ -1,26 +1,737 @@
 @import "tailwindcss";
 
+/*
+  Le Brunch — tokens extraídos da identidade oficial
+  (Catálogo Le Brunch.pdf + Branding - Le Brunch_apresentacao.pptx)
+
+  Verde profundo  #003E39  amostrado do logo e dos títulos do catálogo
+  Verde jade      #247763  amostrado das aplicações (sacola, avental)
+  Terracota       #D79156  amostrado do padrão floral (cartão, caixa)
+  Papel           #F5F4F2  fundo texturizado do catálogo
+*/
+@theme {
+  --color-verde-900: #003e39;
+  --color-verde-800: #0a4740;
+  --color-verde-700: #14514a;
+  --color-verde-600: #247763;
+  --color-verde-500: #3d8f7a;
+
+  --color-sage-600: #5e827a;
+  --color-sage-500: #8aa8a0;
+  --color-sage-400: #adc4be;
+  --color-sage-300: #c9d4cf;
+  --color-sage-200: #d8dcd8;
+  --color-sage-100: #e8ebe7;
+
+  --color-terra-800: #7c481d;
+  --color-terra-700: #945723;
+  --color-terra-600: #bb7f4c;
+  --color-terra-500: #d79156;
+  --color-terra-400: #e3ac7d;
+  --color-terra-200: #f2dcc4;
+
+  --color-papel: #f5f4f2;
+  --color-papel-alt: #efedea;
+  --color-creme: #f8eee5;
+  --color-tinta: #1f2a27;
+  --color-tinta-suave: #55635e;
+
+  /* Coleção de Natal — amostrado do ensaio de outubro/2026: a cortina de
+     veludo verde do fundo, o laço vermelho de cetim e o dourado das
+     estrelas do laço e da tag "Boas Festas". */
+  --color-noite: #0e231f;
+  --color-noite-alt: #15302a;
+  --color-ouro: #c9a45c;
+  --color-ouro-claro: #e9d39c;
+  --color-natal: #9e2a2b;
+  --color-natal-claro: #c8474a;
+
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-parisienne), cursive;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-papel);
+  color: var(--color-verde-900);
+  font-family: var(--font-sans);
+  /* textura de papel do catálogo, bem discreta — o endereço vem do layout
+     (`--textura`), por causa do prefixo do GitHub Pages */
+  background-image: var(--textura);
+  background-size: 700px;
+  background-blend-mode: multiply;
+}
+
+/* ————— tipografia editorial ————— */
+.titulo {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.olho {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ————— utilitários ————— */
+.borda-fina {
+  border-color: color-mix(in srgb, var(--color-verde-900) 14%, transparent);
+}
+
+/* Foco visível e consistente (nunca removido) */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-verde-600);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-verde-900);
+  color: var(--color-papel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ————— revelação ao rolar (ver components/revelar.tsx) ————— */
+[data-revelar] {
+  transition:
+    opacity 900ms var(--ease-suave),
+    transform 900ms var(--ease-suave);
+}
+
+[data-revelar="oculto"] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+[data-revelar="visivel"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ————— modal de pedido (components/modal-pedido.tsx) ————— */
+.modal-pedido {
+  /* o <dialog> nativo vem com largura/altura automáticas e margin auto */
+  width: min(38rem, calc(100vw - 1.5rem));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-verde-900);
+  margin: auto;
+  overflow: visible;
+}
+
+.modal-pedido::backdrop {
+  background: color-mix(in srgb, var(--color-verde-900) 55%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+.modal-pedido[open] {
+  animation: modal-entra 320ms var(--ease-suave);
+}
+
+.modal-pedido[open]::backdrop {
+  animation: modal-fundo 320ms var(--ease-suave);
+}
+
+@keyframes modal-entra {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem) scale(0.985);
+  }
+}
+
+@keyframes modal-fundo {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-pedido[open],
+  .modal-pedido[open]::backdrop {
+    animation: none;
+  }
+}
+
+/* ————— gavetas do modal de pedido ————— */
+.gaveta {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-verde-900) 12%, transparent);
+}
+
+.gaveta:last-of-type {
+  border-bottom: 0;
+}
+
+.gaveta > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding: 0.875rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 250ms var(--ease-suave);
+}
+
+@media (min-width: 640px) {
+  .gaveta > summary {
+    padding-inline: 1.5rem;
+  }
+}
+
+.gaveta > summary:hover {
+  background: color-mix(in srgb, var(--color-verde-900) 4%, transparent);
+}
+
+/* esconde o triângulo nativo e usa a nossa seta */
+.gaveta > summary::-webkit-details-marker {
+  display: none;
+}
+
+.gaveta > summary::marker {
+  content: "";
+}
+
+.gaveta-titulo {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.gaveta-resumo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-left: auto;
+  font-size: 0.8125rem;
+  color: var(--color-tinta-suave);
+  text-align: right;
+}
+
+/* seta que gira ao abrir */
+.gaveta-resumo::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transform-origin: center;
+  transition: transform 300ms var(--ease-suave);
+  flex-shrink: 0;
+}
+
+.gaveta[open] > summary .gaveta-resumo::after {
+  transform: rotate(-135deg);
+}
+
+/* ————————————————————————————————————————————————————————————————
+   Efeitos de rolagem
+
+   Tudo aqui usa animações CSS ligadas ao scroll (`animation-timeline`):
+   rodam no compositor, sem listener de scroll em JS e sem travar a rolagem
+   no celular. Só entram em navegadores que suportam e para quem não pediu
+   menos movimento — caso contrário o conteúdo aparece no estado final,
+   sem nenhuma animação.
+
+   Seguindo a regra da skill: movimento apenas em camada decorativa e em
+   foto. Nunca em texto ou controle.
+   ———————————————————————————————————————————————————————————————— */
+
+/* moldura de parallax: a foto é mais alta que a moldura e desliza dentro */
+.quadro-parallax {
+  position: relative;
+  overflow: hidden;
+}
+
+.quadro-parallax > img {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  width: 100%;
+  height: 114%;
+  object-fit: cover;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .quadro-parallax > img {
+      animation: parallax-foto linear both;
+      animation-timeline: view();
+      animation-range: cover;
+      will-change: transform;
+    }
+
+    /* zoom lento de saída, para as fotos largas */
+    .foto-zoom > img {
+      animation:
+        parallax-foto linear both,
+        zoom-lento linear both;
+      animation-timeline: view(), view();
+      animation-range: cover, cover;
+    }
+  }
+}
+
+@keyframes parallax-foto {
+  from {
+    transform: translateY(-12%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes zoom-lento {
+  from {
+    scale: 1.06;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* o hero recua de leve ao sair de cena */
+    .hero-imagem {
+      animation: hero-recua linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90vh;
+      will-change: transform, opacity;
+    }
+
+    /* o papel de parede deriva devagar ao longo da página inteira */
+    .fundo-deriva {
+      animation: fundo-deriva linear both;
+      animation-timeline: scroll(root block);
+      will-change: transform;
+    }
+
+    /* filete que mostra o quanto já foi lido */
+    .barra-progresso {
+      animation: progresso linear both;
+      animation-timeline: scroll(root block);
+      transform-origin: 0 50%;
+    }
+  }
+}
+
+@keyframes hero-recua {
+  to {
+    transform: translateY(-2.5rem) scale(0.97);
+    opacity: 0.75;
+  }
+}
+
+@keyframes fundo-deriva {
+  to {
+    transform: translate3d(0, -5%, 0);
+  }
+}
+
+@keyframes progresso {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ————— capitular, para a abertura da história ————— */
+.capitular::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.6em;
+  font-weight: 300;
+  line-height: 0.82;
+  margin: 0.06em 0.08em 0 0;
+  color: var(--color-verde-900);
+}
+
+/* ————— rolagem lateral (grades de cesta no celular) —————
+   No celular a grade vira carrossel com encaixe: o próximo card fica
+   espiando na borda, o que mostra que há mais sem esticar a página.
+   A barra de rolagem some, mas o gesto e o teclado continuam funcionando. */
+.rolagem-lateral {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rolagem-lateral::-webkit-scrollbar {
+  display: none;
+}
+
+/* ————————————————————————————————————————————————————————————————
+   Transição entre páginas (ver components/transicao.tsx)
+
+   A página que sai recua e esmaece; a que entra sobe de leve. O cabeçalho
+   tem nome próprio, então fica parado enquanto o conteúdo troca. Fotos
+   com `view-transition-name` (linha → página da linha) viajam de um lugar
+   para o outro.
+   ———————————————————————————————————————————————————————————————— */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: 420ms var(--ease-suave) both pagina-sai;
+  }
+
+  ::view-transition-new(root) {
+    animation: 620ms var(--ease-suave) 80ms both pagina-entra;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: 650ms;
+    animation-timing-function: var(--ease-suave);
+  }
+}
+
+::view-transition-old(cabecalho),
+::view-transition-new(cabecalho) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes pagina-sai {
+  to {
+    opacity: 0;
+    transform: translateY(-1.5rem) scale(0.985);
+    filter: blur(2px);
+  }
+}
+
+@keyframes pagina-entra {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem);
+  }
+}
+
+/* ————— brilho da estrela de Natal ————— */
+@media (prefers-reduced-motion: no-preference) {
+  .cintilar {
+    animation: cintilar 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes cintilar {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.78) rotate(45deg);
+  }
+}
+
+/* ————— menu do celular: itens entram em cascata ————— */
+@media (prefers-reduced-motion: no-preference) {
+  .menu-celular:not([hidden]) {
+    animation: menu-abre 450ms var(--ease-suave) both;
+  }
+
+  .menu-celular:not([hidden]) .menu-item {
+    animation: menu-item 600ms var(--ease-suave) both;
+    animation-delay: calc(80ms + var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes menu-abre {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes menu-item {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+}
+
+/* ————— banner em vídeo da home ————— */
+.banner-video {
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-suave);
+}
+
+.banner-video[data-tocando] {
+  opacity: 1;
+}
+
+/* legenda "em cena": troca suave a cada tomada */
+.legenda-cena {
+  animation: legenda-entra 700ms var(--ease-suave) both;
+}
+
+@keyframes legenda-entra {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+    filter: blur(3px);
+  }
+}
+
+/* indicador de rolagem do banner */
+@media (prefers-reduced-motion: no-preference) {
+  .indicador-rolagem::after {
+    animation: indicador 2.2s var(--ease-suave) infinite;
+  }
+}
+
+.indicador-rolagem::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 40%;
+  background: currentColor;
+}
+
+@keyframes indicador {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(250%);
+  }
+}
+
+/* ————— faixa corrida (marquee) ————— */
+.faixa-corrida {
+  display: flex;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faixa-corrida {
+    animation: faixa 38s linear infinite;
+  }
+
+  .faixa-corrida:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes faixa {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ————— revelação de foto com cortina (entra de baixo para cima) ————— */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cortina {
+      animation: cortina linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+
+    /* galeria horizontal: fotos crescem ao entrar no centro */
+    .cresce-no-centro {
+      animation: cresce linear both;
+      animation-timeline: view(inline);
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes cortina {
+  from {
+    clip-path: inset(18% 6% 0 6% round 1rem);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 1rem);
+    opacity: 1;
+  }
+}
+
+@keyframes cresce {
+  0%,
+  100% {
+    scale: 0.9;
+    opacity: 0.6;
+  }
+  50% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+/* ————————————————————————————————————————————————————————————————
+   Coleção de Natal
+
+   A página de Natal troca o papel claro pelo veludo verde do ensaio.
+   As luzes são bolinhas de bokeh desenhadas em CSS, piscando em ritmos
+   diferentes — o mesmo pisca-pisca desfocado que aparece atrás das
+   cestas nas fotos.
+   ———————————————————————————————————————————————————————————————— */
+.tema-natal {
+  background-color: var(--color-noite);
+  color: var(--color-papel);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgb(36 72 62 / 0.55), transparent 70%),
+    repeating-linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0.07) 0 2px,
+      transparent 2px 38px,
+      rgb(255 255 255 / 0.025) 38px 40px,
+      transparent 40px 76px
+    );
+}
+
+.tema-natal ::selection {
+  background: var(--color-ouro);
+  color: var(--color-noite);
+}
+
+.luzes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.luzes > span {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(255 226 160 / 0.95) 0%, rgb(255 205 120 / 0.5) 35%, transparent 70%);
+  filter: blur(1px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .luzes > span {
+    animation: piscar var(--d, 3.5s) ease-in-out var(--a, 0s) infinite;
+  }
+}
+
+@keyframes piscar {
+  0%,
+  100% {
+    opacity: var(--o, 0.85);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+}
+
+/* filete dourado com a estrela ao centro */
+.filete-ouro {
+  background: linear-gradient(90deg, transparent, var(--color-ouro), transparent);
+}
+
+/* brilho que atravessa o título dourado */
+.texto-ouro {
+  background: linear-gradient(
+    100deg,
+    var(--color-ouro) 0%,
+    var(--color-ouro-claro) 40%,
+    #fff6dc 50%,
+    var(--color-ouro-claro) 60%,
+    var(--color-ouro) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .texto-ouro {
+    animation: brilho-ouro 6s ease-in-out infinite;
+  }
+}
+
+@keyframes brilho-ouro {
+  0%,
+  100% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0% 0;
+  }
+}
+
+/* modal de pedido dentro da coleção de Natal */
+.modal-pedido.natal::backdrop {
+  background: color-mix(in srgb, var(--color-noite) 75%, transparent);
+}
+
+/* Páginas de modelo da Coleção de Natal reaproveitam os componentes do
+   catálogo; dentro do tema, os tons do papel viram tons do veludo. */
+.natal-catalogo .text-tinta-suave {
+  color: color-mix(in srgb, var(--color-papel) 68%, transparent);
+}
+
+.natal-catalogo .text-terra-700,
+.natal-catalogo .text-verde-600,
+.natal-catalogo .text-sage-600 {
+  color: var(--color-ouro);
+}
+
+.natal-catalogo .borda-fina {
+  border-color: color-mix(in srgb, var(--color-papel) 14%, transparent);
+}
+
+.natal-catalogo .bg-creme\/85 {
+  background-color: color-mix(in srgb, var(--color-noite-alt) 70%, transparent);
+}
+
+.natal-catalogo .text-verde-900 {
+  color: var(--color-papel);
+}
+
+.natal-catalogo .hover\:text-verde-900:hover {
+  color: var(--color-ouro-claro);
+}
+
+.tema-natal details summary {
+  color: var(--color-papel);
 }
