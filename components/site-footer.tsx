@@ -54,8 +54,8 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <nav aria-label="Cestas">
-            <h2 className="olho text-papel/65">Cestas</h2>
+          <nav aria-label="Modelos">
+            <h2 className="olho text-papel/65">Modelos</h2>
             <ul className="mt-5 flex flex-col gap-1">
               {categorias.map((c) => (
                 <li key={c.slug}>
@@ -72,7 +72,7 @@ export function SiteFooter() {
                   href="/cestas"
                   className="inline-flex min-h-11 items-center text-[0.9375rem] text-papel/85 transition-colors duration-300 hover:text-papel"
                 >
-                  Todas as cestas
+                  Todos os modelos
                 </Link>
               </li>
             </ul>

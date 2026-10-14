@@ -60,7 +60,7 @@ export default async function CestaPage(
           <ol className="olho flex flex-wrap items-center gap-2 text-tinta-suave">
             <li>
               <Link href="/cestas" className="hover:text-verde-900">
-                Cestas
+                Modelos
               </Link>
             </li>
             <li aria-hidden>/</li>
@@ -232,13 +232,13 @@ export default async function CestaPage(
         <Secao fundo="creme">
           <Ornamento className="mb-12" />
           <h2 className="titulo mb-10 text-center text-[clamp(1.75rem,6vw,2.75rem)]">
-            {natal ? "Mais presentes de Natal" : `Outras cestas da ${categoria.nome}`}
+            {natal ? "Mais presentes de Natal" : `Outros modelos da ${categoria.nome}`}
           </h2>
           <div className={relacionadas.length === 2 ? "mx-auto max-w-4xl" : undefined}>
           <GradeCestas
             cestas={relacionadas}
             colunas={relacionadas.length === 2 ? 2 : 3}
-            rotulo={natal ? "Mais presentes de Natal" : `Outras cestas da ${categoria.nome}`}
+            rotulo={natal ? "Mais presentes de Natal" : `Outros modelos da ${categoria.nome}`}
             prontaEntrega={categoria.prontaEntrega}
             escuro={natal}
           />

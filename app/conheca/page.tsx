@@ -247,7 +247,7 @@ export default function ConhecaPage() {
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <BotaoLink href="/cestas" variante="solido">
-              Ver as cestas
+              Ver os modelos
             </BotaoLink>
             <BotaoLink
               href={linkWhatsApp(mensagens.geral)}

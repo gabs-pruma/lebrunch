@@ -231,7 +231,7 @@ export default function Home() {
             </h2>
           </div>
           <BotaoLink href="/cestas" variante="texto" className="self-start sm:self-auto">
-            Ver todas as cestas
+            Ver todos os modelos
             <IconeSeta className="size-4" />
           </BotaoLink>
         </div>

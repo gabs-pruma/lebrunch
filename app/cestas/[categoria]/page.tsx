@@ -57,7 +57,7 @@ export default async function CategoriaPage(
           <ol className="olho flex items-center gap-2 text-tinta-suave">
             <li>
               <Link href="/cestas" className="hover:text-verde-900">
-                Cestas
+                Modelos
               </Link>
             </li>
             <li aria-hidden>/</li>

@@ -376,7 +376,7 @@ export default function NatalPage() {
               Falar no WhatsApp
             </BotaoLink>
             <BotaoLink href="/cestas" variante="contornoClaro">
-              Ver as cestas do ano todo
+              Ver os modelos do ano todo
               <IconeSeta className="size-4" />
             </BotaoLink>
           </div>

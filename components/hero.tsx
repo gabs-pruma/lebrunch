@@ -169,7 +169,7 @@ export function Hero() {
 
           <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
             <BotaoLink href="/cestas" variante="claro">
-              Ver as cestas
+              Ver os modelos
             </BotaoLink>
             <BotaoLink href="/natal" variante="contornoClaro">
               <IconeBrilho className="cintilar size-4 text-ouro-claro" />

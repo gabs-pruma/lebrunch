@@ -174,7 +174,7 @@ export function SiteHeader() {
                       : "after:w-0 hover:after:w-full",
                   )}
                 >
-                  Cestas
+                  Modelos
                   <span
                     aria-hidden
                     className={clsx(
@@ -257,7 +257,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* ——— painel "Cestas" do desktop ——— */}
+        {/* ——— painel "Modelos" do desktop ——— */}
         <div
           id="painel-cestas"
           onMouseEnter={abrirPainel}
@@ -320,7 +320,7 @@ export function SiteHeader() {
                   tabIndex={painelAberto ? undefined : -1}
                   className="olho inline-flex min-h-11 items-center gap-2 border-b border-papel/30 self-start transition-colors hover:border-papel"
                 >
-                  Todas as cestas
+                  Todos os modelos
                   <IconeSeta className="size-4" />
                 </LinkTransicao>
               </div>
@@ -348,7 +348,7 @@ export function SiteHeader() {
           <ul className="flex flex-col">
             {[
               { href: "/", rotulo: "Início" },
-              { href: "/cestas", rotulo: "Todas as cestas" },
+              { href: "/cestas", rotulo: "Todos os modelos" },
               { href: "/natal", rotulo: "Natal 2026", natal: true },
               { href: "/conheca", rotulo: "Nossa história" },
             ].map((item, i) => (

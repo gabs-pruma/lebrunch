@@ -51,7 +51,7 @@ export function GradeCestas({
         ref={trilha}
         tabIndex={0}
         role="group"
-        aria-label={`Cestas: ${rotulo}`}
+        aria-label={`Modelos: ${rotulo}`}
         className={clsx(
           "rolagem-lateral -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:scroll-px-8 sm:px-8 lg:mx-0 lg:grid lg:snap-none lg:gap-x-5 lg:gap-y-12 lg:overflow-visible lg:px-0 lg:pb-0",
           colunas === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3",
@@ -81,7 +81,7 @@ export function GradeCestas({
               key={d}
               type="button"
               onClick={() => deslizar(d)}
-              aria-label={d === -1 ? "Ver cestas anteriores" : "Ver mais cestas"}
+              aria-label={d === -1 ? "Ver modelos anteriores" : "Ver mais modelos"}
               className={clsx(
                 "inline-flex size-11 cursor-pointer items-center justify-center rounded-full border transition-colors duration-300",
                 escuro

@@ -20,7 +20,7 @@ export default function NaoEncontrado() {
             Voltar ao início
           </BotaoLink>
           <BotaoLink href="/cestas" variante="contorno">
-            Ver as cestas
+            Ver os modelos
           </BotaoLink>
         </div>
       </div>
