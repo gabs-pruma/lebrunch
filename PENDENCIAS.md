@@ -42,7 +42,7 @@ laranja só em `npm run dev`). Saíram do ensaio, mas não têm ficha oficial:
 | Premium | Caixa Verde Bentô · Cesta Flores do Campo · Cesta Bouquet |
 | Pronta Entrega | Caixa Café Coado |
 | Presentes & Mimos | Box Caneca com Inicial · Cesta Kids |
-| Natal | Caixa Tábua & Merlot · Caixa de Petiscos · Kit Brinde & Panetone · Kit Boas Festas · Lata de Brownies · Lata & Panetone · Kit Caneca de Natal · Saco de Noel |
+| Natal | Caixa Tábua & Merlot · Caixa de Petiscos · Kit Brinde & Panetone · Kit Boas Festas · Lata de Brownies · Lata de Panetone · Kit Caneca de Natal |
 
 Dúvidas específicas:
 
@@ -59,8 +59,11 @@ Dúvidas específicas:
 - **Kit Boas Festas**: o antigo "Kit Brinde Dourado" era o mesmo kit (lata
   fechada com laço), então virou um modelo só, com as fotos dos dois.
   Confirmar se a lata é sempre a dourada de frutas secas e castanhas
-- **Lata & Panetone**: o recheio da lata não aparece na foto ("a confirmar")
-- **Saco de Noel**: o recheio não aparece na foto
+- **Latas de Natal**: são dois modelos, a **Lata de Brownies** e a **Lata de
+  Panetone** (o panetone vai dentro da lata). O **Saco de Noel** deixou de ser
+  modelo e virou opção de embalagem das duas, escolhida no modal de pedido
+  (a outra é a sacolinha de tecido com pinheiros). Confirmar se a lata vai
+  dentro do Saco de Noel e se a embalagem muda o preço
 - **Pronta Entrega**: voltou, com a **Caixa Café Coado** (caneca, café e
   foto impressa), como você indicou. No modal ela libera entrega para hoje e
   o card mostra o selo "Sai hoje". Falta o preço

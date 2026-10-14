@@ -233,7 +233,8 @@ export default function NatalPage() {
               <div
                 className={
                   modelos.length === 2
-                    ? "flex flex-col gap-4 lg:sticky lg:top-28 lg:self-start lg:pr-8"
+                    ? // Os grupos de dois alternam o lado do texto no desktop.
+                      `flex flex-col gap-4 lg:sticky lg:top-28 lg:self-start ${i % 2 === 1 ? "lg:order-last lg:pl-8" : "lg:pr-8"}`
                     : "mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between"
                 }
               >

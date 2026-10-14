@@ -107,6 +107,9 @@ export function ModalPedido({
   const [data, setData] = useState(dataMinima);
   const [periodo, setPeriodo] = useState<Periodo>("manha");
   const [observacao, setObservacao] = useState("");
+  /** Índice da embalagem escolhida; a primeira é a padrão. */
+  const [embalagem, setEmbalagem] = useState(0);
+  const embalagemEscolhida = cesta.embalagens?.[embalagem];
   /** Quantidade escolhida de cada adicional, indexada pelo nome. */
   const [extras, setExtras] = useState<Record<string, number>>({});
 
@@ -163,6 +166,7 @@ export function ModalPedido({
     preco: cesta.preco !== null ? formatarPreco(cesta.preco) : null,
     data: formatarData(data),
     periodo: `${periodos[periodoEfetivo].rotulo} (${periodos[periodoEfetivo].faixa})`,
+    embalagem: embalagemEscolhida?.nome ?? null,
     adicionais: escolhidos.map((a) => ({
       nome: a.nome,
       quantidade: a.quantidade,
@@ -317,6 +321,67 @@ export function ModalPedido({
               </p>
             </div>
           </details>
+
+          {/* embalagem, só nos modelos que têm mais de uma */}
+          {cesta.embalagens && embalagemEscolhida ? (
+            <details className="gaveta">
+              <summary>
+                <span className="gaveta-titulo">Embalagem</span>
+                <span className="gaveta-resumo">{embalagemEscolhida.nome}</span>
+              </summary>
+
+              <fieldset className="border-0 px-5 pb-6 sm:px-6">
+                <legend className="sr-only">Embalagem</legend>
+                <div className="flex flex-col gap-2">
+                  {cesta.embalagens.map((opcao, i) => {
+                    const marcado = embalagem === i;
+                    return (
+                      <label
+                        key={opcao.nome}
+                        className={clsx(
+                          "flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 transition-colors duration-300",
+                          marcado
+                            ? "border-verde-900 bg-verde-900 text-papel"
+                            : "border-verde-900/20 hover:border-verde-900/45",
+                        )}
+                      >
+                        <input
+                          type="radio"
+                          name={`embalagem-${cesta.slug}`}
+                          value={i}
+                          checked={marcado}
+                          onChange={() => setEmbalagem(i)}
+                          className="sr-only"
+                        />
+                        <span
+                          aria-hidden
+                          className={clsx(
+                            "mt-1 flex size-4 shrink-0 items-center justify-center rounded-full border",
+                            marcado ? "border-papel" : "border-verde-900/40",
+                          )}
+                        >
+                          {marcado ? <span className="size-2 rounded-full bg-papel" /> : null}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[0.9375rem] leading-snug">
+                            {opcao.nome}
+                          </span>
+                          <span
+                            className={clsx(
+                              "mt-0.5 block text-[0.8125rem] leading-relaxed",
+                              marcado ? "text-papel/75" : "text-tinta-suave",
+                            )}
+                          >
+                            {opcao.descricao}
+                          </span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            </details>
+          ) : null}
 
           {/* adicionais */}
           <details className="gaveta">
@@ -508,7 +573,8 @@ export function ModalPedido({
             Pedir no WhatsApp
           </a>
           <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
-            A mensagem já vai com a cesta, a data, a faixa e o seu recado.
+            A mensagem já vai com a cesta, a data, a faixa
+            {cesta.embalagens ? ", a embalagem" : ""} e o seu recado.
             <br className="hidden sm:inline" />{" "}
             {site.pagamento.aVista} à vista, ou{" "}
             {site.pagamento.parcelado.maximo

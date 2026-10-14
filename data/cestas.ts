@@ -43,9 +43,19 @@ export type Cesta = {
   /** Ângulos extras da mesma cesta, para a galeria da página do modelo. */
   fotos?: string[];
   secoes: Secao[];
+  /**
+   * Opções de embalagem do mesmo modelo. A primeira é a padrão; o modal de
+   * pedido pergunta qual a pessoa quer e manda a escolha na mensagem.
+   */
+  embalagens?: Embalagem[];
   destaque?: boolean;
   /** Modelo ainda sem ficha oficial — nome, itens e preço a confirmar. */
   rascunho?: boolean;
+};
+
+export type Embalagem = {
+  nome: string;
+  descricao: string;
 };
 
 export type CategoriaSlug =
@@ -484,6 +494,22 @@ const presentes: Cesta[] = [
 
 /* ———————————————————————— Coleção de Natal ———————————————————————— */
 
+/**
+ * As duas latas de Natal saem em uma de duas embalagens: a sacolinha de
+ * tecido com pinheiros (a das fotos da lata) ou o Saco de Noel. O Saco de
+ * Noel não é um modelo à parte.
+ */
+const embalagensDaLata: Embalagem[] = [
+  {
+    nome: "Sacola de Tecido com Pinheiros",
+    descricao: "A sacolinha de alça estampada de pinheiros, combinando com a lata.",
+  },
+  {
+    nome: "Saco de Noel",
+    descricao: "Saco de algodão estampado com a árvore de Natal e laço de cetim vermelho.",
+  },
+];
+
 const natal: Cesta[] = [
   {
     slug: "natal-tabua-de-frios",
@@ -611,38 +637,45 @@ const natal: Cesta[] = [
     nome: "Lata de Brownies",
     categoria: "natal",
     chamada:
-      "Lata Feliz Natal estampada de pinheiros, cheia de brownies, com a sacolinha de tecido combinando.",
+      "Lata Feliz Natal estampada de pinheiros, cheia de brownies. Vai na sacolinha de tecido ou no Saco de Noel.",
     preco: null,
     imagem: foto("natal-lata-cookies-1"),
-    fotos: [foto("natal-lata-cookies-2"), foto("natal-lata-cookies-3"), foto("natal-lata-cookies-4")],
+    fotos: [
+      foto("natal-lata-cookies-2"),
+      foto("natal-lata-cookies-3"),
+      foto("natal-lata-cookies-4"),
+      foto("natal-saquinho-1"),
+    ],
     foco: "50% 72%",
     rascunho: true,
     secoes: [
-      { titulo: "Doces", itens: ["Brownies"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Lata Feliz Natal", "Sacola de Tecido com Pinheiros"],
-      },
+      { titulo: "Na lata", itens: ["Brownies"] },
+      { titulo: "Para presentear", itens: ["Lata Feliz Natal"] },
     ],
+    embalagens: embalagensDaLata,
   },
   {
-    slug: "natal-lata-e-panetone",
-    nome: "Lata & Panetone",
+    // O panetone vai dentro da lata alta — não é "lata e panetone".
+    slug: "natal-lata-de-panetone",
+    nome: "Lata de Panetone",
     categoria: "natal",
     chamada:
-      "A lata Feliz Natal alta, com mini panetone de chocolate e a sacolinha de tecido.",
+      "Mini panetone de chocolate guardado na lata Feliz Natal alta. Vai na sacolinha de tecido ou no Saco de Noel.",
     preco: null,
-    imagem: foto("natal-lata-panetone-1"),
-    fotos: [foto("natal-lata-panetone-2"), foto("natal-lata-panetone-3")],
+    // Capa com o panetone saindo da lata: é o que explica o modelo.
+    imagem: foto("natal-lata-panetone-2"),
+    fotos: [
+      foto("natal-lata-panetone-1"),
+      foto("natal-lata-panetone-3"),
+      foto("natal-saquinho-2"),
+    ],
     foco: "50% 75%",
     rascunho: true,
     secoes: [
-      { titulo: "Doces", itens: ["Mini Panetone de Chocolate", "Recheio da lata (a confirmar)"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Lata Feliz Natal", "Sacola de Tecido com Pinheiros"],
-      },
+      { titulo: "Na lata", itens: ["Mini Panetone de Chocolate"] },
+      { titulo: "Para presentear", itens: ["Lata Feliz Natal Alta"] },
     ],
+    embalagens: embalagensDaLata,
   },
   {
     slug: "natal-kit-caneca",
@@ -664,25 +697,6 @@ const natal: Cesta[] = [
           "Porta-copo Xadrez",
           "Caixa Feliz Natal com Laço Xadrez",
         ],
-      },
-    ],
-  },
-  {
-    slug: "natal-saquinho",
-    nome: "Saco de Noel",
-    categoria: "natal",
-    chamada:
-      "Saquinho de algodão estampado com pinheiro e laço de cetim vermelho.",
-    preco: null,
-    imagem: foto("natal-saquinho-1"),
-    fotos: [foto("natal-saquinho-2")],
-    foco: "50% 78%",
-    rascunho: true,
-    secoes: [
-      { titulo: "Recheio", itens: ["A confirmar"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Saco de Algodão Estampado", "Laço de Cetim Vermelho"],
       },
     ],
   },

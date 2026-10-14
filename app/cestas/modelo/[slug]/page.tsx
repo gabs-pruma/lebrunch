@@ -163,6 +163,34 @@ export default async function CestaPage(
               </div>
             </div>
 
+            {/* embalagem */}
+            {cesta.embalagens ? (
+              <div className="flex flex-col gap-4 border-t borda-fina pt-6">
+                <h2 className="titulo text-3xl">Escolha a embalagem</h2>
+                <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
+                  É só marcar na hora do pedido.
+                </p>
+                <ol className="flex flex-col">
+                  {cesta.embalagens.map((opcao, i) => (
+                    <li
+                      key={opcao.nome}
+                      className="flex items-baseline gap-4 border-b borda-fina py-3 last:border-0"
+                    >
+                      <span className="titulo w-6 shrink-0 text-xl text-terra-700 tabular-nums">
+                        {i + 1}
+                      </span>
+                      <span>
+                        <span className="block text-[0.9375rem]">{opcao.nome}</span>
+                        <span className="block text-[0.875rem] leading-relaxed text-tinta-suave">
+                          {opcao.descricao}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : null}
+
             {/* adicionais */}
             <details className="group border-t borda-fina pt-6">
               <summary className="flex cursor-pointer items-center justify-between gap-4 py-2 text-[1.0625rem]">

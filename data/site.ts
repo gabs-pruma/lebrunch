@@ -142,6 +142,7 @@ export const mensagens = {
     preco,
     data,
     periodo,
+    embalagem,
     adicionais,
     total,
     observacao,
@@ -150,6 +151,8 @@ export const mensagens = {
     preco: string | null;
     data: string | null;
     periodo: string | null;
+    /** Embalagem escolhida, nos modelos que oferecem mais de uma. */
+    embalagem?: string | null;
     /** Itens extras escolhidos no modal, já formatados. */
     adicionais?: Array<{ nome: string; quantidade: number; valor: string }>;
     /** Soma da cesta com os adicionais, sem o frete. */
@@ -164,6 +167,7 @@ export const mensagens = {
     ];
     if (data) linhas.push(`• Data da entrega: ${data}`);
     if (periodo) linhas.push(`• Período: ${periodo}`);
+    if (embalagem) linhas.push(`• Embalagem: ${embalagem}`);
 
     const extras = adicionais?.filter((a) => a.quantidade > 0) ?? [];
     if (extras.length > 0) {

@@ -21,22 +21,18 @@ export const colecaoNatal = {
       slugs: ["natal-espumante-e-panetone", "natal-boas-festas"],
     },
     {
+      id: "na-lata",
+      titulo: "Na lata",
+      descricao:
+        "A lata Feliz Natal estampada de pinheiros, com brownies ou com o panetone dentro. Você escolhe se ela vai na sacolinha de tecido ou no Saco de Noel, com laço de cetim vermelho.",
+      slugs: ["natal-lata-de-brownies", "natal-lata-de-panetone"],
+    },
+    {
       id: "para-adocar",
       titulo: "Para adoçar",
       descricao:
-        "A caixa de petiscos e as latas estampadas de pinheiro. Doces finos para a mesa de quem você ama.",
-      slugs: [
-        "natal-caixa-petiscos",
-        "natal-lata-de-brownies",
-        "natal-lata-e-panetone",
-      ],
-    },
-    {
-      id: "lembrancinhas",
-      titulo: "Lembrancinhas",
-      descricao:
-        "A caneca natalina com brownie e o saquinho de algodão com laço de cetim. Para o amigo secreto, a professora, a vizinha.",
-      slugs: ["natal-kit-caneca", "natal-saquinho"],
+        "A caixa de doces finos com laço de veludo e a caneca natalina com brownie. Para a ceia, o amigo secreto, a professora, a vizinha.",
+      slugs: ["natal-caixa-petiscos", "natal-kit-caneca"],
     },
   ],
 
