@@ -35,13 +35,23 @@ export const site = {
   },
 
   google: {
-    /** Dados lidos do perfil do Google em 09/09/2026. */
+    /** Dados lidos do perfil do Google em 09/09/2026 (conferidos em 13/10). */
     nota: 5.0,
     avaliacoes: 119,
-    perfil: "https://www.google.com/search?q=le+brunch+cestas",
-    // TODO: trocar pelo link direto de avaliação quando tivermos o place_id:
-    // https://search.google.com/local/writereview?placeid=SEU_PLACE_ID
-    avaliar: "https://www.google.com/search?q=le+brunch+cestas",
+    /**
+     * Identificadores do perfil "Le Brunch" (R. Icó, Santo André). Uma busca
+     * por nome mistura a Le Brunch com concorrentes; estes links abrem só o
+     * perfil dela.
+     */
+    placeId: "ChIJTajESh5pzpQRl2lR1_yYAbM",
+    /** Só as avaliações da Le Brunch, com as estrelas para avaliar no topo. */
+    perfil:
+      "https://search.google.com/local/reviews?placeid=ChIJTajESh5pzpQRl2lR1_yYAbM",
+    /** Abre direto o formulário de avaliação (pede login no Google). */
+    avaliar:
+      "https://search.google.com/local/writereview?placeid=ChIJTajESh5pzpQRl2lR1_yYAbM",
+    /** A ficha no Google Maps — para os dados estruturados (`sameAs`). */
+    maps: "https://maps.google.com/?cid=12898759019477428631",
   },
 
   /**
