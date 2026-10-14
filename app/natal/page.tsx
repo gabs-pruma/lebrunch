@@ -238,7 +238,7 @@ export default function NatalPage() {
                 className={
                   modelos.length === 2
                     ? // Os grupos de dois alternam o lado do texto no desktop.
-                      `flex flex-col gap-4 lg:sticky lg:top-28 lg:self-start ${i % 2 === 1 ? "lg:order-last lg:pl-8" : "lg:pr-8"}`
+                      `flex min-w-0 flex-col gap-4 lg:sticky lg:top-28 lg:self-start ${i % 2 === 1 ? "lg:order-last lg:pl-8" : "lg:pr-8"}`
                     : "mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between"
                 }
               >
@@ -257,7 +257,9 @@ export default function NatalPage() {
                   {grupo.descricao}
                 </p>
               </div>
-              <div className={modelos.length === 2 ? "lg:col-span-2" : undefined}>
+              {/* min-w-0: sem ele, a coluna da grade cresce até caber o
+                  carrossel inteiro e a página ganha rolagem lateral */}
+              <div className={modelos.length === 2 ? "min-w-0 lg:col-span-2" : undefined}>
                 <GradeCestas
                   cestas={modelos}
                   rotulo={grupo.titulo}
