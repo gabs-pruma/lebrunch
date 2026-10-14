@@ -662,6 +662,55 @@ body {
   }
 }
 
+/* Neve caindo (components/neve.tsx). Camada fixa acima do conteúdo e abaixo
+   do botão de WhatsApp e do topo; não intercepta clique. Só `transform` é
+   animado, então a queda fica no compositor. Sem movimento reduzido, não há
+   neve nenhuma — um floco parado pareceria sujeira na foto. */
+.neve {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .neve {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .neve > span {
+    position: absolute;
+    top: 0;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgb(255 255 255 / 0.95) 30%, rgb(255 255 255 / 0) 70%);
+    opacity: var(--o, 0.6);
+    transform: translate3d(0, -12px, 0);
+    will-change: transform;
+    animation: nevar var(--d, 14s) linear var(--a, 0s) infinite;
+  }
+
+  /* no celular, metade dos flocos basta */
+  @media (width < 40rem) {
+    .neve > span:nth-child(2n) {
+      display: none;
+    }
+  }
+}
+
+@keyframes nevar {
+  0% {
+    transform: translate3d(0, -12px, 0);
+  }
+  50% {
+    transform: translate3d(var(--deriva, 0), 50lvh, 0);
+  }
+  100% {
+    transform: translate3d(0, calc(100lvh + 12px), 0);
+  }
+}
+
 /* filete dourado com a estrela ao centro */
 .filete-ouro {
   background: linear-gradient(90deg, transparent, var(--color-ouro), transparent);

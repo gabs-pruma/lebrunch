@@ -7,6 +7,7 @@ import { GaleriaCesta } from "@/components/galeria-cesta";
 import { BotaoPedido } from "@/components/botao-pedido";
 import { Revelar } from "@/components/revelar";
 import { Luzes } from "@/components/luzes";
+import { Neve } from "@/components/neve";
 import { FotoParallax } from "@/components/foto-parallax";
 import { Simbolo } from "@/components/marca";
 import {
@@ -59,6 +60,7 @@ export default function NatalPage() {
 
   return (
     <div className="tema-natal">
+      <Neve />
       {/* ————— abertura ————— */}
       <section className="relative isolate flex min-h-[max(38rem,100svh)] flex-col justify-end overflow-hidden">
         <div className="hero-imagem absolute inset-0 -z-10">
