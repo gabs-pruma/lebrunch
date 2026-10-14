@@ -730,6 +730,13 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* O fundo só pinta dentro da caixa da fonte, e as volutas da manuscrita
+     (a perna do "p", o laço do "F") passam dela. O respiro estica o fundo
+     sem mexer no lugar do texto: a margem negativa devolve o espaço. */
+  padding: 0.15em 0.3em 0.35em;
+  margin: -0.15em -0.3em -0.35em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 @media (prefers-reduced-motion: no-preference) {
