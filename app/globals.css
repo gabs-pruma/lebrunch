@@ -10,6 +10,11 @@
   Papel           #F5F4F2  fundo texturizado do catálogo
 */
 @theme {
+  /* Coluna do site: o conteúdo começa sempre na mesma margem. É a
+     max-w-6xl (72rem) de conteúdo mais os 2rem de respiro de cada lado,
+     para blocos que têm o px-8 por dentro. Bloco com o respiro por fora
+     (como a Secao) usa max-w-6xl direto — a margem é a mesma. */
+  --container-site: 76rem;
   --color-verde-900: #003e39;
   --color-verde-800: #0a4740;
   --color-verde-700: #14514a;
@@ -154,6 +159,13 @@ body {
   color: var(--color-verde-900);
   margin: auto;
   overflow: visible;
+}
+
+/* aberto pelo card: galeria à esquerda e ficha/pedido à direita */
+@media (min-width: 1024px) {
+  .modal-pedido.com-fotos {
+    width: min(62rem, calc(100vw - 3rem));
+  }
 }
 
 .modal-pedido::backdrop {
@@ -540,28 +552,6 @@ body {
   }
 }
 
-/* ————— faixa corrida (marquee) ————— */
-.faixa-corrida {
-  display: flex;
-  width: max-content;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .faixa-corrida {
-    animation: faixa 38s linear infinite;
-  }
-
-  .faixa-corrida:hover {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes faixa {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /* ————— revelação de foto com cortina (entra de baixo para cima) ————— */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -569,13 +559,6 @@ body {
       animation: cortina linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 70%;
-    }
-
-    /* galeria horizontal: fotos crescem ao entrar no centro */
-    .cresce-no-centro {
-      animation: cresce linear both;
-      animation-timeline: view(inline);
-      animation-range: cover;
     }
   }
 }
@@ -587,18 +570,6 @@ body {
   }
   to {
     clip-path: inset(0 0 0 0 round 1rem);
-    opacity: 1;
-  }
-}
-
-@keyframes cresce {
-  0%,
-  100% {
-    scale: 0.9;
-    opacity: 0.6;
-  }
-  50% {
-    scale: 1;
     opacity: 1;
   }
 }

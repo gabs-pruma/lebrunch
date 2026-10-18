@@ -87,9 +87,9 @@ export function DepoimentosSecao() {
         ))}
       </ul>
 
-      <Ornamento className="mt-14" />
+      <Ornamento className="mt-10" />
 
-      <div className="mt-10 flex flex-col items-center gap-4 text-center">
+      <div className="mt-8 flex flex-col items-center gap-4 text-center">
         <p className="max-w-md text-[0.9375rem] leading-relaxed text-tinta-suave">
           Já recebeu uma cesta Le Brunch? Sua avaliação ajuda outras pessoas a
           presentear com confiança.

@@ -9,6 +9,9 @@ laço sem corte. Saem duas versões: paisagem (desktop) e retrato (celular),
 cada uma com um pôster em WebP — o pôster é o primeiro quadro, e é ele que
 aparece antes do vídeo carregar.
 
+A marca d'água da Le Brunch (scripts/marca_dagua.py) entra por último, fixa
+por cima de cada quadro — o pôster sai com ela também.
+
 Os quadros são calculados em Python com reamostragem sub-pixel (o zoompan do
 ffmpeg arredonda para o pixel inteiro e o movimento treme).
 """
@@ -16,9 +19,10 @@ import io, os, sys, subprocess
 from multiprocessing import Pool
 from PIL import Image, ImageCms, ImageOps
 from cor import aplicar_retoque, dar_vida
+from marca_dagua import aplicar_marca
 
 ORIGEM = next((a for a in sys.argv[1:] if not a.startswith("--")),
-              os.path.expanduser("~/LeBrunch/lebrunch-dev/ensaio-102026/Highlights"))
+              os.path.expanduser("~/LeBrunch/lebrunch-dev/ensaio-102026/gostei"))
 PREVIA = "--previa" in sys.argv
 RAIZ = os.path.join(os.path.dirname(__file__), "..", "public", "video")
 
@@ -26,19 +30,21 @@ FPS = 30
 DURACAO = 3.4   # tempo de cada foto em tela, contando a fusão
 FUSAO = 0.9     # duração da fusão entre duas fotos
 
+# Só modelos do ano todo: o destaque do site é o dia a dia, não o Natal.
+# A ordem é a das legendas em data/banner.ts.
 # (foto, centro vertical do recorte paisagem, centro vertical do recorte retrato, zoom de/para, deslocamento x)
 TOMADAS = [
-    (129, 0.62, 0.55, (1.00, 1.10), 0.00),
-    (151, 0.52, 0.50, (1.10, 1.00), 0.00),
-    (242, 0.42, 0.45, (1.00, 1.08), -0.02),
-    (89,  0.48, 0.50, (1.08, 1.00), 0.02),
-    (138, 0.33, 0.45, (1.00, 1.07), 0.00),
-    (27,  0.55, 0.52, (1.00, 1.10), 0.00),
-    (177, 0.50, 0.50, (1.08, 1.00), 0.00),
-    (229, 0.55, 0.52, (1.00, 1.08), 0.00),
-    (56,  0.64, 0.58, (1.08, 1.00), -0.02),
-    (214, 0.60, 0.55, (1.00, 1.08), 0.00),
-    (126, 0.50, 0.50, (1.04, 1.12), 0.00),
+    # abre no trabalho da Rebeca: a caixa montada à mão, com o bentô decorado
+    (227, 0.60, 0.55, (1.00, 1.06), 0.00),   # Caixa Verde Bentô
+    (151, 0.52, 0.50, (1.10, 1.00), 0.00),   # Café G
+    (242, 0.42, 0.45, (1.00, 1.08), -0.02),  # Cesta Flores do Campo
+    (189, 0.50, 0.50, (1.08, 1.00), 0.02),   # Café M
+    (177, 0.50, 0.50, (1.08, 1.00), 0.00),   # Caixa Café Coado
+    (172, 0.36, 0.45, (1.08, 1.00), 0.00),   # Cesta Bouquet
+    (222, 0.52, 0.50, (1.00, 1.10), 0.00),   # Café P
+    (214, 0.60, 0.55, (1.00, 1.08), 0.00),   # Cesta Kids
+    (199, 0.64, 0.58, (1.06, 1.00), -0.02),  # Box Caneca com Inicial
+    (161, 0.50, 0.50, (1.00, 1.08), 0.00),   # Café G, de perto
 ]
 
 FORMATOS = {
@@ -96,7 +102,9 @@ def quadro_da_tomada(i, progresso, largura, altura, coluna):
 
 def quadro(args):
     n, largura, altura, coluna = args
-    t = n / FPS
+    # começa com a primeira tomada já inteira na tela (sem o deslocamento,
+    # o quadro 0 — que vira o pôster — seria só a última tomada do laço)
+    t = n / FPS + FUSAO
     passo = DURACAO - FUSAO
     total = passo * len(TOMADAS)
     ativos = []
@@ -114,7 +122,8 @@ def quadro(args):
         else:
             alfa = suave(min(local / FUSAO, 1))
             base = Image.blend(base, img, alfa)
-    return base.tobytes()
+    # a marca d'água é uma camada fixa por cima do quadro já pronto
+    return aplicar_marca(base).tobytes()
 
 def gerar(nome, largura, altura, coluna):
     passo = DURACAO - FUSAO

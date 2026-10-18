@@ -32,8 +32,10 @@ def dar_vida(im):
 def aplicar_retoque(numero, im):
     """Sobrepõe o retoque da foto, se houver (scripts/retoques/<número>.png).
 
-    A camada é gerada por retocar-caixa-verde.py na foto antes do acerto de
-    cor, por isso entra antes de `dar_vida`.
+    A camada é desenhada na foto antes do acerto de cor, por isso entra
+    antes de `dar_vida`. Hoje nenhuma foto tem retoque: o interior verde da
+    Caixa Verde Bentô foi desfeito a pedido da Rebeca (out/2026), que
+    preferiu o fundo original.
     """
     caminho = os.path.join(RETOQUES, f"{numero}.png")
     if not os.path.exists(caminho):

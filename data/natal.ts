@@ -39,7 +39,7 @@ export const colecaoNatal = {
   ambiente: {
     hero: {
       paisagem: "/ensaio/natal-mesa.webp",
-      retrato: "/ensaio/natal-mesa-4.webp",
+      retrato: "/ensaio/natal-mesa-3.webp",
       alt: "Mesa redonda com a Coleção de Natal da Le Brunch diante da guirlanda iluminada e da cortina de veludo verde",
     },
     rebeca: {
@@ -47,8 +47,8 @@ export const colecaoNatal = {
       alt: "Rebeca Santana, de vestido estampado, arrumando os presentes de Natal sobre a mesa ao lado da guirlanda",
     },
     mesa: {
-      src: "/ensaio/natal-mesa-3.webp",
-      alt: "Composição com sacos de algodão estampados, caixas verdes com laço estrelado, espumante e lata dourada",
+      src: "/ensaio/natal-petiscos-6.webp",
+      alt: "Caixa redonda verde da Le Brunch aberta, com castanhas, trufas e doces finos, sob a guirlanda iluminada",
     },
   },
 } as const;

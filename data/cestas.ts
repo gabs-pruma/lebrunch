@@ -2,7 +2,8 @@
  * Catálogo de cestas — coleção de outubro/2026.
  *
  * Todas as fotos vêm do ensaio de outubro/2026 (`public/ensaio/`, gerado por
- * `scripts/exportar-ensaio.py`). As fotos antigas (Instagram e packshots do
+ * `scripts/exportar-ensaio.py`), e só as que a Rebeca aprovou (a pasta
+ * `gostei` do ensaio). As fotos antigas (Instagram e packshots do
  * catálogo em PDF) saíram do site.
  *
  * ⚠️  DOIS TIPOS DE MODELO AQUI
@@ -157,8 +158,8 @@ const prontaEntrega: Cesta[] = [
       "Caixa de madeira com café, coador de pano, caneca de cerâmica e uma foto impressa de quem você ama. Sai no mesmo dia.",
     preco: null,
     serve: "1 pessoa",
-    imagem: foto("cafe-coado-1"),
-    fotos: [foto("cafe-coado-2"), foto("cafe-coado-3"), foto("cafe-coado-4")],
+    imagem: foto("cafe-coado-2"),
+    fotos: [foto("cafe-coado-3"), foto("cafe-coado-5"), foto("cafe-coado-6"), foto("cafe-coado-7")],
     foco: "50% 50%",
     destaque: true,
     rascunho: true,
@@ -214,7 +215,6 @@ const essencial: Cesta[] = [
     preco: 243,
     serve: "1 a 2 pessoas",
     imagem: foto("cafe-p-1"),
-    fotos: [foto("cafe-p-2")],
     foco: "50% 55%",
     secoes: [
       {
@@ -257,7 +257,7 @@ const essencial: Cesta[] = [
     preco: 303,
     serve: "2 pessoas",
     imagem: foto("cafe-m-1"),
-    fotos: [foto("cafe-m-2"), foto("cafe-m-3"), foto("cafe-m-4")],
+    fotos: [foto("cafe-m-5"), foto("cafe-m-6")],
     foco: "50% 60%",
     destaque: true,
     secoes: [
@@ -308,7 +308,7 @@ const essencial: Cesta[] = [
     preco: 343,
     serve: "2 a 3 pessoas",
     imagem: foto("cafe-g-1"),
-    fotos: [foto("cafe-g-2"), foto("cafe-g-3"), foto("cafe-g-4"), foto("cafe-g-5")],
+    fotos: [foto("cafe-g-2"), foto("cafe-g-3")],
     foco: "50% 55%",
     destaque: true,
     secoes: [
@@ -364,7 +364,7 @@ const premium: Cesta[] = [
     preco: null,
     serve: "2 pessoas",
     imagem: foto("caixa-verde-1"),
-    fotos: [foto("caixa-verde-2"), foto("caixa-verde-3"), foto("caixa-verde-4")],
+    fotos: [foto("caixa-verde-5"), foto("caixa-verde-2"), foto("caixa-verde-3"), foto("caixa-verde-6")],
     foco: "50% 65%",
     rascunho: true,
     secoes: [
@@ -406,7 +406,14 @@ const premium: Cesta[] = [
     preco: null,
     serve: "2 pessoas",
     imagem: foto("cesta-flores-1"),
-    fotos: [foto("cesta-flores-2"), foto("cesta-flores-3"), foto("cesta-flores-4")],
+    fotos: [
+      foto("cesta-flores-2"),
+      foto("cesta-flores-5"),
+      foto("cesta-flores-8"),
+      foto("cesta-flores-4"),
+      foto("cesta-flores-6"),
+      foto("cesta-flores-7"),
+    ],
     foco: "50% 50%",
     rascunho: true,
     secoes: [
@@ -439,7 +446,7 @@ const premium: Cesta[] = [
     preco: null,
     serve: "1 a 2 pessoas",
     imagem: foto("cesta-bouquet-1"),
-    fotos: [foto("cesta-bouquet-2"), foto("cesta-bouquet-3"), foto("cesta-bouquet-4")],
+    fotos: [foto("cesta-bouquet-5"), foto("cesta-bouquet-6"), foto("cesta-bouquet-3"), foto("cesta-bouquet-7")],
     foco: "50% 50%",
     rascunho: true,
     secoes: [
@@ -474,7 +481,7 @@ const presentes: Cesta[] = [
     preco: null,
     serve: "1 pessoa",
     imagem: foto("box-caneca-1"),
-    fotos: [foto("box-caneca-2"), foto("box-caneca-3")],
+    fotos: [foto("box-caneca-3"), foto("box-caneca-4"), foto("box-caneca-5")],
     foco: "50% 55%",
     rascunho: true,
     secoes: [
@@ -499,7 +506,7 @@ const presentes: Cesta[] = [
     preco: null,
     serve: "1 criança",
     imagem: foto("cesta-kids-1"),
-    fotos: [foto("cesta-kids-2"), foto("cesta-kids-3"), foto("cesta-kids-4")],
+    fotos: [foto("cesta-kids-2"), foto("cesta-kids-5"), foto("cesta-kids-6")],
     foco: "50% 60%",
     rascunho: true,
     secoes: [
@@ -544,14 +551,16 @@ const natal: Cesta[] = [
       "A caixa verde de gaveta: suco de uva Merlot em cima, tábua de queijos e frios embaixo, com laço estrelado.",
     preco: null,
     serve: "2 pessoas",
-    imagem: foto("natal-vinho-frios-1"),
+    imagem: foto("natal-vinho-frios-2"),
     fotos: [
-      foto("natal-vinho-frios-2"),
-      foto("natal-vinho-frios-5"),
+      foto("natal-vinho-frios-6"),
       foto("natal-vinho-frios-3"),
-      foto("natal-vinho-frios-4"),
+      foto("natal-vinho-frios-7"),
+      foto("natal-vinho-frios-8"),
+      foto("natal-vinho-frios-9"),
+      foto("natal-vinho-frios-10"),
     ],
-    foco: "50% 55%",
+    foco: "50% 65%",
     destaque: true,
     rascunho: true,
     secoes: [
@@ -582,7 +591,7 @@ const natal: Cesta[] = [
       "Caixa redonda com quatro divisões de doces finos e castanhas, fechada com laço de veludo estrelado.",
     preco: null,
     imagem: foto("natal-petiscos-1"),
-    fotos: [foto("natal-petiscos-3"), foto("natal-petiscos-2"), foto("natal-petiscos-4"), foto("natal-petiscos-5")],
+    fotos: [foto("natal-petiscos-3"), foto("natal-petiscos-2"), foto("natal-petiscos-6"), foto("natal-petiscos-7")],
     foco: "50% 72%",
     destaque: true,
     rascunho: true,
@@ -611,9 +620,9 @@ const natal: Cesta[] = [
     preco: null,
     imagem: foto("natal-espumante-panetone-1"),
     fotos: [
-      foto("natal-espumante-panetone-3"),
       foto("natal-espumante-panetone-2"),
       foto("natal-espumante-panetone-4"),
+      foto("natal-espumante-panetone-5"),
     ],
     foco: "50% 70%",
     rascunho: true,
@@ -627,7 +636,7 @@ const natal: Cesta[] = [
     ],
   },
   {
-    // As fotos 69/70/68 ("espumante-lata") são o mesmo kit, com a lata
+    // A foto 68 ("espumante-lata") é o mesmo kit, com a lata
     // fechada e o laço — a Rebeca confirmou que é um modelo só.
     slug: "natal-boas-festas",
     nome: "Kit Boas Festas",
@@ -635,12 +644,10 @@ const natal: Cesta[] = [
     chamada:
       "Espumante e uma lata dourada de frutas secas e castanhas, fechada com laço de organza estrelado e a tag Boas Festas.",
     preco: null,
-    imagem: foto("natal-boas-festas-1"),
+    imagem: foto("natal-boas-festas-2"),
     fotos: [
-      foto("natal-espumante-lata-1"),
-      foto("natal-boas-festas-3"),
-      foto("natal-espumante-lata-2"),
-      foto("natal-boas-festas-2"),
+      foto("natal-boas-festas-4"),
+      foto("natal-boas-festas-5"),
       foto("natal-espumante-lata-3"),
     ],
     foco: "50% 65%",
@@ -666,8 +673,8 @@ const natal: Cesta[] = [
     preco: null,
     imagem: foto("natal-lata-cookies-1"),
     fotos: [
-      foto("natal-lata-cookies-2"),
-      foto("natal-lata-cookies-3"),
+      foto("natal-lata-cookies-5"),
+      foto("natal-lata-cookies-6"),
       foto("natal-lata-cookies-4"),
       foto("natal-saquinho-1"),
     ],
@@ -688,12 +695,7 @@ const natal: Cesta[] = [
       "Mini panetone de chocolate guardado na lata Feliz Natal alta. Vai na sacolinha de tecido ou no Saco de Noel.",
     preco: null,
     // Capa com o panetone saindo da lata: é o que explica o modelo.
-    imagem: foto("natal-lata-panetone-2"),
-    fotos: [
-      foto("natal-lata-panetone-1"),
-      foto("natal-lata-panetone-3"),
-      foto("natal-saquinho-2"),
-    ],
+    imagem: foto("natal-lata-panetone-1"),
     foco: "50% 75%",
     rascunho: true,
     secoes: [
@@ -709,8 +711,8 @@ const natal: Cesta[] = [
     chamada:
       "Caneca natalina, brownie e a caixinha do caminhãozinho de Natal com laço xadrez.",
     preco: null,
-    imagem: foto("natal-caneca-1"),
-    fotos: [foto("natal-caneca-2"), foto("natal-caneca-3"), foto("natal-caneca-4")],
+    imagem: foto("natal-caneca-3"),
+    fotos: [foto("natal-caneca-5"), foto("natal-caneca-6"), foto("natal-caneca-7")],
     foco: "50% 75%",
     rascunho: true,
     secoes: [

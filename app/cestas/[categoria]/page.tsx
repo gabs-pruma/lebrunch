@@ -98,7 +98,7 @@ export default async function CategoriaPage(
           >
             <Image
               src={categoria.foto}
-              alt={`Cesta representativa da ${categoria.nome}`}
+              alt={`${categoria.nome} — cestas da Le Brunch`}
               fill
               loading="eager"
               fetchPriority="high"

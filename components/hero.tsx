@@ -5,7 +5,6 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BotaoLink } from "@/components/ui";
 import { LinkTransicao } from "@/components/transicao";
 import {
-  IconeBrilho,
   IconeEstrela,
   IconePausa,
   IconePlay,
@@ -24,6 +23,8 @@ import { site } from "@/data/site";
  * - Paisagem no desktop, retrato no celular — cada um com seu recorte.
  * - A legenda "em cena" acompanha o tempo do vídeo e leva até a cesta
  *   que está na tela.
+ * - Altura contida (não ocupa a tela toda): a vitrine dos modelos do dia a
+ *   dia tem de aparecer logo abaixo, já na primeira tela.
  * - Quem pediu menos movimento fica só com o pôster. Para todos os outros
  *   há um botão de pausar (movimento automático com mais de 5s precisa de
  *   controle — WCAG 2.2.2).
@@ -102,7 +103,7 @@ export function Hero() {
   return (
     <section
       aria-label="Apresentação"
-      className="relative isolate flex min-h-[max(36rem,100svh)] flex-col justify-end overflow-hidden bg-verde-900 text-papel"
+      className="relative isolate flex min-h-[max(28rem,62svh)] flex-col justify-end overflow-hidden bg-verde-900 text-papel lg:min-h-[max(34rem,70svh)]"
     >
       {/* ——— imagem e vídeo ——— */}
       <div className="hero-imagem absolute inset-0 -z-10">
@@ -123,9 +124,11 @@ export function Hero() {
             }}
             onTimeUpdate={(e) => {
               const t = e.currentTarget.currentTime;
-              // troca a legenda no meio da fusão entre duas tomadas
+              // troca a legenda no meio da fusão entre duas tomadas; o vídeo
+              // começa com a primeira já inteira, então a fusão para a
+              // tomada i fica 0,45s antes de i × passo
               const n = banner.cenas.length;
-              const i = ((Math.floor((t - 0.45) / banner.passo) % n) + n) % n;
+              const i = ((Math.floor((t + 0.45) / banner.passo) % n) + n) % n;
               if (i !== cena) setCena(i);
             }}
             className="banner-video absolute inset-0 h-full w-full object-cover"
@@ -137,8 +140,8 @@ export function Hero() {
       </div>
 
       {/* ——— texto ——— */}
-      <div className="mx-auto w-full max-w-7xl px-5 pt-28 pb-10 sm:px-8 sm:pb-14 lg:pb-16">
-        <div className="flex max-w-3xl flex-col items-start gap-6">
+      <div className="mx-auto w-full max-w-site px-5 pt-32 pb-6 sm:px-8 sm:pt-36 sm:pb-8 lg:pb-10">
+        <div className="flex max-w-4xl flex-col items-start gap-5">
           <a
             href={site.google.perfil}
             target="_blank"
@@ -154,35 +157,29 @@ export function Hero() {
             · {site.google.avaliacoes} avaliações no Google
           </a>
 
-          <h1 className="titulo text-[clamp(2.9rem,9vw,6.5rem)] leading-[0.92] text-balance [text-shadow:0_2px_30px_rgba(0,0,0,0.25)]">
+          <h1 className="titulo text-[clamp(2.5rem,7.5vw,4.75rem)] leading-[0.92] text-balance [text-shadow:0_2px_30px_rgba(0,0,0,0.25)]">
             onde os momentos simples se tornam{" "}
             <em className="script text-[1.05em] leading-[0.8] font-normal text-terra-400 not-italic">
               extraordinários
             </em>
           </h1>
 
-          <p className="max-w-lg text-[1.0625rem] leading-relaxed text-papel/85">
+          {/* no celular o banner fica curto: título e botão bastam */}
+          <p className="hidden max-w-lg text-[1.0625rem] leading-relaxed text-papel/85 sm:block">
             Cestas de café da manhã montadas à mão em Santo André e entregues
-            no dia e na hora que você escolher — agora com a nova coleção de
-            Natal.
+            no dia e na hora que você escolher.
           </p>
 
-          <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
-            <BotaoLink href="/cestas" variante="claro">
-              Ver os modelos
-            </BotaoLink>
-            <BotaoLink href="/natal" variante="contornoClaro">
-              <IconeBrilho className="cintilar size-4 text-ouro-claro" />
-              Coleção de Natal
-            </BotaoLink>
-          </div>
+          <BotaoLink href="/cestas" variante="claro" className="w-full sm:w-auto">
+            Ver os modelos
+          </BotaoLink>
         </div>
 
         {/* ——— rodapé do banner: em cena, controle e rolagem ——— */}
-        <div className="mt-10 flex items-end justify-between gap-6 border-t border-papel/20 pt-5 sm:mt-14">
+        <div className="mt-6 flex items-end justify-between gap-6 border-t border-papel/20 pt-3 sm:mt-8 sm:pt-4">
           <div className="min-w-0" aria-live="off">
             {semVideo ? (
-              <p className="olho text-papel/70">Ensaio Le Brunch · outubro 2026</p>
+              <p className="olho text-papel/70">Montadas à mão em Santo André</p>
             ) : (
               <LinkTransicao
                 key={cena}
@@ -209,7 +206,7 @@ export function Hero() {
               </button>
             )}
             <a
-              href="#natal"
+              href="#modelos"
               className="hidden items-center gap-3 sm:inline-flex"
               aria-label="Rolar para o conteúdo"
             >

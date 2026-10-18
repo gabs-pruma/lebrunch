@@ -2,22 +2,22 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { IconePessoas, IconeSeta } from "@/components/icones";
+import { IconeFotos, IconePessoas, IconeSeta } from "@/components/icones";
 import { Simbolo } from "@/components/marca";
 import { ModalPedido } from "@/components/modal-pedido";
-import { SetasFoto } from "@/components/setas-foto";
 import { clsx } from "@/lib/utils";
 import { categoriaDe, formatarPreco, type Cesta } from "@/data/cestas";
 
 /**
- * Card de cesta. Clicar abre o modal de pedido (data + WhatsApp) em vez de
- * levar para outra página — o cliente decide sem perder o contexto.
+ * Card de cesta. Clicar abre o modal já nas fotos do modelo — o instinto de
+ * quem toca num produto é ver as fotos. De lá, "Quero esse modelo" leva ao
+ * pedido (data + WhatsApp), sem sair da página.
  *
  * Todos os cards têm o mesmo formato: retrato 4:5, canto de 16px e a foto
- * do ensaio enquadrada pelo `foco` da cesta. Quando o modelo tem mais de
- * uma foto, setas sobre a foto passam pelos ângulos sem abrir o pedido.
- * Só a capa carrega de saída; as outras entram quando a pessoa chega
- * perto delas (a atual e a vizinha de cada lado).
+ * do ensaio enquadrada pelo `foco` da cesta. O card mostra só a capa, com
+ * um selo de quantas fotos o modelo tem; as outras carregam no modal.
+ * (Setas no próprio card foram tiradas: a pessoa clicava na foto em vez
+ * delas.)
  *
  * As cestas da Coleção de Natal saem na variante escura, sobre o veludo.
  */
@@ -41,26 +41,14 @@ export function CestaCard({
   // a linha manda: um card de Pronta Entrega fora da página dela continua
   // oferecendo entrega no mesmo dia
   const mesmoDia = prontaEntrega ?? linha.prontaEntrega;
-  const fotos = cesta.imagem ? [cesta.imagem, ...(cesta.fotos ?? [])] : [];
-  const [ativa, setAtiva] = useState(0);
-  const [carregadas, setCarregadas] = useState<ReadonlySet<number>>(() => new Set([0]));
-  const foco = { objectPosition: cesta.foco ?? "50% 50%" };
-
-  const mudarFoto = (i: number) => {
-    const n = fotos.length;
-    setAtiva(i);
-    setCarregadas((antes) => new Set([...antes, i, (i + 1) % n, (i - 1 + n) % n]));
-  };
+  const totalFotos = cesta.imagem ? 1 + (cesta.fotos?.length ?? 0) : 0;
 
   return (
-    <article
-      className="group relative flex w-full flex-col"
-      // com mouse, a foto vizinha já começa a carregar antes da primeira seta
-      onPointerEnter={() => fotos.length > 1 && setCarregadas((antes) => new Set([...antes, 1, fotos.length - 1]))}
-    >
+    <article className="group relative flex w-full flex-col">
       <button
         type="button"
         onClick={() => setAberto(true)}
+        aria-haspopup="dialog"
         className="flex flex-1 cursor-pointer flex-col text-left"
       >
         <div
@@ -69,33 +57,36 @@ export function CestaCard({
             natal ? "bg-noite-alt" : "bg-creme",
           )}
         >
-          {fotos.length ? (
-            fotos.map((foto, i) =>
-              carregadas.has(i) ? (
-                <Image
-                  key={foto}
-                  src={foto}
-                  alt={i === ativa ? `Cesta ${cesta.nome} da Le Brunch` : ""}
-                  aria-hidden={i !== ativa || undefined}
-                  width={800}
-                  height={1200}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 80vw"
-                  loading={i === 0 && prioridade ? "eager" : "lazy"}
-                  style={foco}
-                  className={clsx(
-                    "absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-700 ease-suave group-hover:scale-[1.05]",
-                    i === ativa ? "opacity-100" : "opacity-0",
-                  )}
-                />
-              ) : null,
-            )
+          {cesta.imagem ? (
+            <Image
+              src={cesta.imagem}
+              alt={`${cesta.nome}, da Le Brunch`}
+              width={800}
+              height={1200}
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 80vw"
+              loading={prioridade ? "eager" : "lazy"}
+              style={{ objectPosition: cesta.foco ?? "50% 50%" }}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.05]"
+            />
           ) : (
             <span className="absolute inset-0 flex items-center justify-center">
               <Simbolo className="h-12 w-12 text-verde-900/15" />
             </span>
           )}
 
-          {/* véu de baixo para a chamada "pedir" */}
+          {totalFotos > 1 ? (
+            <span
+              className={clsx(
+                "absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.75rem] tabular-nums backdrop-blur-sm",
+                natal ? "bg-noite/70 text-ouro-claro" : "bg-papel/85 text-verde-900",
+              )}
+            >
+              <IconeFotos className="size-3.5" />
+              {totalFotos} fotos
+            </span>
+          ) : null}
+
+          {/* véu de baixo para a chamada "ver as fotos" */}
           <span
             aria-hidden
             className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/45 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -104,7 +95,7 @@ export function CestaCard({
             aria-hidden
             className="olho absolute inset-x-4 bottom-4 flex translate-y-2 items-center justify-between text-papel opacity-0 transition-[opacity,transform] duration-500 ease-suave group-hover:translate-y-0 group-hover:opacity-100"
           >
-            Montar meu pedido
+            Ver as fotos
             <IconeSeta className="size-4" />
           </span>
 
@@ -198,30 +189,19 @@ export function CestaCard({
                 natal && "text-ouro-claro",
               )}
             >
-              Pedir
+              Ver o modelo
               <IconeSeta className="size-4 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
             </span>
           </div>
         </div>
       </button>
 
-      {/* por cima da foto (mesma moldura 4:5 do topo do card), fora do botão */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 aspect-4/5">
-        <SetasFoto
-          total={fotos.length}
-          ativa={ativa}
-          aoMudar={mudarFoto}
-          nome={cesta.nome}
-          escuro={natal}
-          discreto
-        />
-      </div>
-
       <ModalPedido
         cesta={cesta}
         prontaEntrega={mesmoDia}
         aberto={aberto}
         onFechar={() => setAberto(false)}
+        comFotos
       />
     </article>
   );

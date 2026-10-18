@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { comBase } from "@/lib/base";
 import { metadadosPagina } from "@/lib/metadados";
 import Image from "next/image";
 import { FotoParallax } from "@/components/foto-parallax";
@@ -47,8 +48,8 @@ export default function CestasPage() {
       {/* abertura em fotografia: três cestas do ensaio lado a lado */}
       <div className="mb-14 grid grid-cols-3 gap-2 px-2 sm:gap-4 sm:px-4">
         {[
-          { src: "/ensaio/cafe-g-4.webp", alt: "Bandeja Café G sobre a mesa, diante da cortina de veludo verde", foco: "50% 60%" },
-          { src: "/ensaio/cesta-flores-3.webp", alt: "Cesta Flores do Campo de palha, com buquê, bolo de chocolate e café", foco: "50% 50%" },
+          { src: "/ensaio/cafe-g-2.webp", alt: "Bandeja Café G de madeira com croissants, pães de queijo, suco de uva, frutas e iogurte", foco: "50% 50%" },
+          { src: "/ensaio/cesta-flores-8.webp", alt: "Cesta Flores do Campo de palha, com buquê, bolo de chocolate e café", foco: "50% 50%" },
           { src: "/ensaio/cafe-coado-3.webp", alt: "Caixa Café Coado de madeira, com café, coador de pano e caneca", foco: "50% 55%" },
         ].map((foto, i) => (
           <div key={foto.src} className="relative aspect-3/4 overflow-hidden rounded-xl sm:rounded-2xl lg:aspect-4/5">
@@ -67,13 +68,15 @@ export default function CestasPage() {
       </div>
 
       {/* índice das linhas — âncoras para as seções abaixo */}
-      <section className="px-5 pb-14 sm:px-8">
+      <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
         <nav aria-label="Linhas de cesta" className="mx-auto w-full max-w-6xl">
           <ul className="flex flex-col border-t borda-fina">
             {categorias.map((categoria, i) => (
               <li key={categoria.slug} className="border-b borda-fina">
                 <a
-                  href={categoria.tema ? hrefCategoria(categoria) : `#${categoria.slug}`}
+                  // <a> puro (por causa das âncoras): o link de página precisa do
+                  // subcaminho do GitHub Pages à mão
+                  href={categoria.tema ? comBase(hrefCategoria(categoria)) : `#${categoria.slug}`}
                   className="group flex min-h-16 items-center gap-5 py-4"
                 >
                   <span
@@ -149,7 +152,7 @@ export default function CestasPage() {
       <section
         id="natal"
         aria-labelledby="titulo-natal-cestas"
-        className="tema-natal relative overflow-hidden px-5 py-14 sm:px-8 sm:py-18 lg:py-20"
+        className="tema-natal relative overflow-hidden px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
       >
         <Luzes className="opacity-50" />
         <div className="relative mx-auto w-full max-w-6xl">
@@ -177,7 +180,7 @@ export default function CestasPage() {
       </section>
 
       {/* faixa editorial com foto real */}
-      <section className="px-5 pb-16 sm:px-8 sm:pb-24">
+      <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
         <Revelar className="mx-auto w-full max-w-6xl">
           <figure className="relative overflow-hidden rounded-2xl">
             <FotoParallax
@@ -195,8 +198,8 @@ export default function CestasPage() {
                 cada item escolhido no dia
               </p>
               <p className="mt-1 max-w-md text-[0.875rem] leading-relaxed text-papel/80">
-                Pães e croissants da manhã, frutas da estação e uma curadoria
-                que não repete por repetir.
+                Pães e croissants da manhã, frutas da estação e itens
+                escolhidos cesta por cesta.
               </p>
             </figcaption>
           </figure>
@@ -211,7 +214,7 @@ export default function CestasPage() {
               olho="Personalize"
               descricao="Dá para incluir itens extras em qualquer cesta. Peça no WhatsApp junto com o pedido."
             >
-              Um carinho
+              Um carinho a mais
             </TituloSecao>
             <Image
               src="/ensaio/mesa-itens.webp"
@@ -248,7 +251,7 @@ export default function CestasPage() {
               Como pagar
             </h2>
             <p className="mt-3 max-w-xs text-[0.9375rem] leading-relaxed text-tinta-suave">
-              O acerto é combinado no WhatsApp, junto com a taxa de entrega.
+              O pagamento é combinado no WhatsApp, junto com a taxa de entrega.
             </p>
           </div>
 
@@ -268,9 +271,8 @@ export default function CestasPage() {
                 : "Cartão de crédito"}
             </p>
             <p className="text-[0.875rem] leading-relaxed text-tinta-suave">
-              Por {site.pagamento.parcelado.meio} —{" "}
-              {site.pagamento.parcelado.ressalva}, e ele aparece no orçamento
-              antes de você fechar.
+              Pelo link de pagamento — {site.pagamento.parcelado.ressalva}, e
+              você vê o valor no orçamento antes de fechar.
             </p>
           </div>
         </div>

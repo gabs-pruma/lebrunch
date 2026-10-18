@@ -2,6 +2,29 @@
 
 Atualizado em 13/10/2026 — **v2 do site, com o ensaio de outubro/2026**.
 
+## Ajustes de 18/10/2026 (pedido da Rebeca)
+
+- **Banner menor**: o vídeo da home deixou de ocupar a tela inteira
+  (~62% da altura no celular, ~70% no desktop), e só mostra modelos do dia
+  a dia — o Natal e o retrato da Rebeca saíram do vídeo
+- **Destaque nos modelos do dia a dia**: logo abaixo do banner vem a
+  vitrine "Os modelos do dia a dia" (as mais pedidas primeiro). O Natal
+  virou uma faixa compacta mais abaixo e a seção da Rebeca desceu e encolheu
+- **Chamada de Natal no topo**: faixa fixa no alto de todas as páginas
+  (menos dentro da coleção) com "Coleção de Natal 2026 · Ver o catálogo"
+- **Faixa corrida** de palavras: removida
+- **Clique no modelo abre as fotos**: o card mostra só a capa com "N
+  fotos"; ao clicar, abre a galeria (setas, arrastar, miniaturas), a ficha
+  e o botão **Quero esse modelo**, que leva ao pedido de sempre
+- **Marca d'água** em todas as fotos do site, aplicada pelos exportadores
+- **Só fotos do `gostei`**: o site passou a usar apenas as 76 fotos que a
+  Rebeca separou. 41 fotos que estavam no ar saíram e 35 novas entraram nas
+  galerias dos modelos. A Caixa Verde Bentô voltou ao fundo original (o
+  retoque que pintava o interior de verde foi desfeito), com as fotos 227
+  e 235 incluídas. O vídeo do banner abre nela — a caixa montada à mão,
+  com o bentô decorado — e é ela o pôster. A foto larga da Coleção de Natal agora é um
+  recorte deitado da 129 (não há foto deitada no `gostei`)
+
 ## O que mudou na v2
 
 - **Fotos**: todas as fotos antigas (Instagram e packshots do catálogo em PDF)

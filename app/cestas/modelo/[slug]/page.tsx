@@ -138,7 +138,10 @@ export default async function CestaPage(
                 ) : null}
                 <li className="flex items-center gap-2.5">
                   <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-                  Pedido com {site.atendimento.antecedencia}
+                  {/* a Pronta Entrega sai no mesmo dia: não pede antecedência */}
+                  {categoria.prontaEntrega
+                    ? "Pode sair hoje, conforme a agenda do dia"
+                    : `Pedido com ${site.atendimento.antecedencia}`}
                 </li>
               </ul>
             </div>

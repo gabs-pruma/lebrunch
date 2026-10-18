@@ -8,10 +8,7 @@ import { clsx } from "@/lib/utils";
  * "2 / 5". A lista dá a volta: da última foto, "próxima" leva à primeira.
  *
  * Fica por cima da moldura (`absolute inset-0`), sem capturar o clique no
- * resto da foto — no card, clicar fora das setas continua abrindo o pedido.
- *
- * `discreto`: com mouse, as setas só aparecem ao passar sobre o card (que
- * precisa da classe `group`); no toque, ficam sempre visíveis.
+ * resto da foto.
  */
 export function SetasFoto({
   total,
@@ -19,14 +16,12 @@ export function SetasFoto({
   aoMudar,
   nome,
   escuro,
-  discreto,
 }: {
   total: number;
   ativa: number;
   aoMudar: (indice: number) => void;
   nome: string;
   escuro?: boolean;
-  discreto?: boolean;
 }) {
   if (total < 2) return null;
 
@@ -36,8 +31,6 @@ export function SetasFoto({
     escuro
       ? "bg-noite/70 text-ouro-claro ring-1 ring-ouro/35 hover:bg-noite/90"
       : "bg-papel/85 text-verde-900 hover:bg-papel",
-    discreto &&
-      "pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 focus-visible:opacity-100",
   );
 
   return (

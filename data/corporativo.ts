@@ -112,7 +112,7 @@ export const etapas = [
       "Data, número de pessoas e o que a empresa quer celebrar. Uma conversa por WhatsApp resolve.",
   },
   {
-    titulo: "Recebe a proposta",
+    titulo: "Receba a proposta",
     texto:
       "Enviamos o pacote adequado, com o cardápio e o valor fechado — sem surpresa depois.",
   },

@@ -8,12 +8,13 @@ import { hrefCategoria, type Categoria } from "@/data/cestas";
  * Uma linha de cesta apresentada como fileira de revista.
  *
  * Em vez de três cartões iguais, cada linha ganha uma fileira própria: a
- * fileira ocupa a largura toda da página, a fotografia preenche metade dela
- * de ponta a ponta, o lado alterna a cada linha e um numeral grande marca a
- * sequência. Nada de moldura nem de sombra.
+ * foto de um lado, o texto do outro, o lado alterna a cada linha e um
+ * numeral grande marca a sequência.
  *
- * A fileira é full-bleed de propósito, então o recuo do texto é interno —
- * nada de margem negativa, que desperdiçaria foto fora da tela.
+ * A fileira fica dentro da coluna do site, como todo o resto: com a foto
+ * sangrando até a borda da tela, o zigue-zague "espalhava" a seção para os
+ * lados. A foto tem a altura do texto ao lado (3:2) e cantos de 16px, como
+ * as outras fotos da página.
  */
 export function LinhaEditorial({
   categoria,
@@ -31,10 +32,15 @@ export function LinhaEditorial({
   const numero = String(indice).padStart(2, "0");
 
   return (
-    <article className="group grid w-full items-center gap-8 lg:grid-cols-2 lg:gap-0">
+    <article
+      className={clsx(
+        "group mx-auto grid w-full max-w-site items-center gap-6 px-5 sm:px-8 lg:gap-14",
+        invertida ? "lg:grid-cols-[7fr_5fr]" : "lg:grid-cols-[5fr_7fr]",
+      )}
+    >
       <div
         className={clsx(
-          "quadro-parallax aspect-4/3 w-full sm:aspect-16/9 lg:aspect-4/3",
+          "quadro-parallax aspect-16/9 w-full rounded-2xl lg:aspect-3/2",
           invertida && "lg:order-2",
         )}
         style={{ viewTransitionName: `linha-${categoria.slug}` }}
@@ -44,20 +50,13 @@ export function LinhaEditorial({
           alt={`Cestas da ${categoria.nome} da Le Brunch`}
           width={1600}
           height={2400}
-          sizes="(min-width: 1024px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 30rem, 92vw"
           style={{ objectPosition: categoria.foco ?? "50% 50%" }}
           className="transition-transform duration-[1400ms] ease-suave group-hover:scale-[1.03]"
         />
       </div>
 
-      <div
-        className={clsx(
-          "flex flex-col gap-5 px-5 sm:px-8",
-          invertida
-            ? "lg:order-1 lg:justify-self-end lg:pr-14 lg:pl-8 xl:pr-20"
-            : "lg:pr-8 lg:pl-14 xl:pl-20",
-        )}
-      >
+      <div className={clsx("flex flex-col gap-5", invertida && "lg:order-1")}>
         <div className="flex items-baseline gap-4">
           <span
             aria-hidden

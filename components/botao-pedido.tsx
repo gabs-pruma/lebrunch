@@ -40,7 +40,7 @@ export function BotaoPedido({
         )}
       >
         <IconeWhatsApp className="size-4" />
-        {rotulo ?? `Pedir a cesta ${cesta.nome}`}
+        {rotulo ?? "Quero esse modelo"}
       </button>
 
       <ModalPedido

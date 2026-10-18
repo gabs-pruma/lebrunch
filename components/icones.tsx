@@ -164,3 +164,14 @@ export function IconePresente(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+/** Duas molduras sobrepostas: o modelo tem mais de uma foto. */
+export function IconeFotos(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...traco} {...props}>
+      <rect x="7" y="3" width="14" height="14" rx="2.5" />
+      <path d="M17 21H5.5A2.5 2.5 0 0 1 3 18.5V7" />
+      <path d="m7 13 3.5-3.5L14 13l2-2 5 5" />
+    </svg>
+  );
+}

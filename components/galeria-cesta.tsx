@@ -21,6 +21,7 @@ export function GaleriaCesta({
   foco,
   escuro,
   semPrioridade,
+  compacta,
 }: {
   /** A primeira é a foto de capa. */
   fotos: string[];
@@ -31,6 +32,8 @@ export function GaleriaCesta({
   escuro?: boolean;
   /** true quando a galeria não é a imagem principal da página. */
   semPrioridade?: boolean;
+  /** No modal: miniaturas pequenas, em vez de dividirem a largura toda. */
+  compacta?: boolean;
 }) {
   const [ativa, setAtiva] = useState(0);
   const toque = useRef<{ x: number; y: number } | null>(null);
@@ -65,13 +68,13 @@ export function GaleriaCesta({
           <Image
             key={foto}
             src={foto}
-            alt={i === ativa ? `Cesta ${nome} da Le Brunch — foto ${i + 1} de ${fotos.length}` : ""}
+            alt={i === ativa ? `${nome}, da Le Brunch — foto ${i + 1} de ${fotos.length}` : ""}
             aria-hidden={i !== ativa || undefined}
             width={1600}
             height={2400}
             loading={i === 0 && !semPrioridade ? "eager" : "lazy"}
             fetchPriority={i === 0 && !semPrioridade ? "high" : undefined}
-            sizes="(min-width: 1024px) 46vw, 92vw"
+            sizes={compacta ? "(min-width: 1024px) 28rem, 92vw" : "(min-width: 1024px) 46vw, 92vw"}
             style={posicao}
             className={clsx(
               "absolute inset-0 h-full w-full object-cover transition-[opacity,scale] duration-700 ease-suave",
@@ -85,7 +88,7 @@ export function GaleriaCesta({
       {fotos.length > 1 ? (
         <ul className="flex gap-3">
           {fotos.map((foto, i) => (
-            <li key={foto} className="min-w-0 flex-1">
+            <li key={foto} className={clsx("min-w-0 flex-1", compacta && "max-w-18")}>
               <button
                 type="button"
                 onClick={() => setAtiva(i)}

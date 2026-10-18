@@ -57,13 +57,13 @@ export const historia = {
     },
   ],
 
-  /** Foto larga: a Coleção de Natal montada para o ensaio de outubro/2026. */
+  /** Foto larga: a Coleção de Natal montada sobre a mesa. */
   bastidores: {
     src: "/ensaio/natal-mesa.webp",
     largura: 2600,
     altura: 1733,
     alt: "Mesa redonda com a Coleção de Natal da Le Brunch — sacos de algodão estampados, caixas verdes com laço estrelado, kits com espumante e lata dourada — diante da guirlanda iluminada",
-    legenda: "A Coleção de Natal 2026, montada peça por peça para o ensaio",
+    legenda: "A Coleção de Natal 2026, montada peça por peça",
   },
 
   /**
@@ -93,23 +93,23 @@ export const historia = {
       foco: "50% 55%",
     },
     {
-      src: "/ensaio/rebeca-bandeja.webp",
-      alt: "Rebeca Santana sorrindo enquanto segura uma bandeja de café da manhã da Le Brunch",
+      src: "/ensaio/rebeca-cesta-1.webp",
+      alt: "Rebeca Santana sorrindo enquanto segura a Cesta Flores do Campo, de dólmã verde com a marca bordada",
       legenda: "Montada e conferida pela Rebeca",
       span: "lg:col-span-5",
       aspecto: "aspect-3/4",
       foco: "50% 40%",
     },
     {
-      src: "/ensaio/cesta-bouquet-2.webp",
-      alt: "Cesta de vime com buquê de flores, café, suco de uva e iogurte",
+      src: "/ensaio/cesta-bouquet-5.webp",
+      alt: "Cesta de palha com buquê de flores, café Baggio, iogurte e pão no saquinho de tecido florido",
       legenda: "Flores que chegam junto",
       span: "lg:col-span-4",
       aspecto: "aspect-square",
       foco: "50% 60%",
     },
     {
-      src: "/ensaio/cafe-coado-4.webp",
+      src: "/ensaio/cafe-coado-5.webp",
       alt: "Caixa de madeira com café, coador de pano, caneca de cerâmica e foto impressa",
       legenda: "Presentes com a cara de quem recebe",
       span: "lg:col-span-4",

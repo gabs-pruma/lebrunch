@@ -89,7 +89,7 @@ export function Secao({
     <section
       id={id}
       className={clsx(
-        "px-5 py-14 sm:px-8 sm:py-18 lg:py-20",
+        "px-5 sm:px-8 py-12 sm:py-14 lg:py-16",
         fundos[fundo],
         className,
       )}

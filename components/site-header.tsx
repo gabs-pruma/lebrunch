@@ -32,6 +32,8 @@ import { semBarraFinal } from "@/lib/base";
  *   celular o menu ocupa a tela, com as linhas em miniatura.
  * - O filete fino no rodapé do cabeçalho mostra quanto da página já foi
  *   lido (CSS ligado ao scroll, ver `.barra-progresso`).
+ * - No alto, fora da Coleção de Natal, uma faixa chama para o catálogo de
+ *   Natal. Ela faz parte do cabeçalho: some e volta junto com ele.
  */
 
 /** Páginas cuja primeira dobra é imagem sangrada atrás do cabeçalho. */
@@ -76,6 +78,8 @@ export function SiteHeader() {
   const oculto = rolagem === "oculto" && !menuAberto && !painelAberto;
   /** Texto claro: em cima da foto, no menu aberto ou no tema de Natal. */
   const claro = sobreposto || menuAberto || natal;
+  /** Chamada da Coleção de Natal no alto — dentro dela não precisa. */
+  const faixaNatal = !natal && !menuAberto;
 
   // Fecha tudo ao trocar de página.
   const [caminhoAnterior, setCaminhoAnterior] = useState(caminho);
@@ -144,7 +148,26 @@ export function SiteHeader() {
           )}
         />
 
-        <div className="relative mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:h-20 sm:px-8">
+        {faixaNatal ? (
+          <LinkTransicao
+            href="/natal"
+            className="tema-natal group relative flex h-10 items-center justify-center gap-2.5 px-5 text-[0.8125rem] text-papel sm:gap-3"
+          >
+            <IconeBrilho className="cintilar size-3.5 shrink-0 text-ouro-claro" />
+            <span className="truncate">
+              <span className="texto-ouro font-medium">Coleção de Natal 2026</span>
+              <span className="hidden text-papel/75 sm:inline">
+                {" "}· presentes para a ceia, a família e a equipe
+              </span>
+            </span>
+            <span className="olho inline-flex shrink-0 items-center gap-1.5 text-ouro-claro">
+              Ver o catálogo
+              <IconeSeta className="size-3.5 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
+            </span>
+          </LinkTransicao>
+        ) : null}
+
+        <div className="relative mx-auto flex h-16 w-full max-w-site items-center justify-between gap-4 px-5 sm:h-20 sm:px-8">
           <LinkTransicao
             href="/"
             aria-label="Le Brunch — página inicial"
@@ -270,7 +293,7 @@ export function SiteHeader() {
           )}
         >
           <div className="border-t border-verde-900/10 bg-papel text-verde-900 shadow-[0_30px_60px_-30px_rgba(0,30,27,0.45)]">
-            <div className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(5,1fr)_0.9fr] gap-4 px-8 py-8">
+            <div className="mx-auto grid w-full max-w-site grid-cols-[repeat(5,1fr)_0.9fr] gap-4 px-8 py-8">
               {categorias.map((c) => {
                 const n = cestasDaCategoria(c.slug).length;
                 return (
@@ -416,7 +439,7 @@ export function SiteHeader() {
 
       {/* nas páginas sem imagem sangrada, o conteúdo começa abaixo do cabeçalho */}
       {SOBREPOSTAS.includes(caminho) ? null : (
-        <div aria-hidden className="h-16 sm:h-20" />
+        <div aria-hidden className={natal ? "h-16 sm:h-20" : "h-26 sm:h-30"} />
       )}
     </>
   );

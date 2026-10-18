@@ -18,7 +18,7 @@ export function AtalhosLinhas({ excluir }: { excluir?: CategoriaSlug }) {
   const lista = categorias.filter((c) => c.slug !== excluir);
 
   return (
-    <nav aria-label="Outras linhas de cesta" className="px-5 py-14 sm:px-8 sm:py-18">
+    <nav aria-label="Outras linhas de cesta" className="px-5 sm:px-8 py-12 sm:py-14 lg:py-16">
       <div className="mx-auto w-full max-w-6xl">
         <p className="olho text-terra-700">Continue navegando</p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">

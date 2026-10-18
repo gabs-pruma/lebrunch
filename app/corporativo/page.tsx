@@ -44,7 +44,7 @@ export default function CorporativoPage() {
   return (
     <>
       {/* ————— abertura ————— */}
-      <section className="relative overflow-hidden bg-verde-900 px-5 pt-14 pb-16 text-papel sm:px-8 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-32">
+      <section className="relative overflow-hidden bg-verde-900 px-5 pt-14 pb-12 text-papel sm:px-8 sm:pt-20 sm:pb-14 lg:pt-24 lg:pb-16">
         <Simbolo className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 text-papel/[0.05]" />
 
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -254,7 +254,7 @@ export default function CorporativoPage() {
               Tudo pensado
             </TituloSecao>
             <Image
-              src="/ensaio/natal-boas-festas-1.webp"
+              src="/ensaio/natal-boas-festas-4.webp"
               alt="Kit com mini espumante, lata dourada de frutas secas e tag Boas Festas na bolsa de acrílico"
               width={1600}
               height={2400}

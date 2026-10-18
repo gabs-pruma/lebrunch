@@ -79,7 +79,7 @@ export default function NatalPage() {
         </div>
         <Luzes className="-z-10 opacity-60 mix-blend-screen" />
 
-        <div className="mx-auto w-full max-w-7xl px-5 pt-32 pb-12 sm:px-8 sm:pb-16 lg:pb-20">
+        <div className="mx-auto w-full max-w-site px-5 pt-32 pb-12 sm:px-8 sm:pb-16 lg:pb-20">
           <div className="flex max-w-2xl flex-col items-start gap-6">
             <p className="olho inline-flex items-center gap-2.5 rounded-full bg-noite/50 px-4 py-2 text-ouro-claro ring-1 ring-ouro/35 backdrop-blur-md">
               <IconeBrilho className="cintilar size-3.5" />
@@ -140,7 +140,7 @@ export default function NatalPage() {
       <section
         id="presentes"
         aria-labelledby="a-estrela"
-        className="relative scroll-mt-20 px-5 py-16 sm:px-8 sm:py-24 lg:py-28"
+        className="relative scroll-mt-20 px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
       >
         <div className="mx-auto w-full max-w-6xl">
           <FileteOuro className="mb-12" />
@@ -225,7 +225,7 @@ export default function NatalPage() {
           <section
             key={grupo.id}
             aria-labelledby={grupo.id}
-            className={`relative px-5 py-16 sm:px-8 sm:py-20 ${i % 2 === 0 ? "bg-noite-alt/60" : ""}`}
+            className={`relative px-5 sm:px-8 py-12 sm:py-14 lg:py-16 ${i % 2 === 0 ? "bg-noite-alt/60" : ""}`}
           >
             <div
               className={
@@ -273,7 +273,7 @@ export default function NatalPage() {
       })}
 
       {/* ————— feito à mão ————— */}
-      <section className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-24 lg:py-28">
+      <section className="relative overflow-hidden px-5 sm:px-8 py-12 sm:py-14 lg:py-16">
         <Luzes className="opacity-40" />
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <div className="order-last flex flex-col gap-6 lg:order-first">
@@ -318,7 +318,7 @@ export default function NatalPage() {
       <section
         id="empresas"
         aria-labelledby="titulo-empresas"
-        className="scroll-mt-20 px-5 pb-16 sm:px-8 sm:pb-24"
+        className="scroll-mt-20 px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16"
       >
         <div className="relative mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl bg-papel text-verde-900 lg:grid-cols-2">
           <div className="relative min-h-72">
@@ -362,7 +362,7 @@ export default function NatalPage() {
       </section>
 
       {/* ————— fecho ————— */}
-      <section className="relative overflow-hidden px-5 py-20 text-center sm:px-8 sm:py-28">
+      <section className="relative overflow-hidden px-5 text-center sm:px-8 py-12 sm:py-14 lg:py-16">
         <Luzes className="opacity-80" />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-7">
           <FileteOuro />

@@ -15,7 +15,7 @@ export function SiteFooter() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-verde-900 px-5 pt-16 pb-8 text-papel sm:px-8 sm:pt-24">
+    <footer className="relative overflow-hidden bg-verde-900 px-5 pt-12 pb-8 text-papel sm:px-8 sm:pt-14 lg:pt-16">
       {/* marca d'água, como no verso do catálogo */}
       <Simbolo className="pointer-events-none absolute -right-16 -bottom-16 h-72 w-72 text-papel/[0.05]" />
       <Traco
@@ -26,10 +26,10 @@ export function SiteFooter() {
       <div className="relative mx-auto w-full max-w-6xl">
         {/* No celular, duas colunas (Modelos ao lado dos horários): numa
             coluna só o rodapé passava de duas telas e meia. */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:gap-10 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr] lg:gap-8">
-          <div className="col-span-2 flex flex-col gap-6 md:col-span-1">
-            <Logotipo className="h-24 w-[11rem] text-papel" />
-            <p className="script max-w-xs text-2xl text-terra-400">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:gap-10 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr] lg:gap-8">
+          <div className="col-span-2 flex flex-col gap-5 md:col-span-1">
+            <Logotipo className="h-[4.5rem] w-[8.25rem] text-papel" />
+            <p className="script max-w-xs text-xl text-terra-400">
               {site.assinatura}
             </p>
             <SeloPremioChip cor="claro" />
@@ -58,12 +58,12 @@ export function SiteFooter() {
 
           <nav aria-label="Modelos">
             <h2 className="olho text-papel/65">Modelos</h2>
-            <ul className="mt-5 flex flex-col gap-1">
+            <ul className="mt-3 flex flex-col">
               {categorias.map((c) => (
                 <li key={c.slug}>
                   <Link
                     href={hrefCategoria(c)}
-                    className="inline-flex min-h-11 items-center text-[0.9375rem] text-papel/85 transition-colors duration-300 hover:text-papel"
+                    className="inline-flex min-h-11 items-center pointer-fine:min-h-9 text-[0.9375rem] text-papel/85 transition-colors duration-300 hover:text-papel"
                   >
                     {c.nome}
                   </Link>
@@ -72,7 +72,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/cestas"
-                  className="inline-flex min-h-11 items-center text-[0.9375rem] text-papel/85 transition-colors duration-300 hover:text-papel"
+                  className="inline-flex min-h-11 items-center pointer-fine:min-h-9 text-[0.9375rem] text-papel/85 transition-colors duration-300 hover:text-papel"
                 >
                   Todos os modelos
                 </Link>
@@ -80,16 +80,16 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             <div>
               <h2 className="olho text-papel/65">Atendimento</h2>
-              <ul className="mt-5 flex flex-col gap-3 text-[0.9375rem] text-papel/85">
+              <ul className="mt-3 flex flex-col gap-2.5 text-[0.9375rem] text-papel/85">
                 <li>
                   <a
                     href={linkWhatsApp(mensagens.geral)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center transition-colors duration-300 hover:text-papel"
+                    className="inline-flex min-h-11 items-center pointer-fine:min-h-9 transition-colors duration-300 hover:text-papel"
                   >
                     {site.telefone}
                   </a>
@@ -106,7 +106,7 @@ export function SiteFooter() {
             {/* entrega sai antes de o atendimento abrir — daí a separação */}
             <div>
               <h2 className="olho text-papel/65">Entregas</h2>
-              <ul className="mt-5 flex flex-col gap-3 text-[0.9375rem] text-papel/85">
+              <ul className="mt-3 flex flex-col gap-2.5 text-[0.9375rem] text-papel/85">
                 {site.horarios.entregas.map((h) => (
                   <li key={h.dias} className="flex flex-col">
                     <span className="text-papel/60">{h.dias}</span>
@@ -119,11 +119,11 @@ export function SiteFooter() {
 
           <div className="col-span-2 md:col-span-1">
             <h2 className="olho text-papel/65">Le Brunch</h2>
-            <ul className="mt-5 flex flex-col gap-1 text-[0.9375rem] text-papel/85">
+            <ul className="mt-3 flex flex-col text-[0.9375rem] text-papel/85">
               <li>
                 <Link
                   href="/conheca"
-                  className="inline-flex min-h-11 items-center transition-colors duration-300 hover:text-papel"
+                  className="inline-flex min-h-11 items-center pointer-fine:min-h-9 transition-colors duration-300 hover:text-papel"
                 >
                   Conheça a Le Brunch
                 </Link>
@@ -133,15 +133,15 @@ export function SiteFooter() {
                   href={site.google.perfil}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center transition-colors duration-300 hover:text-papel"
+                  className="inline-flex min-h-11 items-center pointer-fine:min-h-9 transition-colors duration-300 hover:text-papel"
                 >
                   Avaliações no Google
                 </a>
               </li>
             </ul>
 
-            <h2 className="olho mt-8 text-papel/65">Pagamento</h2>
-            <p className="mt-4 text-[0.875rem] leading-relaxed text-papel/75">
+            <h2 className="olho mt-6 text-papel/65">Pagamento</h2>
+            <p className="mt-3 text-[0.875rem] leading-relaxed text-papel/75">
               {site.pagamento.aVista} à vista, ou{" "}
               {site.pagamento.parcelado.maximo
                 ? `em até ${site.pagamento.parcelado.maximo}x no `
@@ -152,7 +152,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-5 border-t border-papel/15 pt-8 text-[0.8125rem] text-papel/65">
+        <div className="mt-10 flex flex-col gap-4 border-t border-papel/15 pt-6 text-[0.8125rem] text-papel/65">
           <ul className="flex flex-col gap-3 sm:flex-row sm:gap-8">
             <li className="flex items-center gap-2.5">
               <IconePino className="size-4 shrink-0 text-terra-400" />
@@ -164,7 +164,7 @@ export function SiteFooter() {
             </li>
           </ul>
 
-          {/* dados cadastrais */}
+          {/* dados cadastrais e direitos, num bloco só */}
           <address className="flex flex-col gap-1 not-italic text-papel/55">
             <span>
               {site.cadastro.razaoSocial} · CNPJ {site.cadastro.cnpj}
@@ -173,11 +173,10 @@ export function SiteFooter() {
               {site.cadastro.endereco} · {site.cadastro.cidade} · CEP{" "}
               {site.cadastro.cep}
             </span>
+            <span>
+              © {ano} {site.nomeCompleto}
+            </span>
           </address>
-
-          <p className="text-papel/55">
-            © {ano} {site.nomeCompleto}
-          </p>
         </div>
       </div>
     </footer>

@@ -47,8 +47,8 @@ export default function ConhecaPage() {
                 className="absolute -top-5 -left-5 h-28 w-28 rounded-full bg-creme"
               />
               <Image
-                src="/ensaio/rebeca-retrato-2.webp"
-                alt="Rebeca Santana, fundadora da Le Brunch, de dólmã verde com a marca bordada, sorrindo de braços cruzados"
+                src="/ensaio/rebeca-cesta-2.webp"
+                alt="Rebeca Santana, fundadora da Le Brunch, de dólmã verde com a marca bordada, sorrindo para a cesta de flores que segura"
                 width={1600}
                 height={2400}
                 loading="eager"
@@ -123,7 +123,7 @@ export default function ConhecaPage() {
       </Secao>
 
       {/* ————— bastidores, foto larga ————— */}
-      <section className="px-5 pb-16 sm:px-8 sm:pb-24">
+      <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
         <Revelar className="mx-auto w-full max-w-6xl">
           <figure className="flex flex-col gap-4">
             <FotoParallax
@@ -228,7 +228,7 @@ export default function ConhecaPage() {
           ))}
         </ul>
 
-        <div className="mt-12 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <BotaoLink href={site.instagram.url} variante="contorno" externo>
             <IconeInstagram className="size-4" />
             Ver mais no Instagram
@@ -240,7 +240,7 @@ export default function ConhecaPage() {
       <Secao className="text-center">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-7">
           <Ornamento />
-          <Logotipo className="h-28 w-[13rem] text-verde-900" />
+          <Logotipo className="h-20 w-[9.25rem] text-verde-900" />
           <p className="script text-[clamp(1.75rem,6vw,2.75rem)] leading-tight text-terra-700">
             {site.assinatura}
           </p>
