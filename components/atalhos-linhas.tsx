@@ -21,7 +21,7 @@ export function AtalhosLinhas({ excluir }: { excluir?: CategoriaSlug }) {
     <nav aria-label="Outras linhas de cesta" className="px-5 sm:px-8 py-12 sm:py-14 lg:py-16">
       <div className="mx-auto w-full max-w-6xl">
         <p className="olho text-terra-700">Continue navegando</p>
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-5">
           {lista.map((categoria) => {
             const natal = categoria.tema === "natal";
             const n = cestasDaCategoria(categoria.slug).length;
@@ -29,43 +29,36 @@ export function AtalhosLinhas({ excluir }: { excluir?: CategoriaSlug }) {
               <li key={categoria.slug}>
                 <LinkTransicao
                   href={hrefCategoria(categoria)}
-                  className="group relative flex aspect-16/9 items-end overflow-hidden rounded-2xl p-5 text-papel sm:aspect-4/5"
+                  className="group relative block aspect-4/3 overflow-hidden rounded-2xl bg-creme lg:aspect-5/4"
                 >
                   <Image
                     src={categoria.foto}
                     alt=""
                     fill
-                    sizes="(min-width: 640px) 30vw, 92vw"
+                    sizes="(min-width: 640px) 46vw, 92vw"
                     style={{ objectPosition: categoria.foco ?? "50% 50%" }}
-                    className="-z-10 object-cover transition-transform duration-[1200ms] ease-suave group-hover:scale-[1.06]"
+                    className="object-cover transition-transform duration-[1200ms] ease-suave group-hover:scale-[1.04]"
                   />
+                  {/* etiqueta sobre a foto, sem véu escondendo a imagem (como nas linhas da home) */}
                   <span
-                    aria-hidden
                     className={clsx(
-                      "absolute inset-0 -z-10 bg-gradient-to-t to-transparent",
-                      // o degradê sobe até o rótulo: no cartão baixo do celular,
-                      // o "3 modelos" caía na parte clara da foto
-                      natal
-                        ? "from-noite/90 via-noite/50 via-55%"
-                        : "from-verde-900/90 via-verde-900/50 via-55%",
+                      "absolute bottom-3 left-3 flex flex-col rounded-xl px-3.5 py-2 shadow-sm backdrop-blur-sm",
+                      natal ? "bg-noite/90 text-papel" : "bg-papel/95 text-verde-900",
                     )}
-                  />
-                  <span className="flex w-full items-end justify-between gap-3">
-                    <span className="flex flex-col gap-1">
-                      <span
-                        className={clsx(
-                          "olho inline-flex items-center gap-1.5",
-                          natal ? "text-ouro-claro" : "text-papel/85",
-                        )}
-                      >
-                        {natal ? <IconeBrilho className="size-3" /> : null}
-                        {categoria.selo ?? `${n} ${n === 1 ? "modelo" : "modelos"}`}
-                      </span>
-                      <span className="titulo text-[1.875rem] leading-none">
-                        {categoria.nome}
-                      </span>
+                  >
+                    <span className="titulo flex items-center gap-2 text-[1.25rem] leading-tight sm:text-[1.5rem]">
+                      {categoria.nome}
+                      <IconeSeta className="size-4 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
                     </span>
-                    <IconeSeta className="size-5 shrink-0 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
+                    <span
+                      className={clsx(
+                        "inline-flex items-center gap-1.5 text-[0.75rem]",
+                        natal ? "text-ouro-claro" : "text-tinta-suave",
+                      )}
+                    >
+                      {natal ? <IconeBrilho className="size-3" /> : null}
+                      {categoria.selo ?? `${n} ${n === 1 ? "modelo" : "modelos"}`}
+                    </span>
                   </span>
                 </LinkTransicao>
               </li>
