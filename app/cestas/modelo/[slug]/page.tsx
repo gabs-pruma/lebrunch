@@ -14,10 +14,10 @@ import {
   categoriaDe,
   cestasDaCategoria,
   adicionais,
+  antecedenciaDe,
   formatarPreco,
   hrefCategoria,
 } from "@/data/cestas";
-import { site } from "@/data/site";
 import { TrilhaEstruturada } from "@/components/dados-estruturados";
 
 export function generateStaticParams() {
@@ -34,7 +34,7 @@ export async function generateMetadata(
   const categoria = categoriaDe(cesta.categoria);
   return metadadosPagina({
     titulo: `${cesta.nome} · ${categoria.nome}`,
-    descricao: `${cesta.chamada}${
+    descricao: `${cesta.chamada}.${
       cesta.preco !== null ? ` ${formatarPreco(cesta.preco)} + frete.` : ""
     } Entrega em São Paulo e Grande ABC.`,
     caminho: `/cestas/modelo/${cesta.slug}/`,
@@ -107,7 +107,7 @@ export default async function CestaPage(
           <div className="flex flex-col gap-7">
             <div className="flex flex-col gap-3">
               <Olho>{categoria.nome}</Olho>
-              <h1 className="titulo text-[clamp(2.5rem,9vw,4.5rem)]">
+              <h1 className="titulo text-[clamp(1.875rem,9vw,4.5rem)]">
                 {cesta.nome}
               </h1>
               <p className="text-[1.0625rem] leading-relaxed text-tinta-suave">
@@ -138,17 +138,13 @@ export default async function CestaPage(
                 ) : null}
                 <li className="flex items-center gap-2.5">
                   <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-                  {/* a Pronta Entrega sai no mesmo dia: não pede antecedência */}
-                  {categoria.prontaEntrega
-                    ? "Pode sair hoje, conforme a agenda do dia"
-                    : `Pedido com ${site.atendimento.antecedencia}`}
+                  Pedido com {antecedenciaDe(cesta)}
                 </li>
               </ul>
             </div>
 
             <BotaoPedido
               cesta={cesta}
-              prontaEntrega={categoria.prontaEntrega}
               variante={natal ? "ouro" : "verde"}
               rotulo={natal ? "Pedir este presente" : undefined}
               className="w-full sm:w-auto sm:self-start"
@@ -177,6 +173,11 @@ export default async function CestaPage(
                   </section>
                 ))}
               </div>
+              {cesta.observacao ? (
+                <p className="border-l-2 border-terra-500 pl-4 text-[0.9375rem] leading-relaxed text-tinta-suave">
+                  {cesta.observacao}
+                </p>
+              ) : null}
             </div>
 
             {/* embalagem */}
@@ -245,7 +246,7 @@ export default async function CestaPage(
       {relacionadas.length > 0 ? (
         <Secao fundo="creme">
           <Ornamento className="mb-12" />
-          <h2 className="titulo mb-10 text-center text-[clamp(1.75rem,6vw,2.75rem)]">
+          <h2 className="titulo mb-10 text-center text-[clamp(1.5rem,6vw,2.75rem)]">
             {natal ? "Mais presentes de Natal" : `Outros modelos da ${categoria.nome}`}
           </h2>
           <div className={relacionadas.length === 2 ? "mx-auto max-w-4xl" : undefined}>
@@ -253,7 +254,6 @@ export default async function CestaPage(
             cestas={relacionadas}
             colunas={relacionadas.length === 2 ? 2 : 3}
             rotulo={natal ? "Mais presentes de Natal" : `Outros modelos da ${categoria.nome}`}
-            prontaEntrega={categoria.prontaEntrega}
             escuro={natal}
           />
           </div>

@@ -1,27 +1,39 @@
 """
 Acerto de cor das fotos do ensaio, comum às fotos e ao vídeo do banner.
 
-A edição do ensaio é clara e "matte" (pretos em ~8, brancos em ~240): bonita
-no papel, mas apagada na tela. Aqui os níveis são esticados, entra uma curva
-em S suave e um pouco de cor — o mesmo acerto em todas as fotos, para o site
+A edição do ensaio é clara e "matte" (pretos em ~8, brancos em ~240). Aqui
+os níveis são esticados de leve, entra uma curva em S bem suave e a cor fica
+um pouco abaixo da original — o mesmo acerto em todas as fotos, para o site
 não ficar com cada foto num tom.
+
+Em nov/2026 a Rebeca achou que as cores estouravam e deixavam tudo
+artificial (morango, flores e balões saturados, brancos queimados): o
+acerto anterior (níveis 6–242, curva 0,25, cor 1,10) virou o de baixo. A
+edição do ensaio também é quente (o croissant puxava para o laranja): os
+tons médios esfriam um pouco — menos vermelho, mais azul —, sem tocar no
+branco e no preto.
 """
 import os
 from PIL import Image, ImageEnhance
 
 RETOQUES = os.path.join(os.path.dirname(__file__), "retoques")
 
-PRETO, BRANCO = 6, 242  # níveis de entrada que viram 0 e 255
-CURVA = 0.25            # 0 = linear; 1 = curva em S cheia
-COR = 1.10              # saturação
+PRETO, BRANCO = 4, 250  # níveis de entrada que viram 0 e 255
+CURVA = 0.12            # 0 = linear; 1 = curva em S cheia
+COR = 0.94              # saturação (1 = a do ensaio)
+ESFRIAR = 0.035         # nos tons médios: tira do vermelho, põe no azul
 
 def _tabela():
     t = []
-    for v in range(256):
-        x = min(max((v - PRETO) / (BRANCO - PRETO), 0), 1)
-        s = x * x * (3 - 2 * x)
-        t.append(round(255 * ((1 - CURVA) * x + CURVA * s)))
-    return t * 3
+    for canal in (-1, 0, 1):  # R, G, B
+        for v in range(256):
+            x = min(max((v - PRETO) / (BRANCO - PRETO), 0), 1)
+            s = x * x * (3 - 2 * x)
+            y = (1 - CURVA) * x + CURVA * s
+            # o peso 4y(1-y) é zero no branco e no preto e cheio no meio
+            y += canal * ESFRIAR * 4 * y * (1 - y)
+            t.append(min(255, max(0, round(255 * y))))
+    return t
 
 TABELA = _tabela()
 

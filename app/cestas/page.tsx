@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { comBase } from "@/lib/base";
 import { metadadosPagina } from "@/lib/metadados";
 import Image from "next/image";
 import { FotoParallax } from "@/components/foto-parallax";
 import { Secao, TituloSecao, Ornamento, BotaoLink } from "@/components/ui";
 import { GradeCestas } from "@/components/grade-cestas";
+import { CatalogoFiltrado } from "@/components/catalogo-filtrado";
 import { CestaDestaque } from "@/components/cesta-destaque";
 import { Revelar } from "@/components/revelar";
 import { IconeSeta } from "@/components/icones";
@@ -20,17 +22,160 @@ import {
   linhasDoAno,
   hrefCategoria,
 } from "@/data/cestas";
+import { colecaoNatal } from "@/data/natal";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
 
 export const metadata: Metadata = metadadosPagina({
   titulo: "Cestas de café da manhã",
   descricao:
-    "Todos os modelos da Le Brunch: Pronta Entrega, Linha Essencial, Linha Premium, Presentes & Mimos e Coleção de Natal. Montadas à mão e entregues em SP e no ABC.",
+    "Todos os modelos da Le Brunch: Linha Clássica, Linha Premium e Coleção de Natal. Montados à mão e entregues em SP e no ABC.",
   caminho: "/cestas/",
   og: "modelos",
 });
 
 export default function CestasPage() {
+  // o catálogo de sempre — com filtro no endereço, dá lugar ao resultado
+  const catalogo = (
+    <>
+        {/* abertura em fotografia: três cestas do ensaio lado a lado */}
+        <div className="mb-14 grid grid-cols-3 gap-2 px-2 sm:gap-4 sm:px-4">
+          {[
+            { src: "/ensaio/presenca-2.webp", alt: "Base de madeira da Presença com croissants, pães de queijo, suco de uva, frutas e iogurte", foco: "50% 50%" },
+            { src: "/ensaio/extraordinario-5.webp", alt: "Cesta de vime da Extraordinário, com buquê de flores naturais, bolo e café", foco: "50% 50%" },
+            { src: "/ensaio/fazenda-1.webp", alt: "Caixa de madeira da Fazenda, com café, coador de pano e caneca", foco: "50% 55%" },
+          ].map((foto, i) => (
+            <div key={foto.src} className="relative aspect-3/4 overflow-hidden rounded-xl sm:rounded-2xl lg:aspect-4/5">
+              <Image
+                src={foto.src}
+                alt={foto.alt}
+                fill
+                loading={i === 1 ? "eager" : "lazy"}
+                fetchPriority={i === 1 ? "high" : undefined}
+                sizes="33vw"
+                style={{ objectPosition: foto.foco }}
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* índice das linhas — âncoras para as seções abaixo */}
+        <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
+          <nav aria-label="Linhas de cesta" className="mx-auto w-full max-w-6xl">
+            <ul className="flex flex-col border-t borda-fina">
+              {categorias.map((categoria, i) => (
+                <li key={categoria.slug} className="border-b borda-fina">
+                  <a
+                    // <a> puro (por causa das âncoras): o link de página precisa do
+                    // subcaminho do GitHub Pages à mão
+                    href={categoria.tema ? comBase(hrefCategoria(categoria)) : `#${categoria.slug}`}
+                    className="group flex min-h-16 items-center gap-5 py-4"
+                  >
+                    <span
+                      aria-hidden
+                      className="titulo w-10 shrink-0 text-2xl leading-none text-verde-900/25"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="titulo flex-1 text-[clamp(1.5rem,4vw,2.25rem)] leading-tight transition-colors duration-300 group-hover:text-verde-600">
+                      {categoria.nome}
+                    </span>
+                    {categoria.selo && !categoria.tema ? (
+                      <span className="olho hidden shrink-0 rounded-full bg-terra-700 px-3 py-1.5 text-papel sm:block">
+                        {categoria.selo}
+                      </span>
+                    ) : categoria.selo ? (
+                      <span className="olho hidden shrink-0 items-center gap-1.5 rounded-full bg-noite px-3 py-1.5 text-ouro-claro sm:inline-flex">
+                        <IconeBrilho className="size-3" />
+                        {categoria.selo}
+                      </span>
+                    ) : (
+                      <span className="olho hidden shrink-0 text-tinta-suave sm:block">
+                        {cestasDaCategoria(categoria.slug).length} modelos
+                      </span>
+                    )}
+                    <IconeSeta className="size-4 shrink-0 rotate-90 text-verde-900/40 transition-transform duration-400 ease-suave group-hover:translate-y-1" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </section>
+
+        {/* todos os modelos, agrupados por linha */}
+        {linhasDoAno.map((categoria) => {
+          const modelos = cestasDaCategoria(categoria.slug);
+          if (modelos.length === 0) return null;
+
+          return (
+            <Secao
+              key={categoria.slug}
+              id={categoria.slug}
+              fundo={categoria.slug === "classica" ? "creme" : "papel"}
+            >
+              <div>
+                <TituloSecao olho={categoria.chamada}>
+                  {categoria.nome}
+                </TituloSecao>
+
+                <div className="mt-10 sm:mt-14">
+                  {modelos.length === 1 ? (
+                    <CestaDestaque
+                      cesta={modelos[0]}
+                      selo={categoria.selo}
+                      nivel={3}
+                    />
+                  ) : (
+                    <GradeCestas
+                      cestas={modelos}
+                      rotulo={categoria.nome}
+                      colunas={modelos.length === 2 || modelos.length === 4 ? 2 : 3}
+                    />
+                  )}
+                </div>
+              </div>
+            </Secao>
+          );
+        })}
+
+        {/* Coleção de Natal, no veludo */}
+        <section
+          id="natal"
+          aria-labelledby="titulo-natal-cestas"
+          className="tema-natal relative overflow-hidden px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
+        >
+          <Luzes className="opacity-50" />
+          <div className="relative mx-auto w-full max-w-6xl">
+            <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
+              <div className="flex flex-col gap-4">
+                <p className="olho inline-flex items-center gap-2 text-ouro-claro">
+                  <IconeBrilho className="cintilar size-3.5" />
+                  Edição limitada
+                </p>
+                <h2
+                  id="titulo-natal-cestas"
+                  className="titulo text-[clamp(1.625rem,7vw,3.5rem)] leading-none"
+                >
+                  Coleção de{" "}
+                  <span className="script texto-ouro text-[1.15em]">Natal</span>
+                </h2>
+              </div>
+              <BotaoLink href="/natal" variante="contornoOuro" className="self-start lg:self-auto">
+                Ver a página da coleção
+                <IconeSeta className="size-4" />
+              </BotaoLink>
+            </div>
+            {/* sem a Brinde, que já aparece na Linha Premium: seis presentes, duas fileiras */}
+            <GradeCestas
+              cestas={cestasDaCategoria("natal").filter((c) => c.slug !== colecaoNatal.estrela)}
+              rotulo="Coleção de Natal"
+              escuro
+            />
+          </div>
+        </section>
+    </>
+  );
+
   return (
     <>
       <Secao className="!pb-10">
@@ -38,154 +183,25 @@ export default function CestasPage() {
           <TituloSecao
             nivel={1}
             olho="Cestas de café da manhã"
-            descricao="Quatro linhas para o ano todo e uma coleção de Natal. Uma mesma obsessão: que a pessoa que abre a caixa sinta que alguém pensou nela de verdade."
+            descricao="Duas linhas para o ano todo e uma coleção de Natal. Uma mesma obsessão: que a pessoa que abre a caixa sinta que alguém pensou nela de verdade."
           >
             Escolha a cesta para cada momento
           </TituloSecao>
         </div>
       </Secao>
 
-      {/* abertura em fotografia: três cestas do ensaio lado a lado */}
-      <div className="mb-14 grid grid-cols-3 gap-2 px-2 sm:gap-4 sm:px-4">
-        {[
-          { src: "/ensaio/cafe-g-2.webp", alt: "Bandeja Café G de madeira com croissants, pães de queijo, suco de uva, frutas e iogurte", foco: "50% 50%" },
-          { src: "/ensaio/cesta-flores-8.webp", alt: "Cesta Flores do Campo de palha, com buquê, bolo de chocolate e café", foco: "50% 50%" },
-          { src: "/ensaio/cafe-coado-3.webp", alt: "Caixa Café Coado de madeira, com café, coador de pano e caneca", foco: "50% 55%" },
-        ].map((foto, i) => (
-          <div key={foto.src} className="relative aspect-3/4 overflow-hidden rounded-xl sm:rounded-2xl lg:aspect-4/5">
-            <Image
-              src={foto.src}
-              alt={foto.alt}
-              fill
-              loading={i === 1 ? "eager" : "lazy"}
-              fetchPriority={i === 1 ? "high" : undefined}
-              sizes="33vw"
-              style={{ objectPosition: foto.foco }}
-              className="object-cover"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* índice das linhas — âncoras para as seções abaixo */}
-      <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
-        <nav aria-label="Linhas de cesta" className="mx-auto w-full max-w-6xl">
-          <ul className="flex flex-col border-t borda-fina">
-            {categorias.map((categoria, i) => (
-              <li key={categoria.slug} className="border-b borda-fina">
-                <a
-                  // <a> puro (por causa das âncoras): o link de página precisa do
-                  // subcaminho do GitHub Pages à mão
-                  href={categoria.tema ? comBase(hrefCategoria(categoria)) : `#${categoria.slug}`}
-                  className="group flex min-h-16 items-center gap-5 py-4"
-                >
-                  <span
-                    aria-hidden
-                    className="titulo w-10 shrink-0 text-2xl leading-none text-verde-900/25"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="titulo flex-1 text-[clamp(1.5rem,4vw,2.25rem)] leading-tight transition-colors duration-300 group-hover:text-verde-600">
-                    {categoria.nome}
-                  </span>
-                  {categoria.selo && !categoria.tema ? (
-                    <span className="olho hidden shrink-0 rounded-full bg-terra-700 px-3 py-1.5 text-papel sm:block">
-                      {categoria.selo}
-                    </span>
-                  ) : categoria.selo ? (
-                    <span className="olho hidden shrink-0 items-center gap-1.5 rounded-full bg-noite px-3 py-1.5 text-ouro-claro sm:inline-flex">
-                      <IconeBrilho className="size-3" />
-                      {categoria.selo}
-                    </span>
-                  ) : (
-                    <span className="olho hidden shrink-0 text-tinta-suave sm:block">
-                      {cestasDaCategoria(categoria.slug).length} modelos
-                    </span>
-                  )}
-                  <IconeSeta className="size-4 shrink-0 rotate-90 text-verde-900/40 transition-transform duration-400 ease-suave group-hover:translate-y-1" />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </section>
-
-      {/* todos os modelos, agrupados por linha */}
-      {linhasDoAno.map((categoria) => {
-        const modelos = cestasDaCategoria(categoria.slug);
-        if (modelos.length === 0) return null;
-
-        return (
-          <Secao
-            key={categoria.slug}
-            id={categoria.slug}
-            fundo={categoria.slug === "essencial" || categoria.slug === "presentes" ? "creme" : "papel"}
-          >
-            <div>
-              <TituloSecao olho={categoria.chamada}>
-                {categoria.nome}
-              </TituloSecao>
-
-              <div className="mt-10 sm:mt-14">
-                {modelos.length === 1 ? (
-                  <CestaDestaque
-                    cesta={modelos[0]}
-                    prontaEntrega={categoria.prontaEntrega}
-                    selo={categoria.selo}
-                    nivel={3}
-                  />
-                ) : (
-                  <GradeCestas
-                    cestas={modelos}
-                    prontaEntrega={categoria.prontaEntrega}
-                    rotulo={categoria.nome}
-                    colunas={modelos.length === 2 || modelos.length === 4 ? 2 : 3}
-                  />
-                )}
-              </div>
-            </div>
-          </Secao>
-        );
-      })}
-
-      {/* Coleção de Natal, no veludo */}
-      <section
-        id="natal"
-        aria-labelledby="titulo-natal-cestas"
-        className="tema-natal relative overflow-hidden px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
-      >
-        <Luzes className="opacity-50" />
-        <div className="relative mx-auto w-full max-w-6xl">
-          <div className="mb-10 flex flex-col gap-5 sm:mb-14 lg:flex-row lg:items-end lg:justify-between">
-            <div className="flex flex-col gap-4">
-              <p className="olho inline-flex items-center gap-2 text-ouro-claro">
-                <IconeBrilho className="cintilar size-3.5" />
-                Edição limitada
-              </p>
-              <h2
-                id="titulo-natal-cestas"
-                className="titulo text-[clamp(2rem,7vw,3.5rem)] leading-none"
-              >
-                Coleção de{" "}
-                <span className="script texto-ouro text-[1.15em]">Natal</span>
-              </h2>
-            </div>
-            <BotaoLink href="/natal" variante="contornoOuro" className="self-start lg:self-auto">
-              Ver a página da coleção
-              <IconeSeta className="size-4" />
-            </BotaoLink>
-          </div>
-          <GradeCestas cestas={cestasDaCategoria("natal")} rotulo="Coleção de Natal" escuro />
-        </div>
-      </section>
+      {/* filtro do cabeçalho: chega aqui pelo endereço (?linha=&pessoas=&preco=) */}
+      <Suspense fallback={catalogo}>
+        <CatalogoFiltrado>{catalogo}</CatalogoFiltrado>
+      </Suspense>
 
       {/* faixa editorial com foto real */}
       <section className="px-5 pb-12 sm:px-8 sm:pb-14 lg:pb-16">
         <Revelar className="mx-auto w-full max-w-6xl">
           <figure className="relative overflow-hidden rounded-2xl">
             <FotoParallax
-              src="/ensaio/cafe-g-3.webp"
-              alt="Detalhe da bandeja Café G, com croissants, pães de queijo, morangos, uvas e iogurte"
+              src="/ensaio/presenca-3.webp"
+              alt="Detalhe da Presença, com croissants, pães de queijo, morangos, uvas e iogurte"
               width={1600}
               height={2400}
               foco="50% 45%"
@@ -218,7 +234,7 @@ export default function CestasPage() {
             </TituloSecao>
             <Image
               src="/ensaio/mesa-itens.webp"
-              alt="Itens da Le Brunch dispostos sobre a mesa: café Baggio, caneca de cerâmica, suco de uva e queijos ao lado da cesta de palha"
+              alt="Itens da Le Brunch dispostos sobre a mesa: café Baggio, xícara, suco de uva e queijos ao lado da cesta de vime"
               width={1600}
               height={2400}
               style={{ objectPosition: "50% 45%" }}
@@ -227,11 +243,12 @@ export default function CestasPage() {
             />
           </div>
 
+          {/* no desktop as linhas se esticam até o pé da foto, alinhadas com ela */}
           <ul className="flex flex-col">
             {adicionais.map((item) => (
               <li
                 key={item.nome}
-                className="flex items-baseline justify-between gap-4 border-b borda-fina py-4 first:border-t"
+                className="flex items-baseline justify-between gap-4 border-b borda-fina py-4 first:border-t lg:flex-1 lg:items-center"
               >
                 <span className="text-[1.0625rem]">{item.nome}</span>
                 <span className="shrink-0 text-tinta-suave">
@@ -247,7 +264,7 @@ export default function CestasPage() {
       <Secao className="!pt-0">
         <div className="grid gap-8 border-t borda-fina pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           <div>
-            <h2 className="titulo text-[clamp(1.75rem,4.5vw,2.5rem)] leading-tight">
+            <h2 className="titulo text-[clamp(1.5rem,4.5vw,2.5rem)] leading-tight">
               Como pagar
             </h2>
             <p className="mt-3 max-w-xs text-[0.9375rem] leading-relaxed text-tinta-suave">
@@ -285,7 +302,7 @@ export default function CestasPage() {
         />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-7">
           <Ornamento cor="claro" />
-          <h2 className="titulo text-[clamp(2rem,8vw,3.5rem)] text-balance">
+          <h2 className="titulo text-[clamp(1.625rem,8vw,3.5rem)] text-balance">
             Não sabe qual escolher? A gente ajuda.
           </h2>
           <p className="max-w-md text-[0.9375rem] leading-relaxed text-papel/75">

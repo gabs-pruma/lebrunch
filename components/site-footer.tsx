@@ -1,7 +1,6 @@
 import { LinkTransicao as Link } from "@/components/transicao";
 import { Logotipo, Simbolo } from "@/components/marca";
 import { Traco } from "@/components/ilustracao";
-import { SeloPremioChip } from "@/components/selo-premio";
 import {
   IconeInstagram,
   IconeWhatsApp,
@@ -32,7 +31,6 @@ export function SiteFooter() {
             <p className="script max-w-xs text-xl text-terra-400">
               {site.assinatura}
             </p>
-            <SeloPremioChip cor="claro" />
 
             <div className="flex gap-3">
               <a

@@ -105,6 +105,37 @@ body {
   border-color: color-mix(in srgb, var(--color-verde-900) 14%, transparent);
 }
 
+/* atalhos do cabeçalho: caixa alta mais fechada que o .olho, para caber
+   tudo numa linha com os filtros */
+.link-cabecalho-texto {
+  letter-spacing: 0.12em;
+}
+
+/* atalhos do cabeçalho: sublinhado que cresce no hover e na página atual */
+.link-cabecalho {
+  position: relative;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.link-cabecalho::after {
+  content: "";
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: currentColor;
+  transition: width 400ms var(--ease-suave);
+}
+
+.link-cabecalho:hover::after,
+.link-cabecalho[aria-current="page"]::after {
+  width: 100%;
+}
+
 /* Foco visível e consistente (nunca removido) */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
   outline: 2px solid var(--color-verde-600);
@@ -476,15 +507,17 @@ body {
   }
 }
 
-/* ————— menu do celular: itens entram em cascata ————— */
-@media (prefers-reduced-motion: no-preference) {
-  .menu-celular:not([hidden]) {
-    animation: menu-abre 450ms var(--ease-suave) both;
-  }
+/* ————— menu suspenso: desce de trás da faixa ————— */
+.item-menu {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  font-size: 1rem;
+}
 
-  .menu-celular:not([hidden]) .menu-item {
-    animation: menu-item 600ms var(--ease-suave) both;
-    animation-delay: calc(80ms + var(--i, 0) * 60ms);
+@media (prefers-reduced-motion: no-preference) {
+  .menu-suspenso {
+    animation: menu-abre 400ms var(--ease-suave) both;
   }
 }
 
@@ -494,13 +527,6 @@ body {
   }
   to {
     clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes menu-item {
-  from {
-    opacity: 0;
-    transform: translateY(1.25rem);
   }
 }
 
@@ -514,43 +540,6 @@ body {
   opacity: 1;
 }
 
-/* legenda "em cena": troca suave a cada tomada */
-.legenda-cena {
-  animation: legenda-entra 700ms var(--ease-suave) both;
-}
-
-@keyframes legenda-entra {
-  from {
-    opacity: 0;
-    transform: translateY(0.6rem);
-    filter: blur(3px);
-  }
-}
-
-/* indicador de rolagem do banner */
-@media (prefers-reduced-motion: no-preference) {
-  .indicador-rolagem::after {
-    animation: indicador 2.2s var(--ease-suave) infinite;
-  }
-}
-
-.indicador-rolagem::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 40%;
-  background: currentColor;
-}
-
-@keyframes indicador {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(250%);
-  }
-}
 
 /* ————— revelação de foto com cortina (entra de baixo para cima) ————— */
 @supports (animation-timeline: view()) {

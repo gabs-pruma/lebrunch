@@ -15,14 +15,12 @@ export const site = {
   nome: "Le Brunch",
   nomeCompleto: "Le Brunch Cestas",
   assinatura: "onde os momentos simples se tornam extraordinários.",
-  slogan: "Transmitindo emoções, criando momentos!",
   descricao:
     "Cestas de café da manhã premium entregues montadas em São Paulo e no Grande ABC. Curadoria artesanal para presentear com emoção.",
   url: "https://www.lebrunchcestas.com.br",
 
   fundadora: {
     nome: "Rebeca Santana",
-    cargo: "CEO & Fundadora",
   },
 
   telefone: "(11) 94984-5858",
@@ -52,20 +50,6 @@ export const site = {
       "https://search.google.com/local/writereview?placeid=ChIJTajESh5pzpQRl2lR1_yYAbM",
     /** A ficha no Google Maps — para os dados estruturados (`sameAs`). */
     maps: "https://maps.google.com/?cid=12898759019477428631",
-  },
-
-  /**
-   * Prêmio Melhores no ABC — 2ª Temporada 2026.
-   * Vencedora na categoria "Loja de Cestas de Café", organizado por
-   * @melhoresnoabc. Fonte: destaque do Instagram do prêmio.
-   */
-  premio: {
-    nome: "Prêmio Melhores no ABC",
-    temporada: "2ª Temporada",
-    ano: 2026,
-    categoria: "Loja de Cestas de Café",
-    organizador: "@melhoresnoabc",
-    url: "https://www.instagram.com/melhoresnoabc/",
   },
 
   atendimento: {

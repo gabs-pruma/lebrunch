@@ -21,13 +21,11 @@ import type { Cesta } from "@/data/cestas";
  */
 export function GradeCestas({
   cestas,
-  prontaEntrega,
   rotulo,
   escuro,
   colunas = 3,
 }: {
   cestas: Cesta[];
-  prontaEntrega?: boolean;
   /** Setas claras, para a grade sobre o veludo da Coleção de Natal. */
   escuro?: boolean;
   /** Colunas no desktop. Use 2 para grupos de dois, sem fileira órfã. */
@@ -65,7 +63,7 @@ export function GradeCestas({
             <Revelar atraso={(i % colunas) * 80}>
               <CestaCard
                 cesta={cesta}
-                prontaEntrega={prontaEntrega}
+                escuro={escuro}
                 prioridade={i === 0}
               />
             </Revelar>

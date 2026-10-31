@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ModalPedido } from "@/components/modal-pedido";
-import { IconeWhatsApp } from "@/components/icones";
 import { clsx } from "@/lib/utils";
 import type { Cesta } from "@/data/cestas";
 
@@ -12,13 +11,11 @@ import type { Cesta } from "@/data/cestas";
  */
 export function BotaoPedido({
   cesta,
-  prontaEntrega,
   className,
   rotulo,
   variante = "verde",
 }: {
   cesta: Cesta;
-  prontaEntrega?: boolean;
   className?: string;
   rotulo?: string;
   /** "ouro" para a Coleção de Natal. */
@@ -39,13 +36,11 @@ export function BotaoPedido({
           className,
         )}
       >
-        <IconeWhatsApp className="size-4" />
         {rotulo ?? "Quero esse modelo"}
       </button>
 
       <ModalPedido
         cesta={cesta}
-        prontaEntrega={prontaEntrega}
         aberto={aberto}
         onFechar={() => setAberto(false)}
       />

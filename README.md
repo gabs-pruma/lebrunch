@@ -67,7 +67,7 @@ para incluir uma cesta ou mudar um preço.
 | `data/site.ts` | Contato, WhatsApp, Instagram, links do Google, região de atendimento |
 | `data/cestas.ts` | Linhas, modelos de cesta, itens, preços, fotos e adicionais |
 | `data/natal.ts` | Organização da página `/natal`: destaque, grupos e fotos de ambiente |
-| `data/banner.ts` | Vídeo do banner da home e a legenda "em cena" de cada tomada |
+| `data/banner.ts` | Vídeo do banner da home (paisagem e retrato) |
 | `data/corporativo.ts` | Pacotes, pilares, diferenciais, condições e etapas |
 | `data/historia.ts` | Texto da página "Conheça a Le Brunch" |
 | `data/depoimentos.ts` | Depoimentos de clientes |
@@ -102,19 +102,10 @@ Extraída dos arquivos oficiais em `../Catálogo Le Brunch.pdf.pdf` e
 `../Branding - Le Brunch_apresentacao.pptx`. Os tokens estão no `@theme` de
 `app/globals.css`.
 
-### Prêmio
+### Prova social
 
-A Le Brunch é **vencedora do Prêmio Melhores no ABC 2026** na categoria "Loja
-de Cestas de Café". Os dados estão em `site.premio` e o selo é
-`components/selo-premio.tsx`, em duas variantes (`Chip` e `Medalha`).
-
-O selo original do prêmio é preto com dourado, o que brigaria com a paleta da
-marca — então o prêmio é dito na linguagem da Le Brunch, com o trigo do
-catálogo fazendo o papel do louro, e um link para o perfil do prêmio.
-
-Aparece na faixa de autoridade da home, na página `/conheca` (credenciais e
-bloco de valores) e no rodapé. Também entra no `metadata` e no JSON-LD
-(`award` + `aggregateRating`).
+Só a nota e as avaliações do Google (`site.google`). O prêmio Melhores no
+ABC saiu do site em nov/2026: o foco qualitativo é o Google.
 
 ### Fotografia
 
@@ -125,8 +116,8 @@ fotos 4000×6000, fora do repositório).
   Saem de `python3 scripts/exportar-ensaio.py`; o dicionário `FOTOS` do
   script diz qual arquivo do ensaio virou qual nome
 - `public/video/` — o vídeo do banner (paisagem e retrato) e os pôsteres.
-  Saem de `python3 scripts/video-banner.py`; as tomadas estão em `TOMADAS`
-  e a legenda de cada uma em `data/banner.ts`
+  Feitos no Remotion (`../estudio`, `BannerSite-retrato` e
+  `BannerSite-paisagem`) e finalizados por `python3 scripts/finalizar-banner.py`
 - `public/marca/`, `public/ilustracoes/`, `public/textura/` — assets extraídos
   do catálogo e do manual de marca
 
@@ -163,9 +154,9 @@ impresso.
 
 - **Banner** (`components/hero.tsx`): vídeo de ponta a ponta com as cestas
   do ensaio, atrás do cabeçalho transparente. O pôster é a imagem de LCP; o
-  vídeo só baixa depois de montar e entra com fusão. Legenda "em cena" que
-  leva à cesta que está na tela, botão de pausar (WCAG 2.2.2) e, para quem
-  pede menos movimento, só o pôster
+  vídeo só baixa depois de montar e entra com fusão. Sem legenda nem
+  controle por cima (pedido de nov/2026); para quem pede menos movimento,
+  só o pôster
 - **Coleção de Natal** (`/natal`, `.tema-natal` no CSS): o papel claro vira
   o veludo verde do ensaio, com pisca-pisca em CSS (`components/luzes.tsx`),
   título com brilho dourado e grupos "Para brindar", "Para adoçar" e

@@ -31,7 +31,7 @@ Atualizado em 13/10/2026 — **v2 do site, com o ensaio de outubro/2026**.
   saíram. O site usa só o ensaio de outubro/2026: 79 fotos escolhidas em
   `public/ensaio/`, exportadas por `scripts/exportar-ensaio.py` a partir de
   `../ensaio-102026/Highlights` (o ensaio original, 1,1 GB, fica fora do repo)
-- **Vídeo do banner**: `public/video/`, gerado por `scripts/video-banner.py`
+- **Vídeo do banner**: `public/video/`, feito no Remotion (`../estudio`) e finalizado por `scripts/finalizar-banner.py`
   com 11 fotos do ensaio (paisagem para desktop, retrato para celular, laço
   de 27 s). A legenda "em cena" do banner segue `data/banner.ts`
 - **Coleção de Natal**: linha nova (`categoria: "natal"`) com 9 presentes e

@@ -1,21 +1,13 @@
 /**
- * Catálogo de cestas — coleção de outubro/2026.
+ * Catálogo de cestas — versão de lançamento (novembro/2026).
  *
- * Todas as fotos vêm do ensaio de outubro/2026 (`public/ensaio/`, gerado por
- * `scripts/exportar-ensaio.py`), e só as que a Rebeca aprovou (a pasta
- * `gostei` do ensaio). As fotos antigas (Instagram e packshots do
- * catálogo em PDF) saíram do site.
- *
- * ⚠️  DOIS TIPOS DE MODELO AQUI
- *
- * 1. **Confirmados** — Café P, Café M e Café G. Itens e preços transcritos
- *    do "Catálogo Le Brunch.pdf" oficial. As bandejas redondas de madeira do
- *    ensaio foram associadas a cada tamanho pela escala da bandeja na mesa.
- *
- * 2. **Rascunho** (`rascunho: true`) — modelos que aparecem no ensaio mas
- *    ainda não têm ficha oficial. O nome é uma proposta, os itens são o que
- *    se vê na foto e o preço fica `null` ("sob consulta") até a Rebeca
- *    passar o valor. Aparecem com o selo "rascunho" só em desenvolvimento.
+ * Tudo aqui vem dos dois catálogos que a Rebeca aprovou em 31/10/2026, na
+ * pasta `catalogo-portfolio/` do projeto: o da marca ("Catalogo Le Brunch -
+ * FINAL.pdf", 11 modelos em duas linhas) e o de Natal ("Catalogo Natal Le
+ * Brunch - FINAL.pdf", 7 modelos). Nomes, itens, preços, "serve" e a frase
+ * de cada modelo são os do catálogo — não edite à mão sem uma nova versão
+ * dele. A capa de cada modelo é a foto que o catálogo usa; as outras são do
+ * mesmo modelo no ensaio de outubro/2026 (`scripts/exportar-ensaio.py`).
  */
 
 export type Secao = {
@@ -27,7 +19,7 @@ export type Cesta = {
   slug: string;
   nome: string;
   categoria: CategoriaSlug;
-  /** Frase curta de vitrine. */
+  /** Frase curta de vitrine (a frase do modelo no catálogo). */
   chamada: string;
   /** Preço em reais, sem o frete. `null` quando ainda é sob consulta. */
   preco: number | null;
@@ -44,6 +36,10 @@ export type Cesta = {
   /** Ângulos extras da mesma cesta, para a galeria da página do modelo. */
   fotos?: string[];
   secoes: Secao[];
+  /** Observação do catálogo (personalização, variação, consulta de valor). */
+  observacao?: string;
+  /** Dias de antecedência do pedido, quando passa do padrão de 24h. */
+  antecedenciaDias?: number;
   /**
    * Opções de embalagem do mesmo modelo. A primeira é a padrão; o modal de
    * pedido pergunta qual a pessoa quer e manda a escolha na mensagem.
@@ -59,12 +55,14 @@ export type Embalagem = {
   descricao: string;
 };
 
-export type CategoriaSlug =
-  | "pronta-entrega"
-  | "essencial"
-  | "premium"
-  | "presentes"
-  | "natal";
+export type CategoriaSlug = "classica" | "premium" | "natal";
+
+/** Faixas de preço do filtro (preço da cesta, sem o frete). */
+export const faixasDePreco = [
+  { slug: "ate-150", nome: "Até R$ 150", curto: "Até R$150", min: 0, max: 150 },
+  { slug: "150-300", nome: "R$ 150 a R$ 300", curto: "R$150–300", min: 150.01, max: 300 },
+  { slug: "acima-300", nome: "Acima de R$ 300", curto: "+R$300", min: 300.01, max: Infinity },
+] as const;
 
 export type Categoria = {
   slug: CategoriaSlug;
@@ -76,8 +74,6 @@ export type Categoria = {
   /** Foto da linha (retrato), para atalhos e fileiras editoriais. */
   foto: string;
   foco?: string;
-  /** Sai no mesmo dia — muda o prazo mínimo no modal de pedido. */
-  prontaEntrega?: boolean;
   /** Selo curto exibido junto do nome da linha. */
   selo?: string;
   /** Linha com página e identidade visual próprias (ver `/natal`). */
@@ -88,45 +84,23 @@ const foto = (nome: string) => `/ensaio/${nome}.webp`;
 
 export const categorias: Categoria[] = [
   {
-    slug: "pronta-entrega",
-    nome: "Pronta Entrega",
-    nomeCurto: "Pronta Entrega",
-    chamada: "Para o carinho que não pode esperar",
+    slug: "classica",
+    nome: "Linha Clássica",
+    nomeCurto: "Clássica",
+    chamada: "Na nossa base de madeira",
     descricao:
-      "O nosso presente menorzinho — caneca, café para coar e uma foto impressa de quem você ama. Pronto para sair no mesmo dia.",
-    // de frente, a caixa inteira: a capa do modelo (cafe-coado-1) vem logo
-    // abaixo na página da linha, e a mesma foto duas vezes seguidas pesava
-    foto: foto("cafe-coado-3"),
-    prontaEntrega: true,
-    selo: "Sai hoje",
-  },
-  {
-    slug: "essencial",
-    nome: "Linha Essencial",
-    nomeCurto: "Essencial",
-    chamada: "O nosso café da manhã de assinatura",
-    descricao:
-      "As bandejas redondas de madeira que viraram a cara da Le Brunch, em quatro tamanhos: croissants, pães de queijo, queijos, charcutaria e frutas da estação, montados à mão.",
-    foto: foto("cafe-m-1"),
+      "Os cafés da manhã na base de madeira, do Cafezinho, para uma pessoa, à Presença, para a mesa toda — e ainda a caixa do café coado e a cesta das crianças.",
+    foto: foto("presenca-3"),
   },
   {
     slug: "premium",
     nome: "Linha Premium",
     nomeCurto: "Premium",
-    chamada: "Quando a ocasião pede o extraordinário",
+    chamada: "Caixas e cestas para ocasiões especiais",
     descricao:
-      "A caixa verde da casa com bolinho bentô e as cestas de palha e vime com flores. Para comemorar de verdade.",
-    foto: foto("cesta-flores-1"),
-  },
-  {
-    slug: "presentes",
-    nome: "Presentes & Mimos",
-    nomeCurto: "Presentes",
-    chamada: "Um carinho do tamanho certo",
-    descricao:
-      "A caneca de vidro com a inicial gravada e a cesta das crianças, com balões. Presentes pensados para um gesto que diz muito.",
-    foto: foto("box-caneca-1"),
-    foco: "50% 55%",
+      "A caixa com caneca personalizada, a caixa redonda com bentô cake, a gaveta de frios para brindar e as cestas de vime com flores naturais.",
+    foto: foto("comemore-6"),
+    foco: "50% 60%",
   },
   {
     slug: "natal",
@@ -134,8 +108,8 @@ export const categorias: Categoria[] = [
     nomeCurto: "Natal",
     chamada: "Edição limitada · Natal 2026",
     descricao:
-      "Latas, caixas e kits com espumante, panetone, tábua de frios e doces finos — embrulhados em veludo verde, laço estrelado e xadrez de Natal.",
-    foto: foto("natal-petiscos-1"),
+      "Latas, caixas e kits com espumante, panetone, doces finos e tábua de frios — mimos para lembrar de todo mundo e presentes para brindar a data.",
+    foto: foto("natal-doces-3"),
     foco: "50% 70%",
     selo: "Edição limitada",
     tema: "natal",
@@ -147,117 +121,75 @@ export function hrefCategoria(c: Pick<Categoria, "slug" | "tema">): string {
   return c.tema === "natal" ? "/natal" : `/cestas/${c.slug}`;
 }
 
-/* ———————————————————————— Pronta Entrega ———————————————————————— */
+const cartao = "Cartão com a Sua Mensagem";
+const canecaPersonalizada =
+  "Caneca personalizada com a inicial do nome ou uma frase. Consulte a disponibilidade.";
 
-const prontaEntrega: Cesta[] = [
+/* ———————————————————————— Linha Clássica ———————————————————————— */
+
+const classica: Cesta[] = [
   {
-    slug: "caixa-cafe-coado",
-    nome: "Caixa Café Coado",
-    categoria: "pronta-entrega",
-    chamada:
-      "Caixa de madeira com café, coador de pano, caneca de cerâmica e uma foto impressa de quem você ama. Sai no mesmo dia.",
-    preco: null,
+    slug: "cafezinho",
+    nome: "Cafezinho",
+    categoria: "classica",
+    chamada: "O mimo certo para lembrar de alguém em qualquer dia",
+    preco: 129,
     serve: "1 pessoa",
-    imagem: foto("cafe-coado-2"),
-    fotos: [foto("cafe-coado-3"), foto("cafe-coado-5"), foto("cafe-coado-6"), foto("cafe-coado-7")],
+    imagem: foto("cafezinho-1"),
+    fotos: [foto("cafezinho-2")],
     foco: "50% 50%",
-    destaque: true,
-    rascunho: true,
     secoes: [
-      {
-        titulo: "Para o café",
-        itens: [
-          "Café Chocolate Trufado 250g — Baggio",
-          "Coador de Pano",
-          "Caneca de Cerâmica",
-        ],
-      },
-      { titulo: "Doces", itens: ["Brownie"] },
-      {
-        titulo: "Personalizado",
-        itens: ["Foto Impressa", "Caixa de Madeira com a marca Le Brunch"],
-      },
-    ],
-  },
-];
-
-/* ——————————————————————— Linha Essencial ——————————————————————— */
-
-const essencial: Cesta[] = [
-  {
-    // Fora do catálogo oficial (que começa no Café P): itens tirados da
-    // foto do ensaio, preço a confirmar com a Rebeca.
-    slug: "cafe-pp",
-    nome: "Café PP",
-    categoria: "essencial",
-    chamada:
-      "O menor da linha: croissant, suco, geleia, biscoitos e frutas frescas na bandeja de madeira.",
-    preco: null,
-    imagem: foto("cafe-pp-1"),
-    fotos: [foto("cafe-pp-2")],
-    foco: "50% 50%",
-    rascunho: true,
-    secoes: [
-      { titulo: "Salgados", itens: ["Croissant"] },
-      {
-        titulo: "Doces",
-        itens: ["Geleia", "Biscoito Biscoff", "Biscoitos Finos", "Castanhas Caramelizadas"],
-      },
-      { titulo: "Bebidas", itens: ["Suco de Tangerina Integral — 269ml"] },
-      { titulo: "Frutas", itens: ["Uvas", "Mirtilos", "Morango"] },
+      { titulo: "Salgados", itens: ["Croissant", "Torradas Slim Toast"] },
+      { titulo: "Doces", itens: ["Geleia", "Biscoitos Finos", "Castanhas Caramelizadas"] },
+      { titulo: "Bebidas", itens: ["Suco Integral 250 ml"] },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    slug: "cafe-p",
-    nome: "Café P",
-    categoria: "essencial",
-    chamada: "O clássico da casa: enxuto no tamanho, generoso no cuidado.",
-    preco: 243,
+    slug: "despertar",
+    nome: "Despertar",
+    categoria: "classica",
+    chamada: "Um bom-dia caprichado, com tudo o que uma manhã especial pede",
+    preco: 229,
     serve: "1 a 2 pessoas",
-    imagem: foto("cafe-p-1"),
+    imagem: foto("despertar-1"),
     foco: "50% 55%",
     secoes: [
       {
         titulo: "Salgados",
         itens: [
-          "Croissants",
-          "Tortaninho de Calabresa",
+          "Croissant",
           "Pães de Queijo Recheados",
+          "Tortaninho de Calabresa",
+          "Mini Cinnamon Roll",
           "Torradas Slim Toast",
-          "1 Queijo e 1 Charcutaria",
           "Manteiga Francesa",
+          "Queijo",
+          "Charcutaria",
         ],
       },
       {
         titulo: "Doces",
-        itens: [
-          "Biscoitos Finos",
-          "Stroopwafel",
-          "Doce de Leite, Nutella ou Geleia",
-          "Castanhas",
-          "Chocolate",
-        ],
+        itens: ["Geleia", "Stroopwafel", "Biscoitos Finos", "Chocolate", "Castanhas Caramelizadas"],
       },
       {
         titulo: "Bebidas",
-        itens: [
-          "Café para Coar — Drip Coffee",
-          "Sachê de Chá Inglês — Twinings",
-          "Suco Integral — 300ml",
-        ],
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings", "Suco Integral 250 ml"],
       },
-      { titulo: "Frutas", itens: ["Frutas da Estação", "Frutas Secas"] },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    slug: "cafe-m",
-    nome: "Café M",
-    categoria: "essencial",
-    chamada: "Mais variedade de doces e queijos para dividir com calma.",
-    preco: 303,
-    serve: "2 pessoas",
-    imagem: foto("cafe-m-1"),
-    fotos: [foto("cafe-m-5"), foto("cafe-m-6")],
+    slug: "encanto",
+    nome: "Encanto",
+    categoria: "classica",
+    chamada: "Uma manhã sem pressa, com variedade para saborear com calma",
+    preco: 309,
+    serve: "até 3 pessoas",
+    imagem: foto("encanto-1"),
+    fotos: [foto("encanto-2"), foto("encanto-3")],
     foco: "50% 60%",
     destaque: true,
     secoes: [
@@ -265,50 +197,44 @@ const essencial: Cesta[] = [
         titulo: "Salgados",
         itens: [
           "Croissants",
-          "Tortaninho de Calabresa",
           "Pães de Queijo Recheados",
+          "Tortaninho de Calabresa",
+          "Tortaninho de Canela",
           "Torradas Slim Toast",
-          "2 Queijos e 1 Charcutaria",
           "Manteiga Francesa",
+          "2 Tipos de Queijo",
+          "Charcutaria",
         ],
       },
       {
         titulo: "Doces",
         itens: [
-          "Muffin",
-          "Biscoitos Finos",
-          "Stroopwafel",
-          "Doce de Leite ou Nutella",
-          "Geleia",
           "Iogurte ou Pudim",
-          "Castanhas",
+          "Geleia",
+          "Nutella ou Doce de Leite",
+          "Stroopwafel",
+          "Biscoitos Finos",
           "Chocolate",
+          "Castanhas Caramelizadas",
         ],
       },
       {
         titulo: "Bebidas",
-        itens: [
-          "Café para Coar — Drip Coffee",
-          "Sachê de Chá Inglês — Twinings",
-          "Suco Integral — 300ml",
-        ],
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings", "Suco Integral 250 ml"],
       },
-      {
-        titulo: "Frutas",
-        itens: ["Frutas Frescas da Estação", "Frutas Secas"],
-      },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    slug: "cafe-g",
-    nome: "Café G",
-    categoria: "essencial",
-    chamada:
-      "A mesa completa: pães selecionados, curadoria ampliada e suco de 500ml.",
-    preco: 343,
-    serve: "2 a 3 pessoas",
-    imagem: foto("cafe-g-1"),
-    fotos: [foto("cafe-g-2"), foto("cafe-g-3")],
+    slug: "presenca",
+    nome: "Presença",
+    categoria: "classica",
+    chamada: "A mesa completa, para estar presente nos momentos que importam",
+    preco: 379,
+    serve: "3 a 4 pessoas",
+    imagem: foto("presenca-1"),
+    fotos: [foto("presenca-2"), foto("presenca-3")],
     foco: "50% 55%",
     destaque: true,
     secoes: [
@@ -316,487 +242,369 @@ const essencial: Cesta[] = [
         titulo: "Salgados",
         itens: [
           "Croissants",
-          "Pães Selecionados",
           "Pães de Queijo Recheados",
+          "Seleção de Pães Artesanais",
+          "Cinnamon Roll",
           "Torradas Slim Toast",
-          "2 Queijos e 1 Charcutaria",
           "Manteiga Francesa",
+          "2 Tipos de Queijo",
+          "Charcutaria",
         ],
       },
       {
         titulo: "Doces",
         itens: [
-          "Muffin",
-          "Biscoitos Finos",
-          "Stroopwafel",
-          "Doce de Leite ou Nutella",
-          "Geleia",
           "Iogurte ou Pudim",
-          "Castanhas",
-          "Chocolate",
+          "Geleia",
+          "Nutella ou Doce de Leite",
+          "Stroopwafel",
+          "Biscoitos Finos",
+          "Chocolates",
+          "Castanhas Caramelizadas",
         ],
       },
       {
         titulo: "Bebidas",
-        itens: [
-          "Café para Coar — Drip Coffee",
-          "Sachê de Chá Inglês — Twinings",
-          "Suco Integral — 500ml",
-        ],
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings", "Suco Integral 500 ml"],
       },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: [cartao] },
+    ],
+  },
+  {
+    slug: "fazenda",
+    nome: "Fazenda",
+    categoria: "classica",
+    chamada: "Para quem ama o ritual do café coado, como se faz na fazenda",
+    preco: 229,
+    serve: "1 pessoa",
+    imagem: foto("fazenda-1"),
+    fotos: [foto("fazenda-2"), foto("fazenda-3"), foto("fazenda-4"), foto("fazenda-5")],
+    foco: "50% 50%",
+    destaque: true,
+    observacao: canecaPersonalizada,
+    secoes: [
+      { titulo: "Doces", itens: ["Brownie"] },
+      { titulo: "Bebidas", itens: ["Café Moído 250 g"] },
       {
-        titulo: "Frutas",
-        itens: ["Frutas Frescas da Estação", "Frutas Secas"],
+        titulo: "Acompanha",
+        itens: ["Caneca Personalizada", "Coador de Pano", "Foto Polaroide", cartao],
       },
+    ],
+  },
+  {
+    slug: "aquarela",
+    nome: "Aquarela",
+    categoria: "classica",
+    chamada: "A alegria da infância em cores, sabores e balões",
+    preco: 279,
+    serve: "1 criança",
+    imagem: foto("aquarela-1"),
+    fotos: [foto("aquarela-2"), foto("aquarela-3"), foto("aquarela-4")],
+    foco: "50% 60%",
+    secoes: [
+      { titulo: "Salgados", itens: ["Pães de Queijo Recheados", "Pães de Brioche"] },
+      { titulo: "Doces", itens: ["Bolo Decorado", "Oreo", "M&M's", "Balas Fini", "Kinder Ovo"] },
+      { titulo: "Bebidas", itens: ["Suco Integral"] },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: ["Balões", "Mini Baleiro", cartao] },
     ],
   },
 ];
 
 /* ———————————————————————— Linha Premium ———————————————————————— */
 
+/** A Brinde está nos dois catálogos; no de Natal, com as fotos da guirlanda. */
+const brinde: Omit<Cesta, "slug" | "categoria" | "imagem" | "fotos" | "foco"> = {
+  nome: "Brinde",
+  chamada: "Para brindar e compartilhar bons momentos à mesa",
+  preco: 389,
+  serve: "2 a 3 pessoas",
+  observacao: "Disponível com vinho ou espumante. Consulte valores.",
+  secoes: [
+    {
+      titulo: "Salgados",
+      itens: ["Queijo Amarelo", "Queijo Brie", "Salame", "Lombo Canadense", "Presunto Cru"],
+    },
+    { titulo: "Doces", itens: ["Geleia", "Castanhas Caramelizadas"] },
+    { titulo: "Bebidas", itens: ["Suco Integral 750 ml"] },
+    { titulo: "Frutas", itens: ["Frutas Frescas da Estação", "Frutas Secas"] },
+    { titulo: "Acompanha", itens: [cartao] },
+  ],
+};
+
 const premium: Cesta[] = [
   {
-    slug: "caixa-verde-bento",
-    nome: "Caixa Verde Bentô",
+    slug: "pausa",
+    nome: "Pausa",
     categoria: "premium",
-    chamada:
-      "A caixa redonda verde da casa, com bolinho bentô decorado no centro e laço de cetim.",
-    preco: null,
+    chamada: "Um convite para desacelerar e aproveitar um momento só seu",
+    preco: 179,
+    serve: "1 pessoa",
+    imagem: foto("pausa-1"),
+    fotos: [foto("pausa-2"), foto("pausa-3"), foto("pausa-4")],
+    foco: "50% 60%",
+    observacao: canecaPersonalizada,
+    secoes: [
+      { titulo: "Doces", itens: ["Brownie", "Mel"] },
+      {
+        titulo: "Bebidas",
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings"],
+      },
+      { titulo: "Acompanha", itens: ["Caneca Personalizada", "Pegador de Mel", cartao] },
+    ],
+  },
+  {
+    slug: "comemore",
+    nome: "Comemore",
+    categoria: "premium",
+    chamada: "Para celebrar as datas especiais com um bolo feito para a ocasião",
+    preco: 379,
     serve: "2 pessoas",
-    imagem: foto("caixa-verde-1"),
-    fotos: [foto("caixa-verde-5"), foto("caixa-verde-2"), foto("caixa-verde-3"), foto("caixa-verde-6")],
+    imagem: foto("comemore-1"),
+    fotos: [
+      foto("comemore-2"),
+      foto("comemore-3"),
+      foto("comemore-4"),
+      foto("comemore-5"),
+      foto("comemore-6"),
+    ],
     foco: "50% 65%",
-    rascunho: true,
+    antecedenciaDias: 3,
     secoes: [
       {
         titulo: "Salgados",
         itens: [
           "Croissants",
-          "Pães de Queijo",
-          "Queijo e Charcutaria",
-          "Torradas",
+          "Pães de Queijo Recheados",
+          "Tortaninho de Calabresa",
+          "Torradas Slim Toast",
+          "Manteiga Francesa",
+          "Queijo",
+          "Charcutaria",
         ],
       },
       {
         titulo: "Doces",
         itens: [
-          "Bolinho Bentô Cake Decorado",
-          "Stroopwafel",
+          "Bentô Cake Personalizado",
           "Geleia",
+          "Stroopwafel",
+          "Biscoitos Finos",
           "Castanhas Caramelizadas",
         ],
       },
       {
         titulo: "Bebidas",
-        itens: [
-          "Suco de Uva Integral — Casa Madeira",
-          "Café para Coar — Baggio",
-          "Sachê de Chá — Twinings",
-        ],
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings", "Suco Integral 250 ml"],
       },
-      { titulo: "Frutas", itens: ["Uvas", "Morangos", "Laranja Desidratada"] },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    slug: "cesta-flores-do-campo",
-    nome: "Cesta Flores do Campo",
+    ...brinde,
+    slug: "brinde",
     categoria: "premium",
-    chamada:
-      "Cesta de palha com buquê de flores do campo, bolo de chocolate e café para coar.",
-    preco: null,
-    serve: "2 pessoas",
-    imagem: foto("cesta-flores-1"),
-    fotos: [
-      foto("cesta-flores-2"),
-      foto("cesta-flores-5"),
-      foto("cesta-flores-8"),
-      foto("cesta-flores-4"),
-      foto("cesta-flores-6"),
-      foto("cesta-flores-7"),
-    ],
+    imagem: foto("brinde-1"),
+    fotos: [foto("brinde-2"), foto("brinde-3")],
     foco: "50% 50%",
-    rascunho: true,
-    secoes: [
-      {
-        titulo: "Doces",
-        itens: [
-          "Bolo de Chocolate",
-          "Iogurte — Delicari",
-          "Geleia",
-          "Pão Doce",
-        ],
-      },
-      { titulo: "Salgados", itens: ["Seleção de Queijos", "Torradas"] },
-      {
-        titulo: "Bebidas",
-        itens: [
-          "Suco de Uva Integral — Casa Madeira",
-          "Drip Coffee Chocolate Trufado — Baggio",
-        ],
-      },
-      { titulo: "Para presentear", itens: ["Buquê de Flores do Campo", "Cesta de Palha"] },
-    ],
   },
   {
-    slug: "cesta-bouquet",
-    nome: "Cesta Bouquet",
+    slug: "primavera",
+    nome: "Primavera",
     categoria: "premium",
-    chamada:
-      "Cesta de vime arredondada, com flores, café e guardanapo de tecido para a mesa posta.",
-    preco: null,
+    chamada: "A delicadeza das flores para começar o dia com leveza",
+    preco: 349,
     serve: "1 a 2 pessoas",
-    imagem: foto("cesta-bouquet-1"),
-    fotos: [foto("cesta-bouquet-5"), foto("cesta-bouquet-6"), foto("cesta-bouquet-3"), foto("cesta-bouquet-7")],
-    foco: "50% 50%",
-    rascunho: true,
+    imagem: foto("primavera-1"),
+    fotos: [foto("primavera-2"), foto("primavera-3"), foto("primavera-4"), foto("primavera-5")],
+    foco: "50% 60%",
+    secoes: [
+      { titulo: "Salgados", itens: ["Pão Rústico", "Manteiga Francesa"] },
+      { titulo: "Doces", itens: ["Bolo Caseiro (consulte os sabores)", "Iogurte", "Geleia"] },
+      { titulo: "Bebidas", itens: ["Café para Coar (Drip Coffee)", "Suco Integral 250 ml"] },
+      { titulo: "Acompanha", itens: ["Buquê de Flores Naturais", cartao] },
+    ],
+  },
+  {
+    slug: "extraordinario",
+    nome: "Extraordinário",
+    categoria: "premium",
+    chamada: "Flores naturais e fartura para tornar o dia de alguém inesquecível",
+    preco: 429,
+    serve: "2 a 3 pessoas",
+    imagem: foto("extraordinario-1"),
+    fotos: [
+      foto("extraordinario-2"),
+      foto("extraordinario-3"),
+      foto("extraordinario-4"),
+      foto("extraordinario-5"),
+      foto("extraordinario-6"),
+      foto("extraordinario-7"),
+      // a versão café, sem flores
+      foto("mesa-itens"),
+    ],
+    foco: "50% 60%",
+    observacao:
+      "Também disponível sem flores: no lugar do buquê, vão café moído 250 g e uma xícara.",
     secoes: [
       {
+        titulo: "Salgados",
+        itens: ["Pão Rústico", "Torradas Slim Toast", "Manteiga Francesa", "Queijo", "Charcutaria"],
+      },
+      {
         titulo: "Doces",
-        itens: ["Pão Doce Artesanal", "Iogurte — Delicari", "Geleia"],
+        itens: ["Bolo Decorado", "Iogurte ou Pudim", "Geleia", "Castanhas Caramelizadas"],
       },
       {
         titulo: "Bebidas",
-        itens: [
-          "Suco de Uva Integral — Casa Madeira",
-          "Drip Coffee — Baggio",
-        ],
+        itens: ["Café para Coar (Drip Coffee)", "Sachê de Chá Inglês Twinings", "Suco Integral 500 ml"],
       },
-      {
-        titulo: "Para presentear",
-        itens: ["Buquê de Flores", "Guardanapo de Tecido", "Cesta de Vime"],
-      },
-    ],
-  },
-];
-
-/* ———————————————————————— Presentes & Mimos ———————————————————————— */
-
-const presentes: Cesta[] = [
-  {
-    slug: "box-caneca-inicial",
-    nome: "Box Caneca com Inicial",
-    categoria: "presentes",
-    chamada:
-      "Caixa chapéu verde com caneca de vidro gravada com a inicial, café, mel e um ramo de eucalipto.",
-    preco: null,
-    serve: "1 pessoa",
-    imagem: foto("box-caneca-1"),
-    fotos: [foto("box-caneca-3"), foto("box-caneca-4"), foto("box-caneca-5")],
-    foco: "50% 55%",
-    rascunho: true,
-    secoes: [
-      {
-        titulo: "Personalizado",
-        itens: ["Caneca de Vidro com Inicial Gravada"],
-      },
-      {
-        titulo: "Para o café",
-        itens: ["Café — Baggio", "Mel com Pegador de Madeira"],
-      },
-      { titulo: "Doces", itens: ["Brownie"] },
-      { titulo: "Para presentear", itens: ["Caixa Chapéu Verde", "Ramo de Eucalipto"] },
-    ],
-  },
-  {
-    slug: "cesta-kids",
-    nome: "Cesta Kids",
-    categoria: "presentes",
-    chamada:
-      "Caixote de madeira com balões, bolo de chocolate e as guloseimas que fazem a festa das crianças.",
-    preco: null,
-    serve: "1 criança",
-    imagem: foto("cesta-kids-1"),
-    fotos: [foto("cesta-kids-2"), foto("cesta-kids-5"), foto("cesta-kids-6")],
-    foco: "50% 60%",
-    rascunho: true,
-    secoes: [
-      {
-        titulo: "Doces",
-        itens: ["Bolo de Chocolate Decorado", "Kinder Ovo", "M&M's", "Guloseimas"],
-      },
-      { titulo: "Bebidas", itens: ["Suco de Laranja Natural"] },
-      { titulo: "Frutas", itens: ["Uvas"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Balões", "Guardanapo de Bolinhas", "Caixote de Madeira"],
-      },
+      { titulo: "Frutas", itens: ["Frutas Frescas da Estação"] },
+      { titulo: "Acompanha", itens: ["Buquê de Flores Naturais", cartao] },
     ],
   },
 ];
 
 /* ———————————————————————— Coleção de Natal ———————————————————————— */
 
-/**
- * As duas latas de Natal saem em uma de duas embalagens: a sacolinha de
- * tecido com pinheiros (a das fotos da lata) ou o Saco de Noel. O Saco de
- * Noel não é um modelo à parte.
- */
-const embalagensDaLata: Embalagem[] = [
-  {
-    nome: "Sacola de Tecido com Pinheiros",
-    descricao: "A sacolinha de alça estampada de pinheiros, combinando com a lata.",
-  },
-  {
-    nome: "Saco de Noel",
-    descricao: "Saco de algodão estampado com a árvore de Natal e laço de cetim vermelho.",
-  },
-];
-
+/** Na ordem do catálogo de Natal: do menor preço ao maior. */
 const natal: Cesta[] = [
   {
-    slug: "natal-tabua-de-frios",
-    nome: "Caixa Tábua & Merlot",
+    slug: "natal-lata-brownie",
+    nome: "Lata Brownie Natal",
     categoria: "natal",
-    chamada:
-      "A caixa verde de gaveta: suco de uva Merlot em cima, tábua de queijos e frios embaixo, com laço estrelado.",
-    preco: null,
+    chamada: "Um carinho de Natal para lembrar de quem é especial",
+    preco: 79,
+    serve: "1 pessoa",
+    imagem: foto("natal-lata-brownie-1"),
+    fotos: [foto("natal-lata-brownie-2"), foto("natal-lata-brownie-3"), foto("natal-lata-brownie-4")],
+    foco: "50% 70%",
+    secoes: [
+      { titulo: "Doces", itens: ["Brownies"] },
+      { titulo: "Acompanha", itens: ["Bolsinha de Linho", cartao] },
+    ],
+  },
+  {
+    slug: "natal-caixa-carrinho",
+    nome: "Caixa Carrinho com Caneca",
+    categoria: "natal",
+    chamada: "Um mimo para aquecer as manhãs de dezembro",
+    preco: 89,
+    serve: "1 pessoa",
+    imagem: foto("natal-carrinho-1"),
+    fotos: [
+      foto("natal-carrinho-2"),
+      foto("natal-carrinho-3"),
+      foto("natal-carrinho-4"),
+      foto("natal-carrinho-5"),
+    ],
+    foco: "50% 60%",
+    secoes: [
+      { titulo: "Presente", itens: ["Caneca de Natal"] },
+      { titulo: "Doces", itens: ["Brownie"] },
+      { titulo: "Acompanha", itens: [cartao] },
+    ],
+  },
+  {
+    slug: "natal-lata-alta-panetone",
+    nome: "Lata Alta e Panetone",
+    categoria: "natal",
+    chamada: "O sabor do Natal em um presente simples e certeiro",
+    preco: 129,
+    serve: "2 a 3 pessoas",
+    imagem: foto("natal-lata-alta-1"),
+    fotos: [foto("natal-lata-alta-2")],
+    foco: "50% 75%",
+    secoes: [
+      { titulo: "Doces", itens: ["Panetone Artesanal"] },
+      { titulo: "Acompanha", itens: ["Bolsinha de Linho", cartao] },
+    ],
+  },
+  {
+    slug: "natal-acrilico-espumante-lata",
+    nome: "Acrílico Espumante e Lata",
+    categoria: "natal",
+    chamada: "Para brindar o fim de ano com quem você gosta",
+    preco: 219,
     serve: "2 pessoas",
-    imagem: foto("natal-vinho-frios-2"),
+    imagem: foto("natal-acrilico-lata-1"),
     fotos: [
-      foto("natal-vinho-frios-6"),
-      foto("natal-vinho-frios-3"),
-      foto("natal-vinho-frios-7"),
-      foto("natal-vinho-frios-8"),
-      foto("natal-vinho-frios-9"),
-      foto("natal-vinho-frios-10"),
-    ],
-    foco: "50% 65%",
-    destaque: true,
-    rascunho: true,
-    secoes: [
-      { titulo: "Bebida", itens: ["Suco de Uva Varietal Merlot — Casa Madeira"] },
-      {
-        titulo: "Tábua",
-        itens: [
-          "Queijo Brie",
-          "Queijos Amarelos",
-          "Presunto Cru",
-          "Salame em Rosa",
-          "Torradas",
-          "Geleia",
-          "Castanhas Caramelizadas",
-        ],
-      },
-      {
-        titulo: "Frutas",
-        itens: ["Morangos", "Mirtilos", "Uvas", "Laranja Desidratada", "Physalis"],
-      },
-    ],
-  },
-  {
-    slug: "natal-caixa-petiscos",
-    nome: "Caixa de Petiscos",
-    categoria: "natal",
-    chamada:
-      "Caixa redonda com quatro divisões de doces finos e castanhas, fechada com laço de veludo estrelado.",
-    preco: null,
-    imagem: foto("natal-petiscos-1"),
-    fotos: [foto("natal-petiscos-3"), foto("natal-petiscos-2"), foto("natal-petiscos-6"), foto("natal-petiscos-7")],
-    foco: "50% 72%",
-    destaque: true,
-    rascunho: true,
-    secoes: [
-      {
-        titulo: "Na caixa",
-        itens: [
-          "Castanhas Caramelizadas",
-          "Trufas de Chocolate",
-          "Mendiants de Chocolate com Pistache e Frutas",
-          "Castanhas com Cobertura Dourada",
-        ],
-      },
-      {
-        titulo: "Para presentear",
-        itens: ["Caixa Redonda Verde", "Laço de Veludo Estrelado"],
-      },
-    ],
-  },
-  {
-    slug: "natal-espumante-e-panetone",
-    nome: "Kit Brinde & Panetone",
-    categoria: "natal",
-    chamada:
-      "Bolsa de acrílico com espumante e panetone embrulhado em veludo verde. Pronto para entregar.",
-    preco: null,
-    imagem: foto("natal-espumante-panetone-1"),
-    fotos: [
-      foto("natal-espumante-panetone-2"),
-      foto("natal-espumante-panetone-4"),
-      foto("natal-espumante-panetone-5"),
+      foto("natal-acrilico-lata-2"),
+      foto("natal-acrilico-lata-3"),
+      foto("natal-acrilico-lata-4"),
+      foto("natal-acrilico-lata-5"),
+      foto("natal-acrilico-lata-6"),
     ],
     foco: "50% 70%",
-    rascunho: true,
     secoes: [
-      { titulo: "Bebida", itens: ["Espumante Freixenet Semi Seco — mini"] },
-      { titulo: "Doce", itens: ["Panetone de Chocolate"] },
-      {
-        titulo: "Para presentear",
-        itens: ["Bolsa de Acrílico", "Embrulho de Veludo Estrelado", "Tag Boas Festas"],
-      },
+      { titulo: "Bebidas", itens: ["Espumante Freixenet"] },
+      { titulo: "Frutas", itens: ["Mix de Nuts", "Frutas Secas"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    // A foto 68 ("espumante-lata") é o mesmo kit, com a lata
-    // fechada e o laço — a Rebeca confirmou que é um modelo só.
-    slug: "natal-boas-festas",
-    nome: "Kit Boas Festas",
+    slug: "natal-acrilico-espumante-panetone",
+    nome: "Acrílico Espumante e Panetone",
     categoria: "natal",
-    chamada:
-      "Espumante e uma lata dourada de frutas secas e castanhas, fechada com laço de organza estrelado e a tag Boas Festas.",
-    preco: null,
-    imagem: foto("natal-boas-festas-2"),
+    chamada: "O brinde e o panetone para celebrar a ceia",
+    preco: 239,
+    serve: "2 a 3 pessoas",
+    imagem: foto("natal-acrilico-panetone-1"),
     fotos: [
-      foto("natal-boas-festas-4"),
-      foto("natal-boas-festas-5"),
-      foto("natal-espumante-lata-3"),
+      foto("natal-acrilico-panetone-2"),
+      foto("natal-acrilico-panetone-3"),
+      foto("natal-acrilico-panetone-4"),
+      foto("natal-acrilico-panetone-5"),
     ],
-    foco: "50% 65%",
-    rascunho: true,
+    foco: "50% 70%",
     secoes: [
-      { titulo: "Bebida", itens: ["Espumante Freixenet Semi Seco — mini"] },
-      {
-        titulo: "Na lata",
-        itens: ["Damascos", "Tâmaras", "Pistaches", "Castanhas Caramelizadas"],
-      },
-      {
-        titulo: "Para presentear",
-        itens: ["Lata Dourada", "Laço de Organza Estrelado", "Bolsa de Acrílico", "Tag Boas Festas"],
-      },
+      { titulo: "Doces", itens: ["Panetone Artesanal"] },
+      { titulo: "Bebidas", itens: ["Espumante Freixenet"] },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
   },
   {
-    slug: "natal-lata-de-brownies",
-    nome: "Lata de Brownies",
+    slug: "natal-caixa-de-doces",
+    nome: "Caixa de Doces Natal",
     categoria: "natal",
-    chamada:
-      "Lata Feliz Natal estampada de pinheiros, cheia de brownies. Vai na sacolinha de tecido ou no Saco de Noel.",
-    preco: null,
-    imagem: foto("natal-lata-cookies-1"),
-    fotos: [
-      foto("natal-lata-cookies-5"),
-      foto("natal-lata-cookies-6"),
-      foto("natal-lata-cookies-4"),
-      foto("natal-saquinho-1"),
-    ],
-    foco: "50% 72%",
-    rascunho: true,
-    secoes: [
-      { titulo: "Na lata", itens: ["Brownies"] },
-      { titulo: "Para presentear", itens: ["Lata Feliz Natal"] },
-    ],
-    embalagens: embalagensDaLata,
-  },
-  {
-    // O panetone vai dentro da lata alta — não é "lata e panetone".
-    slug: "natal-lata-de-panetone",
-    nome: "Lata de Panetone",
-    categoria: "natal",
-    chamada:
-      "Mini panetone de chocolate guardado na lata Feliz Natal alta. Vai na sacolinha de tecido ou no Saco de Noel.",
-    preco: null,
-    // Capa com o panetone saindo da lata: é o que explica o modelo.
-    imagem: foto("natal-lata-panetone-1"),
+    chamada: "Doces finos para adoçar as festas de fim de ano",
+    preco: 259,
+    serve: "2 a 4 pessoas",
+    imagem: foto("natal-doces-1"),
+    fotos: [foto("natal-doces-2"), foto("natal-doces-3"), foto("natal-doces-4"), foto("natal-doces-5")],
     foco: "50% 75%",
-    rascunho: true,
+    destaque: true,
     secoes: [
-      { titulo: "Na lata", itens: ["Mini Panetone de Chocolate"] },
-      { titulo: "Para presentear", itens: ["Lata Feliz Natal Alta"] },
-    ],
-    embalagens: embalagensDaLata,
-  },
-  {
-    slug: "natal-kit-caneca",
-    nome: "Kit Caneca de Natal",
-    categoria: "natal",
-    chamada:
-      "Caneca natalina, brownie e a caixinha do caminhãozinho de Natal com laço xadrez.",
-    preco: null,
-    imagem: foto("natal-caneca-3"),
-    fotos: [foto("natal-caneca-5"), foto("natal-caneca-6"), foto("natal-caneca-7")],
-    foco: "50% 75%",
-    rascunho: true,
-    secoes: [
-      { titulo: "Doces", itens: ["Brownie"] },
-      {
-        titulo: "Para presentear",
-        itens: [
-          "Caneca Natalina",
-          "Porta-copo Xadrez",
-          "Caixa Feliz Natal com Laço Xadrez",
-        ],
-      },
-    ],
-  },
-];
-
-export const cestas: Cesta[] = [
-  ...prontaEntrega,
-  ...essencial,
-  ...premium,
-  ...presentes,
-  ...natal,
-];
-
-/**
- * Modelo confirmado que não entrou no ensaio de outubro/2026, então está
- * fora da vitrine (as fotos antigas saíram do site). Para voltar, basta
- * fotografar, preencher `imagem` e mover para `essencial`.
- */
-export const foraDaVitrine: Cesta[] = [
-  {
-    slug: "cafe-com-bento-cake",
-    nome: "Café com Bentô Cake",
-    categoria: "essencial",
-    chamada: "Com bolinho bentô personalizado — o recado escrito no doce.",
-    preco: 330,
-    serve: "2 pessoas",
-    imagem: null,
-    secoes: [
-      {
-        titulo: "Salgados",
-        itens: [
-          "Croissants",
-          "Pães Selecionados",
-          "Pães de Queijo Recheados",
-          "Torradas Slim Toast",
-          "2 Queijos e 1 Charcutaria",
-          "Manteiga Francesa",
-        ],
-      },
       {
         titulo: "Doces",
-        itens: [
-          "Bolinho Bentô Cake Personalizado",
-          "Biscoitos Finos",
-          "Stroopwafel",
-          "Doce de Leite, Geleia ou Nutella",
-          "Castanhas",
-          "Chocolate",
-        ],
+        itens: ["Trufas Belgas", "Mendiants", "Pepitas de Ouro", "Castanhas Caramelizadas"],
       },
-      {
-        titulo: "Bebidas",
-        itens: [
-          "Café para Coar — Drip Coffee",
-          "Sachê de Chá Inglês — Twinings",
-          "Suco Integral — 500ml",
-        ],
-      },
-      {
-        titulo: "Frutas",
-        itens: ["Frutas Frescas da Estação", "Frutas Secas"],
-      },
+      { titulo: "Acompanha", itens: [cartao] },
     ],
+  },
+  {
+    ...brinde,
+    slug: "natal-brinde",
+    categoria: "natal",
+    imagem: foto("natal-brinde-1"),
+    fotos: [foto("natal-brinde-2"), foto("natal-brinde-3"), foto("natal-brinde-4")],
+    foco: "50% 65%",
+    destaque: true,
   },
 ];
 
-/** Adicionais do catálogo oficial. */
+export const cestas: Cesta[] = [...classica, ...premium, ...natal];
+
+/** Adicionais do catálogo da marca (31/10/2026). */
 export const adicionais = [
-  { nome: "Croissant 60g", preco: 10 },
-  { nome: "Cinnamon Roll 90g", preco: 10 },
-  { nome: "Geleia", preco: 10 },
-  { nome: "Nutella", preco: 10 },
+  { nome: "Croissant 60 g", preco: 10 },
+  { nome: "Cinnamon Roll 90 g", preco: 10 },
+  { nome: "Geleia", preco: 14 },
+  { nome: "Nutella", preco: 14 },
   { nome: "Doce de Leite", preco: 10 },
+  { nome: "Foto Polaroide", preco: 14 },
   { nome: "Bentô Cake", preco: 100 },
 ];
 
@@ -839,8 +647,60 @@ export function categoriaDe(slug: CategoriaSlug): Categoria {
   return encontrada;
 }
 
+/**
+ * Quantas pessoas a cesta serve, lido do "serve" do catálogo ("1 a 2
+ * pessoas", "até 3 pessoas", "1 criança"...): [mínimo, máximo].
+ */
+export function pessoasDe(cesta: Pick<Cesta, "serve">): [number, number] | null {
+  const n = cesta.serve?.match(/\d+/g)?.map(Number);
+  if (!n?.length) return null;
+  if (cesta.serve?.startsWith("até")) return [1, n[0]];
+  return [n[0], n[n.length - 1]];
+}
+
+/** Opções de "para quantas pessoas" do filtro. */
+export const opcoesPessoas = [
+  { slug: "1", nome: "1 pessoa", aceita: ([min]: [number, number]) => min <= 1 },
+  { slug: "2", nome: "2 pessoas", aceita: ([min, max]: [number, number]) => min <= 2 && max >= 2 },
+  { slug: "3", nome: "3 ou mais", aceita: ([, max]: [number, number]) => max >= 3 },
+] as const;
+
+export type Filtros = { linha: string; preco: string; pessoas: string };
+
+/** A cesta passa no filtro? Valor vazio é "qualquer um". */
+export function passaNoFiltro(c: Cesta, f: Filtros): boolean {
+  if (f.linha && c.categoria !== f.linha) return false;
+  if (f.preco) {
+    const faixa = faixasDePreco.find((x) => x.slug === f.preco);
+    if (faixa && (c.preco === null || c.preco < faixa.min || c.preco > faixa.max)) return false;
+  }
+  if (f.pessoas) {
+    const opcao = opcoesPessoas.find((x) => x.slug === f.pessoas);
+    const faixa = pessoasDe(c);
+    if (opcao && (!faixa || !opcao.aceita(faixa))) return false;
+  }
+  return true;
+}
+
+/**
+ * O resultado do filtro. Sem linha escolhida, a Brinde de Natal sai: é a
+ * mesma Brinde da Linha Premium, com outras fotos.
+ */
+export function filtrarCestas(f: Filtros): Cesta[] {
+  return cestas.filter(
+    (c) => passaNoFiltro(c, f) && (f.linha || c.slug !== "natal-brinde"),
+  );
+}
+
 /** As linhas do ano todo, sem a coleção sazonal. */
 export const linhasDoAno = categorias.filter((c) => !c.tema);
+
+/** "24h de antecedência", ou os dias do modelo que pede mais tempo. */
+export function antecedenciaDe(cesta: Pick<Cesta, "antecedenciaDias">): string {
+  return cesta.antecedenciaDias && cesta.antecedenciaDias > 1
+    ? `${cesta.antecedenciaDias} dias de antecedência`
+    : "24h de antecedência";
+}
 
 export function formatarPreco(valor: number): string {
   return valor.toLocaleString("pt-BR", {

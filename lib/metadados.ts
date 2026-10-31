@@ -15,7 +15,7 @@ import { site } from "@/data/site";
 
 /** Título e descrição da home — também o padrão do layout. */
 export const tituloInicio = `${site.nomeCompleto} — Cestas de café da manhã em SP e Grande ABC`;
-export const descricaoInicio = `${site.descricao} ${site.premio.nome} ${site.premio.ano}.`;
+export const descricaoInicio = site.descricao;
 
 /** Imagem gerada por `scripts/gerar-og.py`, em `public/og/<chave>.jpg`. */
 export function imagemOg(chave: string): string {

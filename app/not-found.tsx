@@ -6,7 +6,7 @@ export default function NaoEncontrado() {
       <div className="mx-auto flex max-w-lg flex-col items-center gap-7 py-10">
         <Ornamento />
         <Olho>Erro 404</Olho>
-        <h1 className="titulo text-[clamp(2rem,8vw,3.5rem)] text-balance">
+        <h1 className="titulo text-[clamp(1.625rem,8vw,3.5rem)] text-balance">
           Essa página saiu para{" "}
           <span className="script text-[1.1em] leading-none text-terra-700">
             entrega

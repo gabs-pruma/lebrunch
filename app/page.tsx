@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { descricaoInicio, metadadosPagina, tituloInicio } from "@/lib/metadados";
 import { Hero } from "@/components/hero";
 import { Secao, Ornamento, BotaoLink, Olho } from "@/components/ui";
-import { LinhaEditorial } from "@/components/linha-editorial";
+import { AtalhosRedondos } from "@/components/atalhos-redondos";
 import { GradeCestas } from "@/components/grade-cestas";
 import { DepoimentosSecao } from "@/components/depoimentos-secao";
 import { Revelar } from "@/components/revelar";
@@ -17,13 +17,14 @@ import {
   IconeEstrela,
   IconeBrilho,
 } from "@/components/icones";
-import { SeloPremioMedalha } from "@/components/selo-premio";
 import { FotoParallax } from "@/components/foto-parallax";
-import { GaleriaDetalhes, type FotoDetalhe } from "@/components/galeria-detalhes";
 import {
   cestas,
   cestasDaCategoria,
   comoFunciona,
+  faixasDePreco,
+  filtrarCestas,
+  hrefCategoria,
   linhasDoAno,
 } from "@/data/cestas";
 import { linkWhatsApp, mensagens, site } from "@/data/site";
@@ -35,77 +36,102 @@ export const metadata: Metadata = metadadosPagina({
   og: "inicio",
 });
 
-/** Fotos de detalhe das cestas, para a galeria. */
-const DETALHES: FotoDetalhe[] = [
-  // abre no trabalho da Rebeca (o bentô decorado), não num item de mercado
-  { src: "/ensaio/caixa-verde-2.webp", alt: "Caixa verde redonda com bolinho bentô decorado, croissants, uvas e morango", legenda: "Caixa Verde Bentô" },
-  { src: "/ensaio/cafe-g-3.webp", alt: "Detalhe da bandeja Café G com pães de queijo, morangos, uvas, kiwi, queijo e iogurte", legenda: "Café G" },
-  { src: "/ensaio/cesta-flores-6.webp", alt: "Flores do campo, suco de uva, café Baggio, manteiga e bolo de chocolate dentro da cesta de palha", legenda: "Cesta Flores do Campo" },
-  { src: "/ensaio/cafe-m-6.webp", alt: "Croissants, pães de queijo, manteiga Isigny, stroopwafel, laranja desidratada e morangos na bandeja do Café M", legenda: "Café M" },
-  { src: "/ensaio/cafe-coado-7.webp", alt: "Caixa de madeira com café Baggio, coador de pano e caneca de cerâmica", legenda: "Caixa Café Coado" },
-  { src: "/ensaio/cesta-bouquet-3.webp", alt: "Cesta de palha com flores cor-de-rosa, pão no saquinho de tecido florido com laço vermelho e iogurte grego", legenda: "Cesta Bouquet" },
-  { src: "/ensaio/cesta-kids-2.webp", alt: "Caixote de madeira com bolo de chocolate, Kinder Ovo, M&M's e suco", legenda: "Cesta Kids" },
-  { src: "/ensaio/box-caneca-4.webp", alt: "Caixa redonda verde da Le Brunch com caneca de vidro, café Baggio e ramo de eucalipto", legenda: "Box Caneca com Inicial" },
-];
-
 export default function Home() {
   const natal = cestasDaCategoria("natal");
-  const vitrineNatal = natal.slice(0, 4);
-  // o destaque da home são os modelos do ano todo: as mais pedidas primeiro
-  const doAno = cestas.filter((c) => c.categoria !== "natal");
-  const vitrine = [
-    ...doAno.filter((c) => c.destaque),
-    ...doAno.filter((c) => !c.destaque),
-  ].slice(0, 6);
+  const vitrineNatal = [
+    ...natal.filter((c) => c.destaque),
+    ...natal.filter((c) => !c.destaque),
+  ].slice(0, 4);
+  // os mais pedidos (marcados com `destaque` em data/cestas.ts), sem o Natal
+  const destaques = cestas.filter((c) => c.destaque && c.categoria !== "natal");
 
   return (
     <>
+      <AtalhosRedondos />
       <Hero />
 
-      {/* ————— os modelos do dia a dia: a vitrine principal ————— */}
-      <Secao id="modelos" className="scroll-mt-16 pt-10 sm:pt-12 lg:pt-14">
+      {/* ————— os mais pedidos ————— */}
+      <Secao id="modelos" className="scroll-mt-16">
         <div className="flex flex-col gap-5 pb-10 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-4">
-            <Olho>Para qualquer dia do ano</Olho>
-            <h2 className="titulo text-[clamp(2rem,6vw,3.5rem)] leading-[1.03]">
-              Os modelos do dia a dia
+            <Olho>Os mais pedidos</Olho>
+            <h2 className="titulo text-[clamp(1.625rem,6vw,3.5rem)] leading-[1.03]">
+              Os favoritos de quem presenteia
             </h2>
           </div>
           <BotaoLink href="/cestas" variante="texto" className="self-start sm:self-auto">
-            Ver todos os {doAno.length} modelos
+            Ver todos os modelos
             <IconeSeta className="size-4" />
           </BotaoLink>
         </div>
-        <GradeCestas cestas={vitrine} rotulo="os modelos do dia a dia" />
+        <GradeCestas cestas={destaques} rotulo="os mais pedidos" />
       </Secao>
 
-      {/* ————— as linhas do ano todo, em fileiras editoriais ————— */}
-      <section id="cestas" className="overflow-hidden py-12 sm:py-14 lg:py-16">
-        <div className="mx-auto w-full max-w-site px-5 sm:px-8">
-          <div className="flex flex-col gap-5 border-b borda-fina pb-10 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="titulo max-w-xl text-[clamp(2rem,6vw,3.5rem)] leading-[1.03] text-balance">
-              Quatro linhas, uma mesma obsessão pelo detalhe
-            </h2>
-            <p className="max-w-xs text-[0.9375rem] leading-relaxed text-tinta-suave">
-              Do presente que sai hoje à cesta de palha com flores que vira o
-              centro da comemoração.
-            </p>
-          </div>
-        </div>
+      {/* ————— por faixa de preço: o filtro de preço vira um toque ————— */}
+      <Secao className="!pt-0">
+        <h2 className="titulo mb-5 text-[clamp(1.5rem,5vw,2.5rem)] leading-tight">
+          Por faixa de preço
+        </h2>
+        <ul className="grid grid-cols-3 gap-2 sm:gap-4">
+          {faixasDePreco.map((f) => {
+            const n = filtrarCestas({ linha: "", pessoas: "", preco: f.slug }).length;
+            return (
+              <li key={f.slug}>
+                <LinkTransicao
+                  href={`/cestas/?preco=${f.slug}`}
+                  className="flex h-full flex-col justify-between gap-3 rounded-2xl bg-creme p-3.5 transition-colors duration-300 hover:bg-verde-900 hover:text-papel sm:p-6"
+                >
+                  <span className="titulo text-[1.25rem] leading-[1.05] sm:text-[clamp(1.5rem,3vw,2rem)]">
+                    <span className="sm:hidden">{f.curto}</span>
+                    <span className="hidden sm:inline">{f.nome}</span>
+                  </span>
+                  <span className="flex items-center justify-between gap-1 text-[0.75rem] opacity-70 sm:text-[0.8125rem]">
+                    {n} {n === 1 ? "modelo" : "modelos"}
+                    <IconeSeta className="size-3.5 shrink-0" />
+                  </span>
+                </LinkTransicao>
+              </li>
+            );
+          })}
+        </ul>
+      </Secao>
 
-        <div className="mt-12 flex flex-col gap-12 sm:mt-14 lg:mt-14 lg:gap-10">
-          {linhasDoAno.map((categoria, i) => (
-            <Revelar key={categoria.slug}>
-              <LinhaEditorial
-                categoria={categoria}
-                indice={i + 1}
-                quantidade={cestasDaCategoria(categoria.slug).length}
-                invertida={i % 2 === 1}
-              />
-            </Revelar>
-          ))}
-        </div>
-      </section>
+      {/* ————— as linhas, em blocos de foto com o nome por cima ————— */}
+      <Secao id="cestas" className="!pt-0">
+        <h2 className="titulo mb-5 text-[clamp(1.5rem,5vw,2.5rem)] leading-tight">As linhas</h2>
+        <ul className="grid gap-3 sm:grid-cols-2 sm:gap-5">
+          {linhasDoAno.map((categoria, i) => {
+            const n = cestasDaCategoria(categoria.slug).length;
+            return (
+              <li key={categoria.slug}>
+                <LinkTransicao
+                  href={hrefCategoria(categoria)}
+                  className="group relative block aspect-4/3 overflow-hidden rounded-2xl bg-creme sm:aspect-4/5 lg:aspect-5/4"
+                  style={{ viewTransitionName: `linha-${categoria.slug}` }}
+                >
+                  <Image
+                    src={categoria.foto}
+                    alt={`${categoria.nome} — cestas da Le Brunch`}
+                    fill
+                    sizes="(min-width: 640px) 46vw, 92vw"
+                    loading={i === 0 ? "eager" : "lazy"}
+                    style={{ objectPosition: categoria.foco ?? "50% 50%" }}
+                    className="object-cover transition-transform duration-[1200ms] ease-suave group-hover:scale-[1.04]"
+                  />
+                  {/* etiqueta clara sobre a foto, sem véu escondendo a imagem */}
+                  <span className="absolute bottom-3 left-3 flex flex-col rounded-xl bg-papel/95 px-3.5 py-2 text-verde-900 shadow-sm backdrop-blur-sm">
+                    <span className="titulo flex items-center gap-2 text-[1.25rem] leading-tight sm:text-[1.5rem]">
+                      {categoria.nome}
+                      <IconeSeta className="size-4 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
+                    </span>
+                    <span className="text-[0.75rem] text-tinta-suave">{n} modelos</span>
+                  </span>
+                </LinkTransicao>
+              </li>
+            );
+          })}
+        </ul>
+      </Secao>
 
       {/* ————— Coleção de Natal, em faixa compacta ————— */}
       <section
@@ -122,7 +148,7 @@ export default function Home() {
             </p>
             <h2
               id="titulo-natal"
-              className="titulo text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.98] text-balance"
+              className="titulo text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.98] text-balance"
             >
               O Natal chegou à{" "}
               <span className="script texto-ouro text-[1.1em] leading-none">
@@ -171,30 +197,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ————— galeria de detalhes ————— */}
-      <section aria-labelledby="titulo-detalhes" className="py-12 sm:py-14 lg:py-16">
-        <GaleriaDetalhes fotos={DETALHES} rotulo="Fotos de detalhe das cestas">
-          <Olho>Feito à mão</Olho>
-          <h2
-            id="titulo-detalhes"
-            className="titulo max-w-2xl text-[clamp(2rem,6vw,3.5rem)] leading-[1.03] text-balance"
-          >
-            Cada item escolhido no dia,{" "}
-            <span className="script text-[1.1em] leading-none text-terra-700">
-              de perto
-            </span>
-          </h2>
-        </GaleriaDetalhes>
-      </section>
-
       {/* ————— como funciona ————— */}
-      <Secao>
+      <Secao id="como-funciona" className="scroll-mt-32 xl:scroll-mt-24">
         {/* título em cima, e embaixo foto e passos lado a lado, da mesma
             altura: a lista começa junto do topo da foto e termina com ela */}
         <div className="flex flex-col gap-5 pb-10 lg:grid lg:grid-cols-[0.9fr_1fr] lg:items-end lg:gap-16">
           <div className="flex flex-col gap-4">
             <Olho>Como funciona</Olho>
-            <h2 className="titulo text-[clamp(2rem,7vw,3.5rem)] text-balance">
+            <h2 className="titulo text-[clamp(1.625rem,7vw,3.5rem)] text-balance">
               É aqui que a sua{" "}
               <span className="script text-[1.1em] leading-none text-terra-700">
                 experiência começa
@@ -247,7 +257,7 @@ export default function Home() {
             <div className="relative">
               <Image
                 src="/ensaio/rebeca-retrato.webp"
-                alt="Rebeca Santana, fundadora da Le Brunch, de dólmã verde com a marca bordada, sorrindo de braços cruzados"
+                alt="Rebeca Santana, da Le Brunch, de dólmã verde com a marca bordada, sorrindo de braços cruzados"
                 width={1600}
                 height={2400}
                 sizes="(min-width: 1024px) 28vw, 92vw"
@@ -259,7 +269,7 @@ export default function Home() {
 
           <div className="flex flex-col gap-7">
             <p className="olho text-terra-400">Conheça a Le Brunch</p>
-            <h2 className="titulo text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.98] text-balance">
+            <h2 className="titulo text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.98] text-balance">
               Toda cesta passa pelas mãos da{" "}
               <span className="script text-[1.1em] leading-none text-terra-400">
                 Rebeca
@@ -278,7 +288,6 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-1 border-l border-terra-400/60 pl-5">
               <p className="script text-3xl text-terra-400">{site.fundadora.nome}</p>
-              <p className="olho text-papel/55">{site.fundadora.cargo}</p>
             </div>
             <BotaoLink href="/conheca" variante="contornoClaro" className="self-start">
               Ler a nossa história
@@ -288,11 +297,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ————— autoridade: prêmio e nota do Google, junto da Rebeca ————— */}
+      {/* ————— autoridade: a nota do Google, junto da Rebeca ————— */}
       <section className="px-5 sm:px-8">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-7 py-10 sm:flex-row sm:justify-center sm:gap-14 sm:py-12">
-          <SeloPremioMedalha />
-          <span aria-hidden className="h-px w-16 bg-verde-900/12 sm:h-20 sm:w-px" />
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center py-10 sm:py-12">
           <a
             href={site.google.perfil}
             target="_blank"
@@ -332,7 +339,7 @@ export default function Home() {
 
         <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-7">
           <Ornamento cor="claro" />
-          <h2 className="titulo text-[clamp(2.25rem,9vw,4.25rem)] text-balance">
+          <h2 className="titulo text-[clamp(1.75rem,9vw,4.25rem)] text-balance">
             Alguém aí merece começar o dia{" "}
             <span className="script text-[1.1em] leading-none text-terra-400">
               assim

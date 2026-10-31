@@ -16,6 +16,9 @@ projete e verifique no celular primeiro.
 
 ## Regras do projeto
 
+- **Os modelos seguem os catálogos aprovados** de 31/10/2026
+  (`~/LeBrunch/lebrunch-dev/catalogo-portfolio/`): nomes, itens, preços,
+  "serve", frase e foto de capa. Mudou o catálogo, muda `data/cestas.ts`.
 - **Conteúdo vive em `data/`**, não em componentes. Cesta nova, preço,
   pacote corporativo e depoimento se resolvem editando `data/*.ts`.
 - **Português do Brasil** em nomes de arquivo, props, variáveis e comentários,
@@ -41,7 +44,9 @@ projete e verifique no celular primeiro.
 - **Fotos só do ensaio de outubro/2026** (`public/ensaio/`), e só as que a
   Rebeca aprovou: a pasta `gostei` do ensaio
   (`~/LeBrunch/lebrunch-dev/ensaio-102026/gostei`), que é a origem dos
-  exportadores. Foto fora do `gostei` não entra. As fotos antigas
+  exportadores. Foto fora do `gostei` não entra — a exceção são as seis que
+  a Rebeca aprovou nos catálogos finais de 31/10/2026 (`CATALOGO` no
+  exportador, lidas da pasta `Highlights`). As fotos antigas
   saíram e não voltam. Foto nova entra pelo `FOTOS` de
   `scripts/exportar-ensaio.py`, nunca copiada à mão — o script mantém o
   perfil Display P3 do ensaio (sem ele a foto sai lavada) e aplica o acerto
@@ -50,16 +55,29 @@ projete e verifique no celular primeiro.
   aplicada pelos dois exportadores — nunca edite o WebP final à mão. (O
   interior verde da Caixa Verde Bentô foi desfeito: a Rebeca prefere o fundo
   original das fotos.) Toda foto de cesta tem
-  `foco` (`object-position`) — o recorte é 4:5 sobre retrato 2:3. Toda foto
-  (e o vídeo do banner) sai com a marca d'água da Le Brunch, aplicada pelo
-  exportador por último (`scripts/marca_dagua.py`) — não marque à mão nem
-  em cima de WebP já exportado; reexporte do original.
+  `foco` (`object-position`) — o recorte é 4:5 sobre retrato 2:3. **Sem
+  marca d'água** e com cor contida (`scripts/cor.py`: saturação um pouco
+  abaixo do ensaio, tons médios menos quentes) — a Rebeca achou a marca
+  feia e as cores estouradas/artificiais (nov/2026). Mudou o acerto? Apague
+  `public/ensaio/*.webp` e reexporte; depois `gerar-atalhos.py`,
+  `gerar-og.py` e o vídeo do banner (README do estúdio).
 - **Links internos com `LinkTransicao`** (ou `BotaoLink`), não `next/link`
   direto — é ele que faz a transição entre páginas.
-- **Destaque da home são os modelos do dia a dia**, não o Natal nem a
-  Rebeca: banner curto (não ocupa a tela toda), vídeo só com modelos do ano
-  todo e a vitrine "Os modelos do dia a dia" logo abaixo. O Natal é chamado
-  pela faixa do alto do cabeçalho e por uma faixa compacta mais abaixo.
+- **Cabeçalho** (`components/site-header.tsx`): faixa verde fina, fixa,
+  sempre visível. No celular, marca e menu; o menu abre suspenso com uma
+  lista simples, e "Modelos" abre a gaveta dos filtros
+  (`components/painel-filtro.tsx`: linha, pessoas e faixa de preço, em
+  chips). No desktop os atalhos ficam à mostra e "Modelos" abre o mesmo
+  painel. O filtro leva ao `/cestas/?linha=&pessoas=&preco=`, e
+  `components/catalogo-filtrado.tsx` mostra o resultado numa grade só.
+  Nada de barra de filtro visível na página (a Rebeca achou ruim).
+- **Home**, nesta ordem, pensada no celular: atalhos redondos com foto
+  (`components/atalhos-redondos.tsx`, dados em `data/home.ts`, miniaturas
+  por `scripts/gerar-atalhos.py`); o vídeo do banner, limpo (sem véu nem
+  texto por cima), com a frase e o botão logo abaixo; os mais pedidos
+  (`destaque`); por faixa de preço (três blocos que levam ao `/cestas/`
+  filtrado); as linhas em blocos de foto com etiqueta clara por cima; a
+  faixa compacta de Natal; como funciona (`#como-funciona`); a Rebeca.
 - **Coleção de Natal**: identidade própria só dentro de `.tema-natal`
   (tokens `noite`, `ouro`, `ouro-claro`, `natal`). Fora dela, a paleta de
   sempre. Link para a linha sempre por `hrefCategoria()` — a de Natal vai
@@ -106,8 +124,9 @@ projete e verifique no celular primeiro.
   controle — só camada decorativa e foto. Tudo dentro de
   `@supports (animation-timeline: ...)` e
   `@media (prefers-reduced-motion: no-preference)`.
-- **Prêmio**: sempre por `site.premio` e `components/selo-premio.tsx`. Não
-  suba o selo preto e dourado do prêmio para o site.
+- **Prova social só do Google** (`site.google`): nota e avaliações. Não
+  cite o prêmio Melhores no ABC nem cargo da Rebeca (a Le Brunch é MEI —
+  ela aparece só pelo nome).
 - **SEO**: toda página declara os metadados por `metadadosPagina()`
   (`lib/metadados.ts`), com `caminho` de barra final e a chave da imagem de
   compartilhamento. Cesta ou linha nova pede `python3 scripts/gerar-og.py`
@@ -133,7 +152,7 @@ removidos de propósito; não os traga de volta:
 
 - **Não centralize tudo.** A grade é editorial e assimétrica: colunas de
   larguras diferentes, lado que alterna, numeral de índice — sempre dentro
-  da coluna do site. Veja `components/linha-editorial.tsx`.
+  da coluna do site.
 - **Não repita "olho + título + palavra manuscrita".** A manuscrita é
   assinatura, não fórmula: só no hero, no "começar o dia assim?", no
   "experiência começa" (verbatim do catálogo) e nas assinaturas de fecho.

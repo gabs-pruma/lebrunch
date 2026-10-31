@@ -85,23 +85,23 @@ export const historia = {
    */
   galeria: [
     {
-      src: "/ensaio/cafe-g-1.webp",
-      alt: "Bandeja redonda de madeira Café G vista de cima, com croissants, pães de queijo, morangos, uvas, geleia e suco de uva",
-      legenda: "A bandeja Café G, no capricho de sempre",
+      src: "/ensaio/presenca-1.webp",
+      alt: "Base redonda de madeira da Presença vista de cima, com croissants, pães de queijo, morangos, uvas, geleia e suco de uva",
+      legenda: "A Presença, no capricho de sempre",
       span: "lg:col-span-7",
       aspecto: "aspect-4/3",
       foco: "50% 55%",
     },
     {
       src: "/ensaio/rebeca-cesta-1.webp",
-      alt: "Rebeca Santana sorrindo enquanto segura a Cesta Flores do Campo, de dólmã verde com a marca bordada",
+      alt: "Rebeca Santana sorrindo enquanto segura a cesta Extraordinário, de dólmã verde com a marca bordada",
       legenda: "Montada e conferida pela Rebeca",
       span: "lg:col-span-5",
       aspecto: "aspect-3/4",
       foco: "50% 40%",
     },
     {
-      src: "/ensaio/cesta-bouquet-5.webp",
+      src: "/ensaio/primavera-1.webp",
       alt: "Cesta de palha com buquê de flores, café Baggio, iogurte e pão no saquinho de tecido florido",
       legenda: "Flores que chegam junto",
       span: "lg:col-span-4",
@@ -109,7 +109,7 @@ export const historia = {
       foco: "50% 60%",
     },
     {
-      src: "/ensaio/cafe-coado-5.webp",
+      src: "/ensaio/fazenda-3.webp",
       alt: "Caixa de madeira com café, coador de pano, caneca de cerâmica e foto impressa",
       legenda: "Presentes com a cara de quem recebe",
       span: "lg:col-span-4",
@@ -117,7 +117,7 @@ export const historia = {
       foco: "50% 55%",
     },
     {
-      src: "/ensaio/box-caneca-3.webp",
+      src: "/ensaio/pausa-2.webp",
       alt: "Caixa chapéu verde da Le Brunch com caneca de vidro gravada, café e brownie sobre a mesa",
       legenda: "Caneca com a inicial gravada",
       span: "lg:col-span-4",

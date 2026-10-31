@@ -16,9 +16,8 @@ Sai em `public/og/<chave>.jpg`, em sRGB: as fotos do ensaio são Display P3,
 e as redes sociais costumam descartar o perfil de cor — sem converter, a
 prévia sairia lavada. As chaves são as de `lib/metadados.ts`.
 
-A foto vem de `public/ensaio/`, que já sai com a marca d'água
-(scripts/marca_dagua.py): aqui não se aplica outra, senão fica duplicada.
-Mudou a marca? Reexporte o ensaio antes de rodar este script.
+A foto vem de `public/ensaio/`, que já sai com o acerto de cor.
+Mudou o acerto de cor? Reexporte o ensaio antes de rodar este script.
 """
 
 import io
@@ -41,7 +40,7 @@ NOITE = (14, 35, 31)  # --color-noite, da Coleção de Natal
 # Páginas sem cesta própria: (foto do ensaio, foco, tema de Natal)
 FIXAS = {
     "inicio": ("rebeca-cesta-1", "50% 45%", False),
-    "modelos": ("cafe-g-1", "50% 50%", False),
+    "modelos": ("presenca-1", "50% 50%", False),
     "natal": ("natal-mesa-3", "45% 62%", True),
     "conheca": ("rebeca-cesta-2", "50% 35%", False),
     "corporativo": ("mesa-itens", "50% 50%", False),

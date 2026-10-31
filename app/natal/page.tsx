@@ -25,7 +25,7 @@ import { linkWhatsApp, mensagens, site } from "@/data/site";
 
 export const metadata: Metadata = metadadosPagina({
   titulo: `Coleção de Natal ${colecaoNatal.ano}`,
-  descricao: `Presentes de Natal da Le Brunch: latas, caixa de petiscos, kits com espumante e panetone e a caixa Tábua & Merlot. Entrega em ${site.atendimento.regiao}.`,
+  descricao: `Presentes de Natal da Le Brunch: latas com brownie e panetone, caixa de doces finos, kits com espumante e a Brinde, com tábua de frios. Entrega em ${site.atendimento.regiao}.`,
   caminho: "/natal/",
   og: "natal",
 });
@@ -45,6 +45,7 @@ export default function NatalPage() {
   const todas = cestasDaCategoria("natal");
   const estrela = buscarCesta(colecaoNatal.estrela);
   if (!estrela || todas.length === 0) notFound();
+  const outros = todas.filter((c) => c.slug !== estrela.slug);
 
   const { hero } = colecaoNatal.ambiente;
   const comum = { alt: hero.alt, sizes: "100vw" } as const;
@@ -79,13 +80,13 @@ export default function NatalPage() {
         </div>
         <Luzes className="-z-10 opacity-60 mix-blend-screen" />
 
-        <div className="mx-auto w-full max-w-site px-5 pt-32 pb-12 sm:px-8 sm:pb-16 lg:pb-20">
+        <div className="mx-auto w-full max-w-site px-5 pt-16 pb-12 sm:px-8 sm:pb-16 lg:pb-20">
           <div className="flex max-w-2xl flex-col items-start gap-6">
             <p className="olho inline-flex items-center gap-2.5 rounded-full bg-noite/50 px-4 py-2 text-ouro-claro ring-1 ring-ouro/35 backdrop-blur-md">
               <IconeBrilho className="cintilar size-3.5" />
               Edição limitada · Natal {colecaoNatal.ano}
             </p>
-            <h1 className="titulo text-[clamp(3.25rem,11vw,7.5rem)] leading-[0.88] text-balance">
+            <h1 className="titulo text-[clamp(2.5rem,11vw,7.5rem)] leading-[0.88] text-balance">
               Coleção de{" "}
               <span className="script texto-ouro block text-[1.05em] leading-[1.05]">
                 Natal
@@ -110,29 +111,6 @@ export default function NatalPage() {
               </BotaoLink>
             </div>
           </div>
-
-          {/* índice da página */}
-          <nav
-            aria-label="Seções da Coleção de Natal"
-            className="mt-12 border-t border-papel/15 pt-5 sm:mt-16"
-          >
-            <ul className="rolagem-lateral -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0">
-              {[
-                { id: "a-estrela", rotulo: "Para a ceia" },
-                ...colecaoNatal.grupos.map((g) => ({ id: g.id, rotulo: g.titulo })),
-                { id: "empresas", rotulo: "Para empresas" },
-              ].map((item) => (
-                <li key={item.id} className="shrink-0">
-                  <a
-                    href={`#${item.id}`}
-                    className="olho inline-flex min-h-11 items-center rounded-full px-4 text-papel/80 ring-1 ring-papel/20 transition-colors hover:bg-ouro hover:text-noite hover:ring-ouro"
-                  >
-                    {item.rotulo}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
         </div>
       </section>
 
@@ -158,15 +136,15 @@ export default function NatalPage() {
             </div>
 
             <div className="flex flex-col gap-7">
-              <p className="olho text-ouro-claro">A estrela da ceia</p>
+              <p className="olho text-ouro-claro">Destaque de Natal</p>
               <h2
                 id="a-estrela"
-                className="titulo scroll-mt-28 text-[clamp(2.5rem,7vw,4.25rem)] leading-[0.98]"
+                className="titulo scroll-mt-28 text-[clamp(1.875rem,7vw,4.25rem)] leading-[0.98]"
               >
                 {estrela.nome}
               </h2>
               <p className="text-[1.0625rem] leading-relaxed text-papel/75">
-                {estrela.chamada} Abre a tampa, puxa a gaveta: a ceia chega
+                {estrela.chamada}. Abre a tampa, puxa a gaveta: a tábua chega
                 pronta para ir à mesa.
               </p>
 
@@ -205,6 +183,12 @@ export default function NatalPage() {
                 ))}
               </div>
 
+              {estrela.observacao ? (
+                <p className="border-l-2 border-ouro pl-4 text-[0.9375rem] leading-relaxed text-papel/75">
+                  {estrela.observacao}
+                </p>
+              ) : null}
+
               <BotaoPedido
                 cesta={estrela}
                 variante="ouro"
@@ -216,61 +200,24 @@ export default function NatalPage() {
         </div>
       </section>
 
-      {/* ————— os grupos ————— */}
-      {colecaoNatal.grupos.map((grupo, i) => {
-        const modelos = grupo.slugs
-          .map((slug) => buscarCesta(slug))
-          .filter((c) => c !== undefined);
-        return (
-          <section
-            key={grupo.id}
-            aria-labelledby={grupo.id}
-            className={`relative px-5 sm:px-8 py-12 sm:py-14 lg:py-16 ${i % 2 === 0 ? "bg-noite-alt/60" : ""}`}
-          >
-            <div
-              className={
-                modelos.length === 2
-                  ? "mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-3 lg:gap-5"
-                  : "mx-auto w-full max-w-6xl"
-              }
+      {/* ————— os outros presentes, na ordem do catálogo (do menor preço) ————— */}
+      <section
+        aria-labelledby="titulo-presentes"
+        className="relative bg-noite-alt/60 px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
+      >
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="mb-10 flex flex-col gap-3 sm:mb-14">
+            <p className="olho text-ouro">{outros.length} presentes</p>
+            <h2
+              id="titulo-presentes"
+              className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-none"
             >
-              <div
-                className={
-                  modelos.length === 2
-                    ? // Os grupos de dois alternam o lado do texto no desktop.
-                      `flex min-w-0 flex-col gap-4 lg:sticky lg:top-28 lg:self-start ${i % 2 === 1 ? "lg:order-last lg:pl-8" : "lg:pr-8"}`
-                    : "mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between"
-                }
-              >
-                <div className="flex flex-col gap-3">
-                  <p className="olho text-ouro">
-                    {String(i + 1).padStart(2, "0")} · {modelos.length} presentes
-                  </p>
-                  <h2
-                    id={grupo.id}
-                    className="titulo scroll-mt-28 text-[clamp(2.25rem,6vw,3.75rem)] leading-none"
-                  >
-                    {grupo.titulo}
-                  </h2>
-                </div>
-                <p className="max-w-sm text-[0.9375rem] leading-relaxed text-papel/70">
-                  {grupo.descricao}
-                </p>
-              </div>
-              {/* min-w-0: sem ele, a coluna da grade cresce até caber o
-                  carrossel inteiro e a página ganha rolagem lateral */}
-              <div className={modelos.length === 2 ? "min-w-0 lg:col-span-2" : undefined}>
-                <GradeCestas
-                  cestas={modelos}
-                  rotulo={grupo.titulo}
-                  escuro
-                  colunas={modelos.length === 2 ? 2 : 3}
-                />
-              </div>
-            </div>
-          </section>
-        );
-      })}
+              Mais presentes de Natal
+            </h2>
+          </div>
+          <GradeCestas cestas={outros} rotulo="Mais presentes de Natal" escuro />
+        </div>
+      </section>
 
       {/* ————— feito à mão ————— */}
       <section className="relative overflow-hidden px-5 sm:px-8 py-12 sm:py-14 lg:py-16">
@@ -278,7 +225,7 @@ export default function NatalPage() {
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <div className="order-last flex flex-col gap-6 lg:order-first">
             <p className="olho text-ouro-claro">Embrulhado à mão</p>
-            <h2 className="titulo text-[clamp(2.25rem,6vw,3.75rem)] leading-[1.02] text-balance">
+            <h2 className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-[1.02] text-balance">
               O laço também é{" "}
               <span className="script texto-ouro text-[1.1em] leading-none">presente</span>
             </h2>
@@ -296,6 +243,12 @@ export default function NatalPage() {
                 <Simbolo className="h-4 w-4 shrink-0 text-ouro" />
                 Entregamos em {site.atendimento.regiao}
               </li>
+              {colecaoNatal.condicoes.map((condicao) => (
+                <li key={condicao} className="flex items-center gap-3">
+                  <IconePresente className="size-5 shrink-0 text-ouro" />
+                  {condicao}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -338,12 +291,12 @@ export default function NatalPage() {
             </p>
             <h2
               id="titulo-empresas"
-              className="titulo text-[clamp(2rem,5vw,3.25rem)] leading-[1.02] text-balance"
+              className="titulo text-[clamp(1.625rem,5vw,3.25rem)] leading-[1.02] text-balance"
             >
               Presentes para a equipe e para os clientes
             </h2>
             <p className="text-[1rem] leading-relaxed text-tinta-suave">
-              Os kits com espumante, as latas e a Caixa de Petiscos foram feitos
+              Os kits com espumante, as latas e a Caixa de Doces foram feitos
               para presentear em quantidade, todos com a mesma embalagem. Conte
               quantas pessoas e o orçamento — a gente monta a proposta. Para
               pedidos de empresa, {site.atendimento.antecedenciaCorporativa}.
@@ -366,7 +319,7 @@ export default function NatalPage() {
         <Luzes className="opacity-80" />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-7">
           <FileteOuro />
-          <h2 className="titulo text-[clamp(2.5rem,8vw,4.75rem)] leading-[0.98] text-balance">
+          <h2 className="titulo text-[clamp(1.875rem,8vw,4.75rem)] leading-[0.98] text-balance">
             Boas{" "}
             <span className="script texto-ouro text-[1.1em] leading-none">Festas</span>
           </h2>

@@ -5,7 +5,6 @@ import { Secao, TituloSecao, Ornamento, BotaoLink, Olho } from "@/components/ui"
 import { Revelar } from "@/components/revelar";
 import { Logotipo, Simbolo } from "@/components/marca";
 import { Traco } from "@/components/ilustracao";
-import { SeloPremioChip, SeloPremioMedalha } from "@/components/selo-premio";
 import { FotoParallax } from "@/components/foto-parallax";
 import { IconeWhatsApp, IconeInstagram } from "@/components/icones";
 import { historia } from "@/data/historia";
@@ -28,7 +27,7 @@ export default function ConhecaPage() {
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-7 text-center">
           <Simbolo className="h-10 w-10 text-terra-500" />
           <Olho>Conheça a Le Brunch</Olho>
-          <h1 className="titulo text-[clamp(2.5rem,8vw,4.5rem)] leading-[0.98] text-balance">
+          <h1 className="titulo text-[clamp(1.875rem,8vw,4.5rem)] leading-[0.98] text-balance">
             Quem monta a sua cesta
           </h1>
           <p className="max-w-xl text-[1.0625rem] leading-relaxed text-tinta-suave">
@@ -48,7 +47,7 @@ export default function ConhecaPage() {
               />
               <Image
                 src="/ensaio/rebeca-cesta-2.webp"
-                alt="Rebeca Santana, fundadora da Le Brunch, de dólmã verde com a marca bordada, sorrindo para a cesta de flores que segura"
+                alt="Rebeca Santana, da Le Brunch, de dólmã verde com a marca bordada, sorrindo para a cesta de flores que segura"
                 width={1600}
                 height={2400}
                 loading="eager"
@@ -58,7 +57,7 @@ export default function ConhecaPage() {
                 className="relative aspect-4/5 w-full rounded-2xl object-cover"
               />
               <figcaption className="olho mt-4 text-tinta-suave">
-                {site.fundadora.nome} · {site.fundadora.cargo}
+                {site.fundadora.nome}
               </figcaption>
             </figure>
           </Revelar>
@@ -92,11 +91,6 @@ export default function ConhecaPage() {
                 Desde {historia.desde} em {site.atendimento.base}
               </p>
             ) : null}
-
-            {/* autoridade: prêmio do ABC */}
-            <div className="mt-2 border-t borda-fina pt-7">
-              <SeloPremioChip />
-            </div>
 
             {/* números reais do perfil do Google */}
             <dl className="grid grid-cols-2 gap-x-6 gap-y-6 border-t borda-fina pt-7 sm:grid-cols-3">
@@ -159,10 +153,8 @@ export default function ConhecaPage() {
             centro
             className="mx-auto"
           >
-            Transmitindo emoções, criando momentos
+            Onde os momentos simples se tornam extraordinários
           </TituloSecao>
-
-          <SeloPremioMedalha cor="claro" className="mt-12 sm:mt-14" />
 
           <ul className="mt-12 grid gap-8 sm:mt-14 sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-4 lg:gap-8">
             {historia.valores.map((valor, i) => (
@@ -186,7 +178,7 @@ export default function ConhecaPage() {
       <Secao fundo="creme" className="!pb-0">
         <Revelar>
           <figure className="mx-auto max-w-4xl text-center">
-            <blockquote className="titulo text-[clamp(1.75rem,5.5vw,3.25rem)] leading-[1.12] text-balance">
+            <blockquote className="titulo text-[clamp(1.5rem,5.5vw,3.25rem)] leading-[1.12] text-balance">
               “{historia.destaque.texto}”
             </blockquote>
             <figcaption className="olho mt-7 text-tinta-suave">
@@ -241,7 +233,7 @@ export default function ConhecaPage() {
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-7">
           <Ornamento />
           <Logotipo className="h-20 w-[9.25rem] text-verde-900" />
-          <p className="script text-[clamp(1.75rem,6vw,2.75rem)] leading-tight text-terra-700">
+          <p className="script text-[clamp(1.5rem,6vw,2.75rem)] leading-tight text-terra-700">
             {site.assinatura}
           </p>
           <p className="max-w-md text-[0.9375rem] leading-relaxed text-tinta-suave">

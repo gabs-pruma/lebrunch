@@ -54,7 +54,7 @@ export default function CorporativoPage() {
               <Olho className="text-terra-400">Le Brunch Corporativo</Olho>
             </div>
 
-            <h1 className="titulo text-[clamp(2.5rem,9vw,4.75rem)] text-balance">
+            <h1 className="titulo text-[clamp(1.875rem,9vw,4.75rem)] text-balance">
               Uma pausa que{" "}
               <span className="script text-[1.05em] leading-[0.9] text-terra-400">
                 transforma
@@ -254,7 +254,7 @@ export default function CorporativoPage() {
               Tudo pensado
             </TituloSecao>
             <Image
-              src="/ensaio/natal-boas-festas-4.webp"
+              src="/ensaio/natal-acrilico-lata-4.webp"
               alt="Kit com mini espumante, lata dourada de frutas secas e tag Boas Festas na bolsa de acrílico"
               width={1600}
               height={2400}
@@ -285,7 +285,7 @@ export default function CorporativoPage() {
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-16">
           <div className="flex flex-col gap-6">
             <Olho className="text-terra-400">Como funciona</Olho>
-            <h2 className="titulo text-[clamp(2rem,7vw,3.5rem)] text-balance">
+            <h2 className="titulo text-[clamp(1.625rem,7vw,3.5rem)] text-balance">
               Três conversas e{" "}
               <span className="script text-[1.1em] leading-none text-terra-400">
                 está resolvido
@@ -339,7 +339,7 @@ export default function CorporativoPage() {
       <Secao className="text-center">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-7">
           <Ornamento />
-          <h2 className="titulo text-[clamp(2rem,8vw,3.75rem)] text-balance">
+          <h2 className="titulo text-[clamp(1.625rem,8vw,3.75rem)] text-balance">
             Vamos montar o café da{" "}
             <span className="script text-[1.1em] leading-none text-terra-700">
               sua equipe

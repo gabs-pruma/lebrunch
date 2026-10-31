@@ -1,24 +1,21 @@
 import { GaleriaCesta } from "@/components/galeria-cesta";
 import { BotaoPedido } from "@/components/botao-pedido";
 import { IconeCheck, IconePessoas, IconeRelogio } from "@/components/icones";
-import { formatarPreco, type Cesta } from "@/data/cestas";
-import { site } from "@/data/site";
+import { antecedenciaDe, formatarPreco, type Cesta } from "@/data/cestas";
 
 /**
  * Uma cesta só, em tamanho grande: galeria de um lado, ficha do outro.
  *
- * Usado quando a linha tem um único modelo (a Pronta Entrega) — um card
- * sozinho numa grade de três colunas pareceria vitrine vazia.
+ * Usado quando a linha tem um único modelo — um card sozinho numa grade de
+ * três colunas pareceria vitrine vazia.
  */
 export function CestaDestaque({
   cesta,
-  prontaEntrega,
   selo,
   nivel = 2,
 }: {
   cesta: Cesta;
-  prontaEntrega?: boolean;
-  /** Selo da linha, ex.: "Sai hoje". */
+  /** Selo da linha, ex.: "Edição limitada". */
   selo?: string;
   nivel?: 2 | 3;
 }) {
@@ -44,7 +41,7 @@ export function CestaDestaque({
               {selo}
             </span>
           ) : null}
-          <Titulo className="titulo text-[clamp(2.25rem,6vw,3.75rem)] leading-none">
+          <Titulo className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-none">
             {cesta.nome}
           </Titulo>
           <p className="text-[1.0625rem] leading-relaxed text-tinta-suave">
@@ -72,9 +69,7 @@ export function CestaDestaque({
             ) : null}
             <li className="flex items-center gap-2.5">
               <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-              {prontaEntrega
-                ? "Pode sair hoje, conforme a agenda do dia"
-                : `Pedido com ${site.atendimento.antecedencia}`}
+              Pedido com {antecedenciaDe(cesta)}
             </li>
           </ul>
         </div>
@@ -100,7 +95,6 @@ export function CestaDestaque({
 
         <BotaoPedido
           cesta={cesta}
-          prontaEntrega={prontaEntrega}
           className="w-full sm:w-auto sm:self-start"
         />
       </div>

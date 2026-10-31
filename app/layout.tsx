@@ -55,7 +55,6 @@ export const metadata: Metadata = {
     "brunch corporativo",
     "presente café da manhã",
     "Grande ABC",
-    "Melhores no ABC 2026",
     "cesta de Natal",
     "presente de Natal Santo André",
     "kit de Natal corporativo",

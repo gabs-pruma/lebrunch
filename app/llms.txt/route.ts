@@ -1,6 +1,8 @@
 import {
   adicionais,
+  antecedenciaDe,
   categorias,
+  cestas,
   cestasDaCategoria,
   formatarPreco,
   hrefCategoria,
@@ -22,7 +24,7 @@ export const dynamic = "force-static";
 const url = (caminho: string) => `${site.url}${caminho}`;
 
 function texto(): string {
-  const { pagamento, horarios, atendimento, google, premio } = site;
+  const { pagamento, horarios, atendimento, google } = site;
   const parcelado = pagamento.parcelado.maximo
     ? `em até ${pagamento.parcelado.maximo}x no ${pagamento.parcelado.meio}`
     : `parcelado no ${pagamento.parcelado.meio}`;
@@ -32,12 +34,12 @@ function texto(): string {
     "",
     `> ${site.descricao}`,
     "",
-    `A ${site.nome} monta à mão cestas de café da manhã, presentes e kits de Natal em ${atendimento.base} e entrega em ${atendimento.regiao}. Fundada e conduzida por ${site.fundadora.nome} (${site.fundadora.cargo}). Vencedora do ${premio.nome} ${premio.ano} (${premio.temporada}), categoria ${premio.categoria}. Nota ${google.nota.toFixed(1).replace(".", ",")} no Google, com ${google.avaliacoes} avaliações.`,
+    `A ${site.nome} monta à mão cestas de café da manhã, presentes e kits de Natal em ${atendimento.base} e entrega em ${atendimento.regiao}. Conduzida por ${site.fundadora.nome}. Nota ${google.nota.toFixed(1).replace(".", ",")} no Google, com ${google.avaliacoes} avaliações.`,
     "",
     "## Como pedir",
     "",
     `- Pelo WhatsApp ${site.telefone} (https://wa.me/${site.whatsapp}). No site, cada modelo abre um formulário que já monta a mensagem com o modelo, a data e o período de entrega.`,
-    `- Pedidos com ${atendimento.antecedencia}. A linha Pronta Entrega pode sair no mesmo dia, conforme a disponibilidade.`,
+    `- Pedidos com ${atendimento.antecedencia}.${cestas.filter((c) => c.antecedenciaDias).map((c) => ` ${c.nome}: ${antecedenciaDe(c)}.`).join("")}`,
     `- A taxa de entrega é calculada pelo endereço. Preços abaixo não incluem o frete.`,
     `- Pagamento: ${pagamento.aVista} à vista, ou ${parcelado} (${pagamento.parcelado.ressalva}).`,
     `- Atendimento: ${horarios.atendimento.map((h) => `${h.dias.toLowerCase()}, ${h.horas}`).join("; ")}. Entregas: ${horarios.entregas.map((h) => `${h.dias.toLowerCase()}, ${h.horas}`).join("; ")}.`,
@@ -52,9 +54,10 @@ function texto(): string {
     for (const c of modelos) {
       const preco = c.preco !== null ? `${formatarPreco(c.preco)} + frete` : "preço sob consulta";
       const serve = c.serve ? ` Serve ${c.serve}.` : "";
+      const obs = c.observacao ? ` ${c.observacao}` : "";
       const itens = c.secoes.flatMap((s) => s.itens).join(", ");
       linhas.push(
-        `- [${c.nome}](${url(`/cestas/modelo/${c.slug}/`)}): ${c.chamada} ${preco}.${serve} Itens: ${itens}.`,
+        `- [${c.nome}](${url(`/cestas/modelo/${c.slug}/`)}): ${c.chamada}. ${preco}.${serve} Itens: ${itens}.${obs}`,
       );
     }
     linhas.push("");

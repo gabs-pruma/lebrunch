@@ -22,15 +22,13 @@ export function DadosEstruturados() {
     image: `${site.url}${imagemOg("inicio")}`,
     logo: `${site.url}/marca/lebrunch.png`,
     telephone: `+${site.whatsapp}`,
-    slogan: site.slogan,
+    slogan: site.assinatura,
     priceRange: `R$${menorPreco}+`,
     servesCuisine: "Café da manhã",
     founder: {
       "@type": "Person",
       name: site.fundadora.nome,
-      jobTitle: site.fundadora.cargo,
     },
-    award: `${site.premio.nome} ${site.premio.ano} — ${site.premio.categoria}`,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: site.google.nota,
@@ -85,7 +83,7 @@ export function DadosEstruturados() {
 
 /**
  * Trilha de navegação (BreadcrumbList) — o Google mostra "Le Brunch ›
- * Linha Essencial › Café M" no resultado da busca, em vez da URL crua.
+ * Linha Clássica › Encanto" no resultado da busca, em vez da URL crua.
  */
 export function TrilhaEstruturada({
   itens,

@@ -114,13 +114,11 @@ export default async function CategoriaPage(
         {modelos.length === 1 ? (
           <CestaDestaque
             cesta={modelos[0]}
-            prontaEntrega={categoria.prontaEntrega}
             selo={categoria.selo}
           />
         ) : modelos.length > 1 ? (
           <GradeCestas
             cestas={modelos}
-            prontaEntrega={categoria.prontaEntrega}
             rotulo={categoria.nome}
             colunas={modelos.length === 2 || modelos.length === 4 ? 2 : 3}
           />
@@ -129,7 +127,7 @@ export default async function CategoriaPage(
           <div className="mx-auto flex max-w-md flex-col items-center gap-6 py-8 text-center">
             <Simbolo className="h-8 w-8 text-terra-500" />
             <Olho>Novos modelos em breve</Olho>
-            <h2 className="titulo text-[clamp(1.75rem,6vw,2.75rem)] text-balance">
+            <h2 className="titulo text-[clamp(1.5rem,6vw,2.75rem)] text-balance">
               Estamos finalizando esta linha
             </h2>
             <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
@@ -159,9 +157,7 @@ export default async function CategoriaPage(
           <div className="mx-auto flex max-w-xl flex-col items-center gap-6">
             <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
               Os valores não incluem o frete.{" "}
-              {categoria.prontaEntrega
-                ? "Peça pelo WhatsApp e confirmamos se sai hoje"
-                : `Pedidos com ${site.atendimento.antecedencia}`}{" "}
+              Pedidos com {site.atendimento.antecedencia}{" "}
               — entregamos em {site.atendimento.regiao}.
             </p>
             <BotaoLink

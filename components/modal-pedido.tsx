@@ -4,7 +4,6 @@ import Image from "next/image";
 import { LinkTransicao } from "@/components/transicao";
 import { useEffect, useId, useRef, useState } from "react";
 import {
-  IconeWhatsApp,
   IconePessoas,
   IconeCheck,
   IconeSeta,
@@ -14,6 +13,7 @@ import { Simbolo } from "@/components/marca";
 import { GaleriaCesta } from "@/components/galeria-cesta";
 import {
   adicionais as listaAdicionais,
+  antecedenciaDe,
   categoriaDe,
   formatarPreco,
   type Cesta,
@@ -134,14 +134,11 @@ function ehFimDeSemana(iso: string): boolean {
 
 export function ModalPedido({
   cesta,
-  prontaEntrega,
   aberto,
   onFechar,
   comFotos,
 }: {
   cesta: Cesta;
-  /** Linha de pronta entrega pode sair no mesmo dia. */
-  prontaEntrega?: boolean;
   aberto: boolean;
   onFechar: () => void;
   /** Abre nas fotos do modelo antes do pedido (usado pelos cards). */
@@ -165,7 +162,7 @@ export function ModalPedido({
   const idObs = useId();
   const idObsDica = useId();
 
-  const dataMinima = prontaEntrega ? hojeISO() : somarDias(hojeISO(), 1);
+  const dataMinima = somarDias(hojeISO(), cesta.antecedenciaDias ?? 1);
   const [data, setData] = useState(dataMinima);
   const [periodo, setPeriodo] = useState<Periodo>("manha");
   const [observacao, setObservacao] = useState("");
@@ -336,9 +333,7 @@ export function ModalPedido({
                     ) : null}
                     <li className="flex items-center gap-2">
                       <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-                      {prontaEntrega
-                        ? "Pode sair hoje"
-                        : `Pedido com ${site.atendimento.antecedencia}`}
+                      Pedido com {antecedenciaDe(cesta)}
                     </li>
                   </ul>
                 </div>
@@ -365,6 +360,12 @@ export function ModalPedido({
                     </section>
                   ))}
                 </div>
+
+                {cesta.observacao ? (
+                  <p className="border-l-2 border-terra-500 pl-4 text-[0.875rem] leading-relaxed text-tinta-suave">
+                    {cesta.observacao}
+                  </p>
+                ) : null}
               </div>
 
               <div className="sticky bottom-0 z-20 shrink-0 border-t borda-fina bg-papel px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-7">
@@ -508,9 +509,7 @@ export function ModalPedido({
                     </fieldset>
 
                     <p className="mt-3 text-[0.8125rem] leading-relaxed text-tinta-suave">
-                      {prontaEntrega
-                        ? "Pronta entrega: sujeito à disponibilidade do dia."
-                        : `Pedidos com ${site.atendimento.antecedencia}.`}
+                      {`Pedidos com ${antecedenciaDe(cesta)}.`}
                       {fimDeSemana
                         ? " Aos sábados e domingos entregamos somente até as 13h."
                         : ""}
@@ -765,8 +764,7 @@ export function ModalPedido({
                   rel="noopener noreferrer"
                   className="flex min-h-13 w-full items-center justify-center gap-2.5 rounded-full bg-verde-600 px-6 text-[0.8125rem] tracking-[0.14em] uppercase text-papel transition-colors duration-300 hover:bg-verde-900"
                 >
-                  <IconeWhatsApp className="size-5" />
-                  Pedir no WhatsApp
+                  Confirmar pedido
                 </a>
                 <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
                   A mensagem já vai com a cesta, a data, a faixa
