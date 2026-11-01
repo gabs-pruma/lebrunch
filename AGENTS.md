@@ -95,7 +95,7 @@ projete e verifique no celular primeiro.
   pessoas (ao escolher a linha de Natal, o filtro de pessoas some). A
   primeira foto de todo modelo de Natal é o presente aberto; a fechada e a
   da mão segurando vão para o fim da galeria. Na `/natal`, o destaque
-  (`colecaoNatal.estrela`, hoje a Caixa de Doces) vem em poucas linhas —
+  (`colecaoNatal.estrela`, hoje a Doce Natal, a caixa de doces) vem em poucas linhas —
   foto, nome, frase e preço — e os outros modelos logo depois. Textos de
   Natal falam de sentimento (magia, gratidão, carinho), não descrevem
   embalagem (nada de "latas estampadas", "laço estrelado").

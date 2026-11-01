@@ -481,7 +481,7 @@ const premium: Cesta[] = [
 const natal: Cesta[] = [
   {
     slug: "natal-lata-brownie",
-    nome: "Lata Brownie Natal",
+    nome: "Gratidão",
     categoria: "natal",
     chamada: "Um carinho de Natal para lembrar de quem é especial",
     preco: 79,
@@ -495,7 +495,7 @@ const natal: Cesta[] = [
   },
   {
     slug: "natal-caixa-carrinho",
-    nome: "Caixa Carrinho com Caneca",
+    nome: "Magia de Natal",
     categoria: "natal",
     chamada: "Um mimo para aquecer as manhãs de dezembro",
     preco: 89,
@@ -510,7 +510,7 @@ const natal: Cesta[] = [
   },
   {
     slug: "natal-lata-alta-panetone",
-    nome: "Lata Alta e Panetone",
+    nome: "Afeto",
     categoria: "natal",
     chamada: "O sabor do Natal em um presente simples e certeiro",
     preco: 129,
@@ -523,7 +523,7 @@ const natal: Cesta[] = [
   },
   {
     slug: "natal-acrilico-espumante-lata",
-    nome: "Acrílico Espumante e Lata",
+    nome: "Celebrar",
     categoria: "natal",
     chamada: "Para brindar o fim de ano com quem você gosta",
     preco: 219,
@@ -538,7 +538,7 @@ const natal: Cesta[] = [
   },
   {
     slug: "natal-acrilico-espumante-panetone",
-    nome: "Acrílico Espumante e Panetone",
+    nome: "Alegria",
     categoria: "natal",
     chamada: "O brinde e o panetone para celebrar a ceia",
     preco: 239,
@@ -553,7 +553,7 @@ const natal: Cesta[] = [
   },
   {
     slug: "natal-caixa-de-doces",
-    nome: "Caixa de Doces Natal",
+    nome: "Doce Natal",
     categoria: "natal",
     chamada: "Doces finos para adoçar as festas de fim de ano",
     preco: 259,
@@ -571,6 +571,7 @@ const natal: Cesta[] = [
   },
   {
     ...brinde,
+    nome: "Noite Feliz",
     serve: undefined,
     slug: "natal-brinde",
     categoria: "natal",
@@ -674,7 +675,7 @@ export function passaNoFiltro(c: Cesta, f: Filtros): boolean {
 }
 
 /**
- * O resultado do filtro. Sem linha escolhida, a Brinde de Natal sai: é a
+ * O resultado do filtro. Sem linha escolhida, a Noite Feliz sai: é a
  * mesma Brinde da Linha Premium, com outras fotos.
  */
 export function filtrarCestas(f: Filtros): Cesta[] {
