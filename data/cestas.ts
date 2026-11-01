@@ -650,11 +650,13 @@ export function categoriaDe(slug: CategoriaSlug): Categoria {
 /**
  * Quantas pessoas a cesta serve, lido do "serve" do catálogo ("1 a 2
  * pessoas", "até 3 pessoas", "1 criança"...): [mínimo, máximo].
+ *
+ * "Até 3 pessoas" é o tamanho da cesta, não um "de 1 a 3": a Encanto não
+ * aparece em "1 pessoa" (o Gabriel viu esse erro no filtro, nov/2026).
  */
 export function pessoasDe(cesta: Pick<Cesta, "serve">): [number, number] | null {
   const n = cesta.serve?.match(/\d+/g)?.map(Number);
   if (!n?.length) return null;
-  if (cesta.serve?.startsWith("até")) return [1, n[0]];
   return [n[0], n[n.length - 1]];
 }
 
