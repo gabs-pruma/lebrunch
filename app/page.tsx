@@ -6,7 +6,6 @@ import { Secao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { AtalhosRedondos } from "@/components/atalhos-redondos";
 import { GradeCestas } from "@/components/grade-cestas";
 import { DepoimentosSecao } from "@/components/depoimentos-secao";
-import { Revelar } from "@/components/revelar";
 import { Traco } from "@/components/ilustracao";
 import { Luzes } from "@/components/luzes";
 import { LinkTransicao } from "@/components/transicao";
@@ -199,33 +198,28 @@ export default function Home() {
 
       {/* ————— como funciona ————— */}
       <Secao id="como-funciona" className="scroll-mt-32 xl:scroll-mt-24">
-        {/* título em cima, e embaixo foto e passos lado a lado, da mesma
+        {/* como na abertura do catálogo: a Rebeca com a cesta e os passos.
+            Título em cima, e embaixo foto e passos lado a lado, da mesma
             altura: a lista começa junto do topo da foto e termina com ela */}
-        <div className="flex flex-col gap-5 pb-10 lg:grid lg:grid-cols-[0.9fr_1fr] lg:items-end lg:gap-16">
-          <div className="flex flex-col gap-4">
-            <Olho>Como funciona</Olho>
-            <h2 className="titulo text-[clamp(1.625rem,7vw,3.5rem)] text-balance">
-              É aqui que a sua{" "}
-              <span className="script text-[1.1em] leading-none text-terra-700">
-                experiência começa
-              </span>
-            </h2>
-          </div>
-          <p className="max-w-md text-[0.9375rem] leading-relaxed text-tinta-suave lg:pb-2">
-            Você escolhe a cesta e a data aqui mesmo no site. O pedido chega
-            pronto no WhatsApp da Rebeca — sem carrinho, sem robô.
-          </p>
+        <div className="flex flex-col gap-4 pb-10">
+          <Olho>Como funciona</Olho>
+          <h2 className="titulo text-[clamp(1.625rem,7vw,3.5rem)] text-balance">
+            É aqui que a sua{" "}
+            <span className="script text-[1.1em] leading-none text-terra-700">
+              experiência começa
+            </span>
+          </h2>
         </div>
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1fr] lg:gap-16">
           <FotoParallax
-            src="/ensaio/presenca-4.webp"
-            alt="Detalhe da cesta Presença: pães, pão de queijo, uvas, morangos, kiwi e um potinho de mel"
+            src="/ensaio/rebeca-cesta-1.webp"
+            alt="Rebeca Santana, da Le Brunch, sorrindo com uma cesta de vime com flores nas mãos"
             width={1600}
             height={2400}
-            foco="50% 12%"
+            foco="50% 30%"
             sizes="(min-width: 1024px) 42vw, 92vw"
-            className="aspect-3/2 w-full rounded-2xl lg:aspect-auto lg:min-h-80"
+            className="aspect-4/5 w-full rounded-2xl lg:aspect-auto lg:min-h-80"
           />
 
           <ol className="flex flex-col justify-between">
@@ -241,9 +235,11 @@ export default function Home() {
                 </span>
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-[1.0625rem]">{passo.titulo}</h3>
-                  <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
-                    {passo.texto}
-                  </p>
+                  {passo.texto ? (
+                    <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
+                      {passo.texto}
+                    </p>
+                  ) : null}
                 </div>
               </li>
             ))}
@@ -251,24 +247,11 @@ export default function Home() {
         </div>
       </Secao>
 
-      {/* ————— conheça a Rebeca ————— */}
+      {/* ————— conheça a Le Brunch: só texto, porque a Rebeca acabou de
+          aparecer, com a cesta, no "como funciona" logo acima ————— */}
       <section className="relative overflow-hidden bg-noite text-papel">
-        <div className="mx-auto grid w-full max-w-site items-center gap-8 px-5 sm:px-8 py-12 sm:py-14 lg:py-16 lg:grid-cols-[0.7fr_1fr] lg:gap-16">
-          <Revelar>
-            <div className="relative">
-              <Image
-                src="/ensaio/rebeca-retrato.webp"
-                alt="Rebeca Santana, da Le Brunch, sentada de camisa branca e calça jeans, sorrindo com a mão no rosto"
-                width={853}
-                height={1280}
-                sizes="(min-width: 1024px) 28vw, 92vw"
-                style={{ objectPosition: "50% 30%" }}
-                className="cortina aspect-4/3 w-full rounded-2xl object-cover lg:aspect-4/5"
-              />
-            </div>
-          </Revelar>
-
-          <div className="flex flex-col gap-7">
+        <div className="mx-auto grid w-full max-w-site gap-8 px-5 sm:px-8 py-12 sm:py-14 lg:py-16 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
+          <div className="flex flex-col gap-5">
             <p className="olho text-terra-400">Conheça a Le Brunch</p>
             <h2 className="titulo text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.98] text-balance">
               Toda cesta passa pelas mãos da{" "}
@@ -276,19 +259,18 @@ export default function Home() {
                 Rebeca
               </span>
             </h2>
+          </div>
+
+          <div className="flex flex-col gap-7">
             <div className="flex max-w-lg flex-col gap-4 text-[1.0625rem] leading-relaxed text-papel/75">
               <p>
                 A Le Brunch nasceu de uma vontade simples: fazer com que um
                 momento simples se torne extraordinário.
               </p>
               <p>
-                Hoje a {site.fundadora.nome} está à frente de cada pedido —
-                escolhendo os itens, montando as bandejas e conferindo cada
-                detalhe antes de fechar a caixa.
+                Ela escolhe os itens, monta as bandejas e confere cada detalhe
+                antes de fechar a caixa.
               </p>
-            </div>
-            <div className="flex flex-col gap-1 border-l border-terra-400/60 pl-5">
-              <p className="script text-3xl text-terra-400">{site.fundadora.nome}</p>
             </div>
             <BotaoLink href="/conheca" variante="contornoClaro" className="self-start">
               Ler a nossa história

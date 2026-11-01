@@ -599,29 +599,27 @@ export const adicionais = [
   { nome: "Bentô Cake", preco: 100 },
 ];
 
-export const comoFunciona = [
+/**
+ * Os passos do "É aqui que a sua experiência começa", na ordem e com as
+ * palavras da abertura do catálogo (31/10/2026). O `texto` só entra onde o
+ * site acrescenta algo; a Rebeca é apresentada no bloco seguinte da home,
+ * por isso não aparece aqui.
+ */
+export const comoFunciona: { titulo: string; texto?: string }[] = [
+  { titulo: "Escolha a opção ideal para você" },
   {
-    titulo: "Escolha a sua cesta",
-    texto: "Encontre a opção ideal para o momento e para quem vai receber.",
-  },
-  {
-    titulo: "Escolha a data da entrega",
-    texto: "No próprio site você já marca o dia e o período da surpresa.",
-  },
-  {
-    titulo: "Fale com a gente no WhatsApp",
-    texto:
-      "O pedido chega pronto para a Rebeca, com modelo e data já preenchidos.",
+    titulo: "Entre em contato conosco pelo WhatsApp",
+    texto: "O botão de pedido já leva a mensagem pronta, com o modelo e a data.",
   },
   {
     titulo: "Informe o endereço",
-    texto:
-      "Calculamos a taxa de entrega na hora — atendemos São Paulo e o Grande ABC.",
+    texto: "Para calcularmos a taxa de entrega — atendemos São Paulo e o Grande ABC.",
   },
   {
-    titulo: "Desfrute de momentos inesquecíveis",
-    texto: "O resto é a emoção de quem abre a caixa.",
+    titulo: "Peça com no mínimo 24h de antecedência",
+    texto: "E receba a sua cesta cuidadosamente montada no dia e no horário escolhidos.",
   },
+  { titulo: "Desfrute de momentos inesquecíveis" },
 ];
 
 export function cestasDaCategoria(slug: CategoriaSlug): Cesta[] {

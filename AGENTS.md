@@ -84,7 +84,10 @@ projete e verifique no celular primeiro.
   direita — o celular não muda); os mais pedidos
   (`destaque`); por faixa de preço (três blocos que levam ao `/cestas/`
   filtrado); as linhas em blocos de foto com etiqueta clara por cima; a
-  faixa compacta de Natal; como funciona (`#como-funciona`); a Rebeca.
+  faixa compacta de Natal; como funciona (`#como-funciona`), como a
+  abertura do catálogo: a Rebeca com a cesta e os passos com as palavras
+  do catálogo (`comoFunciona`), sem texto antes; o "Conheça a Le Brunch",
+  só texto, para a Rebeca não aparecer duas vezes seguidas.
 - **Modelos de Natal sem "serve"**: no Natal o número de pessoas não
   importa — os modelos não mostram "Serve…" e ficam fora do filtro de
   pessoas (ao escolher a linha de Natal, o filtro de pessoas some). A
