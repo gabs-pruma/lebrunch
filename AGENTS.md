@@ -74,7 +74,9 @@ projete e verifique no celular primeiro.
 - **Home**, nesta ordem, pensada no celular: atalhos redondos com foto
   (`components/atalhos-redondos.tsx`, dados em `data/home.ts`, miniaturas
   por `scripts/gerar-atalhos.py`); o vídeo do banner, limpo (sem véu nem
-  texto por cima), com a frase e o botão logo abaixo; os mais pedidos
+  texto por cima), com a frase e o botão logo abaixo (no desktop o hero abre
+  diferente: frase, botão e bolinhas à esquerda, vídeo em pé num quadro à
+  direita — o celular não muda); os mais pedidos
   (`destaque`); por faixa de preço (três blocos que levam ao `/cestas/`
   filtrado); as linhas em blocos de foto com etiqueta clara por cima; a
   faixa compacta de Natal; como funciona (`#como-funciona`); a Rebeca.
@@ -111,7 +113,7 @@ projete e verifique no celular primeiro.
   72rem + 2rem de cada lado). Não use `max-w-7xl` nem `max-w-6xl` com `px`
   por dentro — cada um cria uma margem diferente, e o desalinhamento aparece
   ao rolar. Fotos e galerias também ficam dentro da coluna — só o banner do
-  topo vai de ponta a ponta. Foto ou trilha que sangra só de um lado deixa a
+  topo vai de ponta a ponta (e só até o tablet). Foto ou trilha que sangra só de um lado deixa a
   seção torta (foi pedido para tirar das linhas e da galeria da home).
 - **Ritmo vertical**: toda seção usa o mesmo respiro,
   `py-12 sm:py-14 lg:py-16` (é o da `Secao`): ~96px entre conteúdos no

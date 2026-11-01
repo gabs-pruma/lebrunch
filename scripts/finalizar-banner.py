@@ -21,8 +21,10 @@ ESTUDIO = os.path.join(RAIZ, "..", "estudio", "out")
 DESTINO = os.path.join(RAIZ, "public", "video")
 
 # formato → crf. O retrato é o do celular, de onde vem quase todo mundo:
-# tem de ficar leve (~1,5 MB) para começar logo no 4G.
-FORMATOS = {"retrato": 31, "paisagem": 29}
+# tem de ficar leve (~1,5 MB) para começar logo no 4G. O `desktop` é o mesmo
+# retrato renderizado em 1,5× (`--scale=1.5`, ver o README do estúdio), para
+# o quadro em pé ao lado da frase na tela grande.
+FORMATOS = {"retrato": 31, "paisagem": 29, "desktop": 29}
 
 
 def medidas(caminho):
