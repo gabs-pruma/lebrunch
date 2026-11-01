@@ -82,9 +82,11 @@ projete e verifique no celular primeiro.
   texto por cima), com a frase e o botão logo abaixo (no desktop o hero abre
   diferente: frase, botão e bolinhas à esquerda, vídeo em pé num quadro à
   direita — o celular não muda); os mais pedidos
-  (`destaque`); por faixa de preço (três blocos que levam ao `/cestas/`
-  filtrado); as linhas em blocos de foto com etiqueta clara por cima; a
-  faixa compacta de Natal; como funciona (`#como-funciona`), como a
+  (`destaque`); na época das festas, a Coleção de Natal (a foto da mesa
+  com a coleção inteira num cartão, o texto embaixo da foto e não por
+  cima, e quatro destaques ao lado); por faixa de preço (três blocos que
+  levam ao `/cestas/` filtrado); as linhas em blocos de foto com etiqueta
+  clara por cima; como funciona (`#como-funciona`), como a
   abertura do catálogo: a Rebeca com a cesta e os passos com as palavras
   do catálogo (`comoFunciona`), sem texto antes; o "Conheça a Le Brunch",
   só texto, para a Rebeca não aparecer duas vezes seguidas.

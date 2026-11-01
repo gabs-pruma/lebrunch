@@ -501,7 +501,7 @@ const natal: Cesta[] = [
     preco: 89,
     imagem: foto("natal-carrinho-3"),
     fotos: [foto("natal-carrinho-4"), foto("natal-carrinho-5"), foto("natal-carrinho-1")],
-    foco: "50% 60%",
+    foco: "50% 78%",
     secoes: [
       { titulo: "Presente", itens: ["Caneca de Natal"] },
       { titulo: "Doces", itens: ["Brownie"] },

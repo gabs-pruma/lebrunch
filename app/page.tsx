@@ -7,7 +7,6 @@ import { AtalhosRedondos } from "@/components/atalhos-redondos";
 import { GradeCestas } from "@/components/grade-cestas";
 import { DepoimentosSecao } from "@/components/depoimentos-secao";
 import { Traco } from "@/components/ilustracao";
-import { Luzes } from "@/components/luzes";
 import { LinkTransicao } from "@/components/transicao";
 import {
   IconeWhatsApp,
@@ -64,6 +63,79 @@ export default function Home() {
           </BotaoLink>
         </div>
         <GradeCestas cestas={destaques} rotulo="os mais pedidos" />
+      </Secao>
+
+      {/* ————— Coleção de Natal: logo depois dos mais pedidos, na época
+          das festas. A foto da mesa com a coleção inteira carrega o bloco
+          (num papel claro, para o veludo da foto saltar), e os destaques
+          vêm ao lado ————— */}
+      <Secao id="natal" className="scroll-mt-16 !pt-0">
+        <div className="grid gap-3 lg:grid-cols-[1.35fr_1fr] lg:gap-4">
+          <LinkTransicao
+            href="/natal"
+            className="tema-natal group flex flex-col overflow-hidden rounded-3xl"
+          >
+            {/* a foto limpa em cima, o texto embaixo, no veludo */}
+            <span className="relative block aspect-4/3 overflow-hidden lg:aspect-auto lg:min-h-[21rem] lg:flex-1">
+              <Image
+                src="/ensaio/natal-mesa.webp"
+                alt="A Coleção de Natal da Le Brunch sobre a mesa, diante da guirlanda iluminada"
+                fill
+                sizes="(min-width: 1024px) 55vw, 92vw"
+                style={{ objectPosition: "50% 62%" }}
+                className="object-cover transition-transform duration-[1600ms] ease-suave group-hover:scale-[1.04]"
+              />
+            </span>
+            <span className="flex flex-col items-start gap-3 p-6 sm:p-8">
+              <span className="olho inline-flex items-center gap-2 text-ouro-claro">
+                <IconeBrilho className="cintilar size-3.5" />
+                Edição limitada · Natal 2026
+              </span>
+              <h2
+                id="titulo-natal"
+                className="titulo text-[clamp(1.875rem,5vw,3.25rem)] leading-[0.98] text-balance"
+              >
+                Coleção de{" "}
+                <span className="script texto-ouro text-[1.1em] leading-none">Natal</span>
+              </h2>
+              <span className="flex w-full flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <span className="max-w-sm text-[0.9375rem] leading-relaxed text-papel/80">
+                  Um presente para agradecer a quem esteve ao seu lado o ano todo
+                  e celebrar a magia das festas.
+                </span>
+                <span className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-full bg-ouro px-6 text-[0.6875rem] tracking-[0.14em] whitespace-nowrap text-noite uppercase transition-colors group-hover:bg-ouro-claro sm:self-auto">
+                  Ver os {natal.length} presentes
+                  <IconeSeta className="size-4" />
+                </span>
+              </span>
+            </span>
+          </LinkTransicao>
+
+          <ul className="grid grid-cols-2 gap-3 lg:gap-4">
+            {vitrineNatal.map((c) => (
+              <li key={c.slug}>
+                <LinkTransicao
+                  href={`/cestas/modelo/${c.slug}`}
+                  className="group relative block aspect-square overflow-hidden rounded-2xl bg-noite lg:aspect-auto lg:h-full"
+                >
+                  {c.imagem ? (
+                    <Image
+                      src={c.imagem}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 20vw, 45vw"
+                      style={{ objectPosition: c.foco ?? "50% 50%" }}
+                      className="object-cover transition-transform duration-[1200ms] ease-suave group-hover:scale-[1.06]"
+                    />
+                  ) : null}
+                  <span className="absolute inset-x-2 bottom-2 rounded-xl bg-noite/85 px-3 py-2 text-[0.8125rem] leading-snug text-papel backdrop-blur-sm">
+                    {c.nome}
+                  </span>
+                </LinkTransicao>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Secao>
 
       {/* ————— por faixa de preço: o filtro de preço vira um toque ————— */}
@@ -131,70 +203,6 @@ export default function Home() {
           })}
         </ul>
       </Secao>
-
-      {/* ————— Coleção de Natal, em faixa compacta ————— */}
-      <section
-        id="natal"
-        aria-labelledby="titulo-natal"
-        className="tema-natal relative scroll-mt-16 overflow-hidden"
-      >
-        <Luzes className="opacity-60" />
-        <div className="relative mx-auto grid w-full max-w-site gap-8 px-5 sm:px-8 py-12 sm:py-14 lg:py-16 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
-          <div className="flex flex-col gap-5">
-            <p className="olho inline-flex items-center gap-2.5 text-ouro-claro">
-              <IconeBrilho className="cintilar size-4" />
-              Edição limitada · Natal 2026
-            </p>
-            <h2
-              id="titulo-natal"
-              className="titulo text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.98] text-balance"
-            >
-              O Natal chegou à{" "}
-              <span className="script texto-ouro text-[1.1em] leading-none">
-                Le Brunch
-              </span>
-            </h2>
-            <p className="max-w-md text-[1rem] leading-relaxed text-papel/75">
-              Um presente para agradecer a quem esteve ao seu lado o ano todo e
-              celebrar a magia das festas.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-              <BotaoLink href="/natal" variante="ouro" className="shrink-0 whitespace-nowrap">
-                Ver o catálogo de Natal
-                <IconeSeta className="size-4" />
-              </BotaoLink>
-              <span className="olho text-papel/55">{natal.length} presentes</span>
-            </div>
-          </div>
-
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {vitrineNatal.map((c) => (
-              <li key={c.slug}>
-                <LinkTransicao
-                  href={`/cestas/modelo/${c.slug}`}
-                  className="group flex flex-col gap-2"
-                >
-                  <span className="relative block aspect-4/5 overflow-hidden rounded-xl bg-noite-alt ring-1 ring-papel/10">
-                    {c.imagem ? (
-                      <Image
-                        src={c.imagem}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1024px) 13vw, (min-width: 640px) 22vw, 45vw"
-                        style={{ objectPosition: c.foco ?? "50% 50%" }}
-                        className="object-cover transition-transform duration-[1200ms] ease-suave group-hover:scale-[1.08]"
-                      />
-                    ) : null}
-                  </span>
-                  <span className="text-[0.8125rem] leading-snug text-papel/80 transition-colors group-hover:text-ouro-claro">
-                    {c.nome}
-                  </span>
-                </LinkTransicao>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       {/* ————— como funciona ————— */}
       <Secao id="como-funciona" className="scroll-mt-32 xl:scroll-mt-24">
