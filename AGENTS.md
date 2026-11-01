@@ -46,7 +46,9 @@ projete e verifique no celular primeiro.
   (`~/LeBrunch/lebrunch-dev/ensaio-102026/gostei`), que é a origem dos
   exportadores. Foto fora do `gostei` não entra — a exceção são as seis que
   a Rebeca aprovou nos catálogos finais de 31/10/2026 (`CATALOGO` no
-  exportador, lidas da pasta `Highlights`). As fotos antigas
+  exportador, lidas da pasta `Highlights`), mais seis da gaveta de frios
+  escolhidas pelo Gabriel em 01/11, e o retrato que a Rebeca mandou
+  (`AVULSAS`, de `../fotos-avulsas/`, sem acerto de cor). As fotos antigas
   saíram e não voltam. Foto nova entra pelo `FOTOS` de
   `scripts/exportar-ensaio.py`, nunca copiada à mão — o script mantém o
   perfil Display P3 do ensaio (sem ele a foto sai lavada) e aplica o acerto
