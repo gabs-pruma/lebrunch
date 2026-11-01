@@ -180,7 +180,6 @@ export default function NatalPage() {
         <Luzes className="opacity-40" />
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <div className="order-last flex flex-col gap-6 lg:order-first">
-            <p className="olho text-ouro-claro">Embrulhado à mão</p>
             <h2 className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-[1.02] text-balance">
               A beleza de{" "}
               <span className="script texto-ouro text-[1.1em] leading-none">agradecer</span>
