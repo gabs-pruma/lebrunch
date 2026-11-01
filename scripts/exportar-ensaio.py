@@ -34,12 +34,13 @@ FOTOS = {
     "despertar-1": 222,
     "encanto-1": 189, "encanto-2": 192, "encanto-3": 193,
     "presenca-1": 151, "presenca-2": 155, "presenca-3": 161,
+    "presenca-4": 162,  # detalhe do "experiência começa", na home
     "fazenda-1": 182, "fazenda-2": 177, "fazenda-3": 176, "fazenda-4": 180, "fazenda-5": 181,
     "aquarela-1": 214, "aquarela-2": 220, "aquarela-3": 217, "aquarela-4": 218,
     # ——— Linha Premium ———
     "pausa-1": 201, "pausa-2": 209, "pausa-3": 199, "pausa-4": 204,
-    "comemore-1": 231, "comemore-2": 233, "comemore-3": 227, "comemore-4": 229,
-    "comemore-5": 232, "comemore-6": 235,
+    # a Comemore ficou só com as melhores (as repetidas saíram, 01/11/2026)
+    "comemore-1": 231, "comemore-2": 233, "comemore-3": 227, "comemore-7": 228,
     # a Brinde do ano todo usa as fotos sem a guirlanda; as com guirlanda são da de Natal
     "brinde-1": 79, "brinde-2": 97, "brinde-3": 98,
     "brinde-4": 92, "brinde-5": 89, "brinde-6": 81, "brinde-7": 84,
@@ -72,6 +73,9 @@ CATALOGO = {231, 45, 13, 70, 50, 63}
 # Mais fotos da gaveta de frios (Brinde e Brinde de Natal), escolhidas pelo
 # Gabriel em 01/11/2026: no "gostei" só havia as que já estavam no site.
 CATALOGO |= {92, 89, 81, 84, 104, 106}
+# Um detalhe da Presença e um close da Comemore, também da Highlights
+# (Gabriel, 01/11/2026).
+CATALOGO |= {162, 228}
 HIGHLIGHTS = os.path.join(os.path.dirname(ORIGEM.rstrip("/")), "Highlights")
 
 # Cestas cujos alimentos levam a cor dos da Presença, a que a Rebeca

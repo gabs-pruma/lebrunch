@@ -99,7 +99,7 @@ export const categorias: Categoria[] = [
     chamada: "Caixas e cestas para ocasiões especiais",
     descricao:
       "A caixa com caneca personalizada, a caixa redonda com bentô cake, a gaveta de frios para brindar e as cestas de vime com flores naturais.",
-    foto: foto("comemore-6"),
+    foto: foto("primavera-1"),
     foco: "50% 60%",
   },
   {
@@ -361,15 +361,9 @@ const premium: Cesta[] = [
     chamada: "Para celebrar as datas especiais com um bolo feito para a ocasião",
     preco: 379,
     serve: "2 pessoas",
-    imagem: foto("comemore-1"),
-    fotos: [
-      foto("comemore-2"),
-      foto("comemore-3"),
-      foto("comemore-4"),
-      foto("comemore-5"),
-      foto("comemore-6"),
-    ],
-    foco: "50% 65%",
+    imagem: foto("comemore-7"),
+    fotos: [foto("comemore-3"), foto("comemore-1"), foto("comemore-2")],
+    foco: "50% 50%",
     antecedenciaDias: 3,
     secoes: [
       {

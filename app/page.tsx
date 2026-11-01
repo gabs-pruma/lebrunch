@@ -219,10 +219,11 @@ export default function Home() {
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1fr] lg:gap-16">
           <FotoParallax
-            src="/ensaio/mesa-itens.webp"
-            alt="Itens de uma cesta da Le Brunch dispostos sobre a mesa: café Baggio, caneca de cerâmica, suco de uva, queijos e pão na cesta de palha"
+            src="/ensaio/presenca-4.webp"
+            alt="Detalhe da cesta Presença: pães, pão de queijo, uvas, morangos, kiwi e um potinho de mel"
             width={1600}
             height={2400}
+            foco="50% 12%"
             sizes="(min-width: 1024px) 42vw, 92vw"
             className="aspect-3/2 w-full rounded-2xl lg:aspect-auto lg:min-h-80"
           />
