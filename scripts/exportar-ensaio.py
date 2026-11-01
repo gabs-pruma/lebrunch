@@ -14,7 +14,7 @@ Arquivo que já existe é pulado: para reexportar, apague o .webp antes.
 import os, sys
 from concurrent.futures import ProcessPoolExecutor
 from PIL import Image, ImageOps
-from cor import aplicar_retoque, dar_vida
+from cor import aplicar_retoque, dar_vida, igualar_presenca
 
 ORIGEM = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser(
     "~/LeBrunch/lebrunch-dev/ensaio-102026/gostei")
@@ -74,6 +74,10 @@ CATALOGO = {231, 45, 13, 70, 50, 63}
 CATALOGO |= {92, 89, 81, 84, 104, 106}
 HIGHLIGHTS = os.path.join(os.path.dirname(ORIGEM.rstrip("/")), "Highlights")
 
+# Cestas cujos alimentos levam a cor dos da Presença, a que a Rebeca
+# escolheu (nov/2026; ver `igualar_presenca` em cor.py).
+COMO_A_PRESENCA = {"cafezinho", "despertar", "encanto", "comemore"}
+
 # A foto larga da coleção de Natal sai recortada em paisagem do retrato
 # (no "gostei" não há foto deitada): (proporção, centro vertical do recorte).
 RECORTES = {"natal-mesa": (3 / 2, 0.6)}
@@ -124,6 +128,8 @@ def exportar(item):
         topo = min(max(round(im.height * centro - altura / 2), 0), im.height - altura)
         im = im.crop((0, topo, im.width, topo + altura))
     im = dar_vida(im)
+    if destino.split("-")[0] in COMO_A_PRESENCA:
+        im = igualar_presenca(im)
     im.save(saida, "WEBP", quality=80, method=6, icc_profile=perfil)
 
 if __name__ == "__main__":

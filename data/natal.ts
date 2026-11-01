@@ -2,7 +2,7 @@
  * Página da Coleção de Natal (`/natal`).
  *
  * Os modelos em si estão em `data/cestas.ts` (categoria "natal"). Aqui fica
- * só a organização da página: a Brinde em destaque e os outros presentes
+ * só a organização da página: a Caixa de Doces em destaque e os outros presentes
  * numa grade só, na ordem do catálogo de Natal aprovado em 31/10/2026. O
  * catálogo não abre páginas de linha no Natal, então o site também não.
  */
@@ -10,8 +10,11 @@
 export const colecaoNatal = {
   ano: 2026,
 
-  /** Modelo em destaque, apresentado em tamanho grande. */
-  estrela: "natal-brinde",
+  /**
+   * Modelo em destaque, logo na entrada dos presentes — com poucas linhas,
+   * para os outros modelos virem logo depois (pedido do Gabriel, 01/11/2026).
+   */
+  estrela: "natal-caixa-de-doces",
 
   /** Condições do catálogo de Natal. */
   condicoes: [

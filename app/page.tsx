@@ -156,8 +156,8 @@ export default function Home() {
               </span>
             </h2>
             <p className="max-w-md text-[1rem] leading-relaxed text-papel/75">
-              Latas estampadas, caixas com laço estrelado, espumante, panetone e
-              tábua de frios — para a família, os amigos e a sua equipe.
+              Um presente para agradecer a quem esteve ao seu lado o ano todo e
+              celebrar a magia das festas.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
               <BotaoLink href="/natal" variante="ouro" className="shrink-0 whitespace-nowrap">

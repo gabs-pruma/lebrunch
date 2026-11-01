@@ -29,11 +29,11 @@ export const filtrosVazios: Filtros = { linha: "", preco: "", pessoas: "" };
 export function filtrosDoEndereco(busca: URLSearchParams): Filtros {
   const valido = (v: string | null, opcoes: readonly { slug: string }[]) =>
     v && opcoes.some((o) => o.slug === v) ? v : "";
-  return {
+  return semPessoasNoNatal({
     linha: valido(busca.get("linha"), categorias),
     preco: valido(busca.get("preco"), faixasDePreco),
     pessoas: valido(busca.get("pessoas"), opcoesPessoas),
-  };
+  });
 }
 
 export function enderecoFiltrado(f: Filtros): string {
@@ -49,6 +49,14 @@ const grupos: { chave: keyof Filtros; rotulo: string; opcoes: { slug: string; no
   { chave: "preco", rotulo: "Faixa de preço", opcoes: faixasDePreco.map((f) => ({ slug: f.slug, nome: f.curto })) },
 ];
 
+/**
+ * O Natal não se escolhe por número de pessoas: ao escolher a linha de Natal,
+ * o filtro de pessoas some e se desfaz.
+ */
+function semPessoasNoNatal(f: Filtros): Filtros {
+  return f.linha === "natal" ? { ...f, pessoas: "" } : f;
+}
+
 export function PainelFiltro({
   inicial = filtrosVazios,
   aoIr,
@@ -63,32 +71,36 @@ export function PainelFiltro({
   const algum = Boolean(filtros.linha || filtros.preco || filtros.pessoas);
 
   const escolher = (chave: keyof Filtros, valor: string) =>
-    setFiltros((f) => ({ ...f, [chave]: f[chave] === valor ? "" : valor }));
+    setFiltros((f) => semPessoasNoNatal({ ...f, [chave]: f[chave] === valor ? "" : valor }));
 
   return (
     <div role="search" aria-label="Encontre a sua cesta" className="flex flex-col gap-4">
-      {grupos.map((grupo) => (
-        <div key={grupo.chave} role="group" aria-label={grupo.rotulo} className="flex flex-col gap-2">
-          <span className="olho text-tinta-suave">{grupo.rotulo}</span>
-          <div className="flex flex-wrap gap-1.5">
-            {grupo.opcoes.map((opcao) => {
-              const ativo = filtros[grupo.chave] === opcao.slug;
-              const zeraria =
-                !ativo && filtrarCestas({ ...filtros, [grupo.chave]: opcao.slug }).length === 0;
-              return (
-                <Chip
-                  key={opcao.slug}
-                  ativo={ativo}
-                  desabilitado={zeraria}
-                  onClick={() => escolher(grupo.chave, opcao.slug)}
-                >
-                  {opcao.nome}
-                </Chip>
-              );
-            })}
+      {grupos
+        .filter((grupo) => !(grupo.chave === "pessoas" && filtros.linha === "natal"))
+        .map((grupo) => (
+          <div key={grupo.chave} role="group" aria-label={grupo.rotulo} className="flex flex-col gap-2">
+            <span className="olho text-tinta-suave">{grupo.rotulo}</span>
+            <div className="flex flex-wrap gap-1.5">
+              {grupo.opcoes.map((opcao) => {
+                const ativo = filtros[grupo.chave] === opcao.slug;
+                const zeraria =
+                  !ativo &&
+                  filtrarCestas(semPessoasNoNatal({ ...filtros, [grupo.chave]: opcao.slug }))
+                    .length === 0;
+                return (
+                  <Chip
+                    key={opcao.slug}
+                    ativo={ativo}
+                    desabilitado={zeraria}
+                    onClick={() => escolher(grupo.chave, opcao.slug)}
+                  >
+                    {opcao.nome}
+                  </Chip>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
       <div className="flex items-center gap-4 pt-1">
         <button

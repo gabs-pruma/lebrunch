@@ -476,7 +476,14 @@ const premium: Cesta[] = [
 
 /* ———————————————————————— Coleção de Natal ———————————————————————— */
 
-/** Na ordem do catálogo de Natal: do menor preço ao maior. */
+/**
+ * Na ordem do catálogo de Natal: do menor preço ao maior.
+ *
+ * - Sem "serve": no Natal a quantidade de pessoas não importa, e os modelos
+ *   ficam fora do filtro de pessoas (pedido do Gabriel, 01/11/2026).
+ * - A primeira foto é sempre o presente aberto, mostrando o que vem dentro;
+ *   a fechada (e a da mão segurando) vai para o fim da galeria.
+ */
 const natal: Cesta[] = [
   {
     slug: "natal-lata-brownie",
@@ -484,9 +491,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "Um carinho de Natal para lembrar de quem é especial",
     preco: 79,
-    serve: "1 pessoa",
-    imagem: foto("natal-lata-brownie-1"),
-    fotos: [foto("natal-lata-brownie-2"), foto("natal-lata-brownie-3"), foto("natal-lata-brownie-4")],
+    imagem: foto("natal-lata-brownie-2"),
+    fotos: [foto("natal-lata-brownie-4"), foto("natal-lata-brownie-3"), foto("natal-lata-brownie-1")],
     foco: "50% 70%",
     secoes: [
       { titulo: "Doces", itens: ["Brownies"] },
@@ -499,14 +505,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "Um mimo para aquecer as manhãs de dezembro",
     preco: 89,
-    serve: "1 pessoa",
-    imagem: foto("natal-carrinho-1"),
-    fotos: [
-      foto("natal-carrinho-2"),
-      foto("natal-carrinho-3"),
-      foto("natal-carrinho-4"),
-      foto("natal-carrinho-5"),
-    ],
+    imagem: foto("natal-carrinho-3"),
+    fotos: [foto("natal-carrinho-4"), foto("natal-carrinho-5"), foto("natal-carrinho-1")],
     foco: "50% 60%",
     secoes: [
       { titulo: "Presente", itens: ["Caneca de Natal"] },
@@ -520,9 +520,7 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "O sabor do Natal em um presente simples e certeiro",
     preco: 129,
-    serve: "2 a 3 pessoas",
     imagem: foto("natal-lata-alta-1"),
-    fotos: [foto("natal-lata-alta-2")],
     foco: "50% 75%",
     secoes: [
       { titulo: "Doces", itens: ["Panetone Artesanal"] },
@@ -535,15 +533,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "Para brindar o fim de ano com quem você gosta",
     preco: 219,
-    serve: "2 pessoas",
-    imagem: foto("natal-acrilico-lata-1"),
-    fotos: [
-      foto("natal-acrilico-lata-2"),
-      foto("natal-acrilico-lata-3"),
-      foto("natal-acrilico-lata-4"),
-      foto("natal-acrilico-lata-5"),
-      foto("natal-acrilico-lata-6"),
-    ],
+    imagem: foto("natal-acrilico-lata-2"),
+    fotos: [foto("natal-acrilico-lata-4"), foto("natal-acrilico-lata-5"), foto("natal-acrilico-lata-1")],
     foco: "50% 70%",
     secoes: [
       { titulo: "Bebidas", itens: ["Espumante Freixenet"] },
@@ -557,14 +548,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "O brinde e o panetone para celebrar a ceia",
     preco: 239,
-    serve: "2 a 3 pessoas",
-    imagem: foto("natal-acrilico-panetone-1"),
-    fotos: [
-      foto("natal-acrilico-panetone-2"),
-      foto("natal-acrilico-panetone-3"),
-      foto("natal-acrilico-panetone-4"),
-      foto("natal-acrilico-panetone-5"),
-    ],
+    imagem: foto("natal-acrilico-panetone-2"),
+    fotos: [foto("natal-acrilico-panetone-1"), foto("natal-acrilico-panetone-5")],
     foco: "50% 70%",
     secoes: [
       { titulo: "Doces", itens: ["Panetone Artesanal"] },
@@ -578,9 +563,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "Doces finos para adoçar as festas de fim de ano",
     preco: 259,
-    serve: "2 a 4 pessoas",
-    imagem: foto("natal-doces-1"),
-    fotos: [foto("natal-doces-2"), foto("natal-doces-3"), foto("natal-doces-4"), foto("natal-doces-5")],
+    imagem: foto("natal-doces-3"),
+    fotos: [foto("natal-doces-2"), foto("natal-doces-1"), foto("natal-doces-5")],
     foco: "50% 75%",
     destaque: true,
     secoes: [
@@ -593,15 +577,15 @@ const natal: Cesta[] = [
   },
   {
     ...brinde,
+    serve: undefined,
     slug: "natal-brinde",
     categoria: "natal",
-    imagem: foto("natal-brinde-1"),
+    imagem: foto("natal-brinde-2"),
     fotos: [
-      foto("natal-brinde-2"),
-      foto("natal-brinde-5"),
       foto("natal-brinde-3"),
       foto("natal-brinde-6"),
       foto("natal-brinde-4"),
+      foto("natal-brinde-1"),
     ],
     foco: "50% 65%",
     destaque: true,

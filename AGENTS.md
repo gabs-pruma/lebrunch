@@ -60,7 +60,10 @@ projete e verifique no celular primeiro.
   `foco` (`object-position`) — o recorte é 4:5 sobre retrato 2:3. **Sem
   marca d'água** e com cor contida (`scripts/cor.py`: saturação um pouco
   abaixo do ensaio, tons médios menos quentes) — a Rebeca achou a marca
-  feia e as cores estouradas/artificiais (nov/2026). Mudou o acerto? Apague
+  feia e as cores estouradas/artificiais (nov/2026). A cor dos alimentos
+  que vale é a da Presença: Cafezinho, Despertar, Encanto e Comemore
+  passam por `igualar_presenca` (`COMO_A_PRESENCA` no exportador). Cesta
+  nova com a mesma luz e cor diferente entra nessa lista. Mudou o acerto? Apague
   `public/ensaio/*.webp` e reexporte; depois `gerar-atalhos.py`,
   `gerar-og.py` e o vídeo do banner (README do estúdio).
 - **Links internos com `LinkTransicao`** (ou `BotaoLink`), não `next/link`
@@ -82,6 +85,15 @@ projete e verifique no celular primeiro.
   (`destaque`); por faixa de preço (três blocos que levam ao `/cestas/`
   filtrado); as linhas em blocos de foto com etiqueta clara por cima; a
   faixa compacta de Natal; como funciona (`#como-funciona`); a Rebeca.
+- **Modelos de Natal sem "serve"**: no Natal o número de pessoas não
+  importa — os modelos não mostram "Serve…" e ficam fora do filtro de
+  pessoas (ao escolher a linha de Natal, o filtro de pessoas some). A
+  primeira foto de todo modelo de Natal é o presente aberto; a fechada e a
+  da mão segurando vão para o fim da galeria. Na `/natal`, o destaque
+  (`colecaoNatal.estrela`, hoje a Caixa de Doces) vem em poucas linhas —
+  foto, nome, frase e preço — e os outros modelos logo depois. Textos de
+  Natal falam de sentimento (magia, gratidão, carinho), não descrevem
+  embalagem (nada de "latas estampadas", "laço estrelado").
 - **Coleção de Natal**: identidade própria só dentro de `.tema-natal`
   (tokens `noite`, `ouro`, `ouro-claro`, `natal`). Fora dela, a paleta de
   sempre. Link para a linha sempre por `hrefCategoria()` — a de Natal vai

@@ -13,7 +13,6 @@ import { FotoParallax } from "@/components/foto-parallax";
 import { Simbolo } from "@/components/marca";
 import {
   IconeBrilho,
-  IconeCheck,
   IconePresente,
   IconeRelogio,
   IconeSeta,
@@ -93,9 +92,9 @@ export default function NatalPage() {
               </span>
             </h1>
             <p className="max-w-lg text-[1.0625rem] leading-relaxed text-papel/80">
-              Veludo verde, laço estrelado, xadrez vermelho e muito dourado.
-              {` ${todas.length}`} presentes montados à mão pela Rebeca — para
-              a ceia, para o brinde e para adoçar quem você ama.
+              A magia do Natal mora nos gestos de carinho. Presentes montados
+              à mão pela {site.fundadora.nome} para agradecer, celebrar e estar
+              perto de quem você ama.
             </p>
             <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
               <BotaoLink href="#presentes" variante="ouro">
@@ -114,28 +113,26 @@ export default function NatalPage() {
         </div>
       </section>
 
-      {/* ————— a estrela da coleção ————— */}
+      {/* ————— os presentes: o destaque em poucas linhas e, logo depois, os outros ————— */}
       <section
         id="presentes"
         aria-labelledby="a-estrela"
         className="relative scroll-mt-20 px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
       >
         <div className="mx-auto w-full max-w-6xl">
-          <FileteOuro className="mb-12" />
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="self-start lg:sticky lg:top-28">
-              {estrela.imagem ? (
-                <GaleriaCesta
-                  fotos={[estrela.imagem, ...(estrela.fotos ?? [])]}
-                  nome={estrela.nome}
-                  foco={estrela.foco}
-                  escuro
-                  semPrioridade
-                />
-              ) : null}
-            </div>
+          <FileteOuro className="mb-10 sm:mb-12" />
+          <div className="grid gap-7 lg:grid-cols-2 lg:items-center lg:gap-16">
+            {estrela.imagem ? (
+              <GaleriaCesta
+                fotos={[estrela.imagem, ...(estrela.fotos ?? [])]}
+                nome={estrela.nome}
+                foco={estrela.foco}
+                escuro
+                semPrioridade
+              />
+            ) : null}
 
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col items-start gap-5">
               <p className="olho text-ouro-claro">Destaque de Natal</p>
               <h2
                 id="a-estrela"
@@ -143,74 +140,33 @@ export default function NatalPage() {
               >
                 {estrela.nome}
               </h2>
-              <p className="text-[1.0625rem] leading-relaxed text-papel/75">
-                {estrela.chamada}. Abre a tampa, puxa a gaveta: a tábua chega
-                pronta para ir à mesa.
+              <p className="max-w-md text-[1.0625rem] leading-relaxed text-papel/75">
+                {estrela.chamada}.
               </p>
-
-              <div className="flex flex-wrap items-end gap-x-8 gap-y-3 border-y border-papel/12 py-6">
-                {estrela.preco !== null ? (
-                  <p>
-                    <span className="titulo block text-[2.75rem] leading-none">
-                      {formatarPreco(estrela.preco)}
-                    </span>
-                    <span className="olho mt-2 block text-papel/60">+ frete</span>
-                  </p>
-                ) : (
-                  <p className="titulo text-3xl text-ouro-claro">Sob consulta</p>
-                )}
-                {estrela.serve ? (
-                  <p className="text-[0.9375rem] text-papel/70">Serve {estrela.serve}</p>
-                ) : null}
-              </div>
-
-              <div className="-mb-7 columns-1 gap-x-8 sm:columns-2">
-                {estrela.secoes.map((secao) => (
-                  <section key={secao.titulo} className="flex break-inside-avoid flex-col gap-3 pb-7">
-                    <h3 className="olho text-ouro">{secao.titulo}</h3>
-                    <ul className="flex flex-col gap-2">
-                      {secao.itens.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-2.5 text-[0.9375rem] leading-relaxed text-papel/85"
-                        >
-                          <IconeCheck className="mt-0.5 size-4 shrink-0 text-ouro" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
-              </div>
-
-              {estrela.observacao ? (
-                <p className="border-l-2 border-ouro pl-4 text-[0.9375rem] leading-relaxed text-papel/75">
-                  {estrela.observacao}
+              {estrela.preco !== null ? (
+                <p className="flex items-baseline gap-3">
+                  <span className="titulo text-[2.25rem] leading-none">
+                    {formatarPreco(estrela.preco)}
+                  </span>
+                  <span className="olho text-papel/60">+ frete</span>
                 </p>
               ) : null}
-
-              <BotaoPedido
-                cesta={estrela}
-                variante="ouro"
-                rotulo="Pedir este presente"
-                className="w-full sm:w-auto sm:self-start"
-              />
+              <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-6">
+                <BotaoPedido cesta={estrela} variante="ouro" rotulo="Pedir este presente" />
+                <BotaoLink href={`/cestas/modelo/${estrela.slug}`} variante="contornoOuro">
+                  Ver o que vem dentro
+                  <IconeSeta className="size-4" />
+                </BotaoLink>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ————— os outros presentes, na ordem do catálogo (do menor preço) ————— */}
-      <section
-        aria-labelledby="titulo-presentes"
-        className="relative bg-noite-alt/60 px-5 sm:px-8 py-12 sm:py-14 lg:py-16"
-      >
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="mb-10 flex flex-col gap-3 sm:mb-14">
+          {/* os outros presentes, na ordem do catálogo (do menor preço) */}
+          <div className="mt-14 flex flex-col gap-3 sm:mt-20">
             <p className="olho text-ouro">{outros.length} presentes</p>
             <h2
               id="titulo-presentes"
-              className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-none"
+              className="titulo mb-8 text-[clamp(1.75rem,6vw,3.75rem)] leading-none sm:mb-12"
             >
               Mais presentes de Natal
             </h2>
@@ -230,9 +186,9 @@ export default function NatalPage() {
               <span className="script texto-ouro text-[1.1em] leading-none">presente</span>
             </h2>
             <p className="max-w-md text-[1.0625rem] leading-relaxed text-papel/75">
-              Cada kit sai da cozinha da Le Brunch fechado pela {site.fundadora.nome}:
-              veludo verde, fita estrelada, xadrez de Natal e a tag Boas Festas.
-              Quem recebe abre um presente antes mesmo de provar.
+              Cada presente sai da cozinha da Le Brunch fechado pela{" "}
+              {site.fundadora.nome}, com o cuidado de quem também está
+              presenteando. Quem recebe sente o carinho antes mesmo de abrir.
             </p>
             <ul className="flex flex-col gap-3 text-[0.9375rem] text-papel/80">
               <li className="flex items-center gap-3">
@@ -296,10 +252,10 @@ export default function NatalPage() {
               Presentes para a equipe e para os clientes
             </h2>
             <p className="text-[1rem] leading-relaxed text-tinta-suave">
-              Os kits com espumante, as latas e a Caixa de Doces foram feitos
-              para presentear em quantidade, todos com a mesma embalagem. Conte
-              quantas pessoas e o orçamento — a gente monta a proposta. Para
-              pedidos de empresa, {site.atendimento.antecedenciaCorporativa}.
+              Agradeça a quem fez o seu ano acontecer. Os presentes de Natal
+              podem ser pedidos em quantidade, todos com a mesma embalagem.
+              Conte quantas pessoas e o orçamento — a gente monta a proposta.
+              Para pedidos de empresa, {site.atendimento.antecedenciaCorporativa}.
             </p>
             <BotaoLink
               href={linkWhatsApp(mensagens.natalCorporativo)}
