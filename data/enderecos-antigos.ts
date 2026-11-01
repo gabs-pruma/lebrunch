@@ -29,7 +29,9 @@ export const enderecosAntigos: Record<string, string> = {
   "produto/167881/cafe-da-manha-g": "/cestas/modelo/presenca/",
   "produto/167882/cafe-bento-cake": "/cestas/modelo/comemore/",
   "produto/167883/bandeja-de-queijos-e-frios": "/cestas/modelo/brinde/",
-  "landing-page/catalogo-corporativo": "/corporativo/",
+  // o corporativo está na página própria, no subdomínio lp (a /corporativo
+  // do site está fora do ar, com noindex)
+  "landing-page/catalogo-corporativo": "https://lp.lebrunchcestas.com.br/",
   "landing-page/le-brunch-dia-dos-pais-2026": "/cestas/",
 
   // Linhas e modelos da prévia do site (out/2026), antes dos catálogos de

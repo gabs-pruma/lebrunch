@@ -165,7 +165,7 @@ export default function CestasPage() {
                 <IconeSeta className="size-4" />
               </BotaoLink>
             </div>
-            {/* sem a Brinde, que já aparece na Linha Premium: seis presentes, duas fileiras */}
+            {/* sem a Noite Feliz, que é a Brinde da Linha Premium: seis presentes, duas fileiras */}
             <GradeCestas
               cestas={cestasDaCategoria("natal").filter((c) => c.slug !== colecaoNatal.estrela)}
               rotulo="Coleção de Natal"

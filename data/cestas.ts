@@ -108,7 +108,7 @@ export const categorias: Categoria[] = [
     nomeCurto: "Natal",
     chamada: "Edição limitada · Natal 2026",
     descricao:
-      "Latas, caixas e kits com espumante, panetone, doces finos e tábua de frios — mimos para lembrar de todo mundo e presentes para brindar a data.",
+      "Presentes para agradecer a quem esteve junto durante o ano e desejar felicidade e saúde para o ano que se inicia — para a família, um cliente especial ou o funcionário que merece reconhecimento.",
     foto: foto("natal-doces-3"),
     foco: "50% 70%",
     selo: "Edição limitada",

@@ -36,13 +36,14 @@ export async function generateMetadata(
 export default async function EnderecoAntigo(props: PageProps<"/[...antigo]">) {
   const destino = destinoDe((await props.params).antigo);
   if (!destino) notFound();
+  const href = destino.startsWith("http") ? destino : comBase(destino);
 
   return (
     <Secao>
-      <meta httpEquiv="refresh" content={`0; url=${comBase(destino)}`} />
+      <meta httpEquiv="refresh" content={`0; url=${href}`} />
       <h1 className="titulo text-4xl">Esta página mudou de endereço</h1>
       <p className="mt-4 text-tinta-suave">
-        <a href={comBase(destino)} className="underline underline-offset-4">
+        <a href={href} className="underline underline-offset-4">
           Continuar para a página nova
         </a>
       </p>

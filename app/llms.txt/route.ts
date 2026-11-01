@@ -38,7 +38,7 @@ function texto(): string {
     "",
     "## Como pedir",
     "",
-    `- Pelo WhatsApp ${site.telefone} (https://wa.me/${site.whatsapp}). No site, cada modelo abre um formulário que já monta a mensagem com o modelo, a data e o período de entrega.`,
+    `- Pelo WhatsApp ${site.telefone} (https://wa.me/${site.whatsapp}). No site, cada modelo abre um formulário que já monta a mensagem com o modelo, a data e o período de entrega. Nos presentes de Natal o pedido vai direto para o WhatsApp, e a disponibilidade é confirmada no atendimento.`,
     `- Pedidos com ${atendimento.antecedencia}.${cestas.filter((c) => c.antecedenciaDias).map((c) => ` ${c.nome}: ${antecedenciaDe(c)}.`).join("")}`,
     `- A taxa de entrega é calculada pelo endereço. Preços abaixo não incluem o frete.`,
     `- Pagamento: ${pagamento.aVista} à vista, ou ${parcelado} (${pagamento.parcelado.ressalva}).`,

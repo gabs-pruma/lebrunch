@@ -24,7 +24,7 @@ import { linkWhatsApp, mensagens, site } from "@/data/site";
 
 export const metadata: Metadata = metadadosPagina({
   titulo: `Coleção de Natal ${colecaoNatal.ano}`,
-  descricao: `Presentes de Natal da Le Brunch: latas com brownie e panetone, caixa de doces finos, kits com espumante e a Brinde, com tábua de frios. Entrega em ${site.atendimento.regiao}.`,
+  descricao: `Presentes de Natal da Le Brunch para agradecer a quem esteve junto durante o ano: Gratidão, Magia de Natal, Afeto, Celebrar, Alegria, Doce Natal e Noite Feliz. Entrega em ${site.atendimento.regiao}.`,
   caminho: "/natal/",
   og: "natal",
 });
