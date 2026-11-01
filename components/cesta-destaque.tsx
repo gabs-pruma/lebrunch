@@ -1,7 +1,7 @@
 import { GaleriaCesta } from "@/components/galeria-cesta";
 import { BotaoPedido } from "@/components/botao-pedido";
 import { IconeCheck, IconePessoas, IconeRelogio } from "@/components/icones";
-import { antecedenciaDe, formatarPreco, type Cesta } from "@/data/cestas";
+import { formatarPreco, prazoDe, type Cesta } from "@/data/cestas";
 
 /**
  * Uma cesta só, em tamanho grande: galeria de um lado, ficha do outro.
@@ -69,7 +69,7 @@ export function CestaDestaque({
             ) : null}
             <li className="flex items-center gap-2.5">
               <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-              Pedido com {antecedenciaDe(cesta)}
+              {prazoDe(cesta)}
             </li>
           </ul>
         </div>

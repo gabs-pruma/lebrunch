@@ -186,14 +186,17 @@ export default function NatalPage() {
               <span className="script texto-ouro text-[1.1em] leading-none">presente</span>
             </h2>
             <p className="max-w-md text-[1.0625rem] leading-relaxed text-papel/75">
-              Cada presente sai da cozinha da Le Brunch fechado pela{" "}
-              {site.fundadora.nome}, com o cuidado de quem também está
-              presenteando. Quem recebe sente o carinho antes mesmo de abrir.
+              A magia do Natal está em agradecer. Agradecer a quem esteve junto
+              durante o ano: a família, um cliente especial, o funcionário que
+              merece reconhecimento. E desejar felicidade e saúde para o ano
+              que começa. Cada presente sai embrulhado à mão pela{" "}
+              {site.fundadora.nome}, para levar esse carinho até quem você
+              escolher.
             </p>
             <ul className="flex flex-col gap-3 text-[0.9375rem] text-papel/80">
               <li className="flex items-center gap-3">
                 <IconeRelogio className="size-5 shrink-0 text-ouro" />
-                Pedidos com {site.atendimento.antecedencia} — quanto antes, melhor para garantir a data
+                Consulte a disponibilidade — quanto antes, melhor para garantir a data
               </li>
               <li className="flex items-center gap-3">
                 <Simbolo className="h-4 w-4 shrink-0 text-ouro" />

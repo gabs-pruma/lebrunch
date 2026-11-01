@@ -91,11 +91,16 @@ projete e verifique no celular primeiro.
   do catálogo (`comoFunciona`), sem texto antes; o "Conheça a Le Brunch",
   com o retrato de camisa branca que a Rebeca prefere (pedido dela) e o
   nome dela uma vez só, no título.
+- **Pedido de Natal vai direto para o WhatsApp**: nos modelos de Natal o
+  site não reserva dia e período (`pedeDisponibilidade`/`prazoDe` em
+  `data/cestas.ts`). O botão leva ao WhatsApp com `mensagens.pedidoNatal`,
+  e no lugar das 24h aparece "Consulte a disponibilidade".
 - **Modelos de Natal sem "serve"**: no Natal o número de pessoas não
   importa — os modelos não mostram "Serve…" e ficam fora do filtro de
   pessoas (ao escolher a linha de Natal, o filtro de pessoas some). A
   primeira foto de todo modelo de Natal é o presente aberto; a fechada e a
-  da mão segurando vão para o fim da galeria. Na `/natal`, o destaque
+  da mão segurando vão para o fim da galeria (Celebrar e Alegria abrem com
+  o kit dentro da bag de acrílico, a pedido da Rebeca). Na `/natal`, o destaque
   (`colecaoNatal.estrela`, hoje a Doce Natal, a caixa de doces) vem em poucas linhas —
   foto, nome, frase e preço — e os outros modelos logo depois. Textos de
   Natal falam de sentimento (magia, gratidão, carinho), não descrevem

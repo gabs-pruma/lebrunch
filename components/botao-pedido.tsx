@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { ModalPedido } from "@/components/modal-pedido";
 import { clsx } from "@/lib/utils";
-import type { Cesta } from "@/data/cestas";
+import { pedeDisponibilidade, type Cesta } from "@/data/cestas";
+import { linkWhatsApp, mensagens } from "@/data/site";
 
 /**
  * Botão que abre o modal de pedido. Usado na página da cesta, para que o
  * fluxo de escolher data e sair para o WhatsApp seja o mesmo dos cards.
+ * Nos modelos de Natal não há data no site: o botão vai direto para o
+ * WhatsApp, e a Rebeca confirma a disponibilidade.
  */
 export function BotaoPedido({
   cesta,
@@ -22,20 +25,30 @@ export function BotaoPedido({
   variante?: "verde" | "ouro";
 }) {
   const [aberto, setAberto] = useState(false);
+  const classes = clsx(
+    "inline-flex min-h-13 cursor-pointer items-center justify-center gap-2.5 rounded-full px-7 text-[0.8125rem] tracking-[0.14em] uppercase transition-[background-color,transform] duration-300 ease-suave active:scale-[0.985]",
+    variante === "ouro"
+      ? "bg-ouro text-noite hover:bg-ouro-claro"
+      : "bg-verde-900 text-papel hover:bg-verde-700",
+    className,
+  );
+
+  if (pedeDisponibilidade(cesta)) {
+    return (
+      <a
+        href={linkWhatsApp(mensagens.pedidoNatal(cesta.nome))}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
+      >
+        {rotulo ?? "Pedir pelo WhatsApp"}
+      </a>
+    );
+  }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setAberto(true)}
-        className={clsx(
-          "inline-flex min-h-13 cursor-pointer items-center justify-center gap-2.5 rounded-full px-7 text-[0.8125rem] tracking-[0.14em] uppercase transition-[background-color,transform] duration-300 ease-suave active:scale-[0.985]",
-          variante === "ouro"
-            ? "bg-ouro text-noite hover:bg-ouro-claro"
-            : "bg-verde-900 text-papel hover:bg-verde-700",
-          className,
-        )}
-      >
+      <button type="button" onClick={() => setAberto(true)} className={classes}>
         {rotulo ?? "Quero esse modelo"}
       </button>
 

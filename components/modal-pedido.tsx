@@ -8,12 +8,15 @@ import {
   IconeCheck,
   IconeSeta,
   IconeRelogio,
+  IconeWhatsApp,
 } from "@/components/icones";
 import { Simbolo } from "@/components/marca";
 import { GaleriaCesta } from "@/components/galeria-cesta";
 import {
   adicionais as listaAdicionais,
   antecedenciaDe,
+  pedeDisponibilidade,
+  prazoDe,
   categoriaDe,
   formatarPreco,
   type Cesta,
@@ -333,7 +336,7 @@ export function ModalPedido({
                     ) : null}
                     <li className="flex items-center gap-2">
                       <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-                      Pedido com {antecedenciaDe(cesta)}
+                      {prazoDe(cesta)}
                     </li>
                   </ul>
                 </div>
@@ -369,18 +372,38 @@ export function ModalPedido({
               </div>
 
               <div className="sticky bottom-0 z-20 shrink-0 border-t borda-fina bg-papel px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-7">
-                <button
-                  type="button"
-                  onClick={quero}
-                  className="flex min-h-13 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full bg-verde-900 px-6 text-[0.8125rem] tracking-[0.14em] text-papel uppercase transition-[background-color,transform] duration-300 ease-suave hover:bg-verde-700 active:scale-[0.985]"
-                >
-                  Quero esse modelo
-                  <IconeSeta className="size-4" />
-                </button>
-                <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
-                  Em seguida você escolhe a data e a hora — o pedido vai pronto
-                  para o WhatsApp.
-                </p>
+                {pedeDisponibilidade(cesta) ? (
+                  <>
+                    {/* Natal: sem data no site, direto para o atendimento */}
+                    <a
+                      href={linkWhatsApp(mensagens.pedidoNatal(cesta.nome))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex min-h-13 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full bg-verde-900 px-6 text-[0.8125rem] tracking-[0.14em] text-papel uppercase transition-[background-color,transform] duration-300 ease-suave hover:bg-verde-700 active:scale-[0.985]"
+                    >
+                      <IconeWhatsApp className="size-4" />
+                      Pedir pelo WhatsApp
+                    </a>
+                    <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
+                      Você fala direto com a Rebeca, que confirma a disponibilidade.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={quero}
+                      className="flex min-h-13 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full bg-verde-900 px-6 text-[0.8125rem] tracking-[0.14em] text-papel uppercase transition-[background-color,transform] duration-300 ease-suave hover:bg-verde-700 active:scale-[0.985]"
+                    >
+                      Quero esse modelo
+                      <IconeSeta className="size-4" />
+                    </button>
+                    <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
+                      Em seguida você escolhe a data e a hora — o pedido vai pronto
+                      para o WhatsApp.
+                    </p>
+                  </>
+                )}
               </div>
             </>
           ) : (

@@ -120,6 +120,9 @@ export const mensagens = {
     `Olá! Vim pelo site da Le Brunch e gostaria de conhecer as opções da ${nome}.`,
   natal:
     "Olá! Vim pelo site da Le Brunch e gostaria de saber mais sobre a Coleção de Natal.",
+  /** Modelo de Natal: sem data no site, a Rebeca confirma a disponibilidade. */
+  pedidoNatal: (nome: string) =>
+    `Olá! Vim pelo site da Le Brunch e quero o presente ${nome}, da Coleção de Natal. Pode me confirmar a disponibilidade?`,
   natalCorporativo:
     "Olá! Vim pelo site da Le Brunch e gostaria de um orçamento de presentes de Natal para a minha empresa (equipe/clientes).",
   corporativo:

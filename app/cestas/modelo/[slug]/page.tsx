@@ -14,7 +14,7 @@ import {
   categoriaDe,
   cestasDaCategoria,
   adicionais,
-  antecedenciaDe,
+  prazoDe,
   formatarPreco,
   hrefCategoria,
 } from "@/data/cestas";
@@ -138,7 +138,7 @@ export default async function CestaPage(
                 ) : null}
                 <li className="flex items-center gap-2.5">
                   <IconeRelogio className="size-4 shrink-0 text-sage-600" />
-                  Pedido com {antecedenciaDe(cesta)}
+                  {prazoDe(cesta)}
                 </li>
               </ul>
             </div>

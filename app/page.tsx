@@ -139,35 +139,6 @@ export default function Home() {
         </div>
       </Secao>
 
-      {/* ————— por faixa de preço: o filtro de preço vira um toque ————— */}
-      <Secao className="!pt-0">
-        <h2 className="titulo mb-5 text-[clamp(1.5rem,5vw,2.5rem)] leading-tight">
-          Por faixa de preço
-        </h2>
-        <ul className="grid grid-cols-3 gap-2 sm:gap-4">
-          {faixasDePreco.map((f) => {
-            const n = filtrarCestas({ linha: "", pessoas: "", preco: f.slug }).length;
-            return (
-              <li key={f.slug}>
-                <LinkTransicao
-                  href={`/cestas/?preco=${f.slug}`}
-                  className="flex h-full flex-col justify-between gap-3 rounded-2xl bg-creme p-3.5 transition-colors duration-300 hover:bg-verde-900 hover:text-papel sm:p-6"
-                >
-                  <span className="titulo text-[1.25rem] leading-[1.05] sm:text-[clamp(1.5rem,3vw,2rem)]">
-                    <span className="sm:hidden">{f.curto}</span>
-                    <span className="hidden sm:inline">{f.nome}</span>
-                  </span>
-                  <span className="flex items-center justify-between gap-1 text-[0.75rem] opacity-70 sm:text-[0.8125rem]">
-                    {n} {n === 1 ? "modelo" : "modelos"}
-                    <IconeSeta className="size-3.5 shrink-0" />
-                  </span>
-                </LinkTransicao>
-              </li>
-            );
-          })}
-        </ul>
-      </Secao>
-
       {/* ————— as linhas, em blocos de foto com o nome por cima ————— */}
       <Secao id="cestas" className="!pt-0">
         <h2 className="titulo mb-5 text-[clamp(1.5rem,5vw,2.5rem)] leading-tight">As linhas</h2>
@@ -197,6 +168,35 @@ export default function Home() {
                       <IconeSeta className="size-4 transition-transform duration-400 ease-suave group-hover:translate-x-1" />
                     </span>
                     <span className="text-[0.75rem] text-tinta-suave">{n} modelos</span>
+                  </span>
+                </LinkTransicao>
+              </li>
+            );
+          })}
+        </ul>
+      </Secao>
+
+      {/* ————— por faixa de preço: o filtro de preço vira um toque ————— */}
+      <Secao className="!pt-0">
+        <h2 className="titulo mb-5 text-[clamp(1.5rem,5vw,2.5rem)] leading-tight">
+          Por faixa de preço
+        </h2>
+        <ul className="grid grid-cols-3 gap-2 sm:gap-4">
+          {faixasDePreco.map((f) => {
+            const n = filtrarCestas({ linha: "", pessoas: "", preco: f.slug }).length;
+            return (
+              <li key={f.slug}>
+                <LinkTransicao
+                  href={`/cestas/?preco=${f.slug}`}
+                  className="flex h-full flex-col justify-between gap-3 rounded-2xl bg-creme p-3.5 transition-colors duration-300 hover:bg-verde-900 hover:text-papel sm:p-6"
+                >
+                  <span className="titulo text-[1.25rem] leading-[1.05] sm:text-[clamp(1.5rem,3vw,2rem)]">
+                    <span className="sm:hidden">{f.curto}</span>
+                    <span className="hidden sm:inline">{f.nome}</span>
+                  </span>
+                  <span className="flex items-center justify-between gap-1 text-[0.75rem] opacity-70 sm:text-[0.8125rem]">
+                    {n} {n === 1 ? "modelo" : "modelos"}
+                    <IconeSeta className="size-3.5 shrink-0" />
                   </span>
                 </LinkTransicao>
               </li>

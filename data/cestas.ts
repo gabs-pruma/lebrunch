@@ -476,7 +476,8 @@ const premium: Cesta[] = [
  * - Sem "serve": no Natal a quantidade de pessoas não importa, e os modelos
  *   ficam fora do filtro de pessoas (pedido do Gabriel, 01/11/2026).
  * - A primeira foto é sempre o presente aberto, mostrando o que vem dentro;
- *   a fechada (e a da mão segurando) vai para o fim da galeria.
+ *   a fechada (e a da mão segurando) vai para o fim da galeria. Exceção:
+ *   Celebrar e Alegria abrem com o kit dentro da bag de acrílico (Rebeca).
  */
 const natal: Cesta[] = [
   {
@@ -527,8 +528,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "Para brindar o fim de ano com quem você gosta",
     preco: 219,
-    imagem: foto("natal-acrilico-lata-2"),
-    fotos: [foto("natal-acrilico-lata-4"), foto("natal-acrilico-lata-5"), foto("natal-acrilico-lata-1")],
+    imagem: foto("natal-acrilico-lata-1"),
+    fotos: [foto("natal-acrilico-lata-2"), foto("natal-acrilico-lata-4"), foto("natal-acrilico-lata-5")],
     foco: "50% 70%",
     secoes: [
       { titulo: "Bebidas", itens: ["Espumante Freixenet"] },
@@ -542,8 +543,8 @@ const natal: Cesta[] = [
     categoria: "natal",
     chamada: "O brinde e o panetone para celebrar a ceia",
     preco: 239,
-    imagem: foto("natal-acrilico-panetone-2"),
-    fotos: [foto("natal-acrilico-panetone-1"), foto("natal-acrilico-panetone-5")],
+    imagem: foto("natal-acrilico-panetone-1"),
+    fotos: [foto("natal-acrilico-panetone-2"), foto("natal-acrilico-panetone-5")],
     foco: "50% 70%",
     secoes: [
       { titulo: "Doces", itens: ["Panetone Artesanal"] },
@@ -686,6 +687,22 @@ export function filtrarCestas(f: Filtros): Cesta[] {
 
 /** As linhas do ano todo, sem a coleção sazonal. */
 export const linhasDoAno = categorias.filter((c) => !c.tema);
+
+/**
+ * Os modelos de Natal não reservam dia e período pelo site: o pedido vai
+ * direto para o WhatsApp, e a Rebeca confirma a disponibilidade (pedido
+ * dela, 02/11/2026).
+ */
+export function pedeDisponibilidade(cesta: Pick<Cesta, "categoria">): boolean {
+  return cesta.categoria === "natal";
+}
+
+/** "Pedido com 24h de antecedência", ou "Consulte a disponibilidade" no Natal. */
+export function prazoDe(cesta: Pick<Cesta, "categoria" | "antecedenciaDias">): string {
+  return pedeDisponibilidade(cesta)
+    ? "Consulte a disponibilidade"
+    : `Pedido com ${antecedenciaDe(cesta)}`;
+}
 
 /** "24h de antecedência", ou os dias do modelo que pede mais tempo. */
 export function antecedenciaDe(cesta: Pick<Cesta, "antecedenciaDias">): string {
