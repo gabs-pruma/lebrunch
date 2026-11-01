@@ -89,7 +89,8 @@ projete e verifique no celular primeiro.
   clara por cima; como funciona (`#como-funciona`), como a
   abertura do catálogo: a Rebeca com a cesta e os passos com as palavras
   do catálogo (`comoFunciona`), sem texto antes; o "Conheça a Le Brunch",
-  só texto, para a Rebeca não aparecer duas vezes seguidas.
+  com o retrato de camisa branca que a Rebeca prefere (pedido dela) e o
+  nome dela uma vez só, no título.
 - **Modelos de Natal sem "serve"**: no Natal o número de pessoas não
   importa — os modelos não mostram "Serve…" e ficam fora do filtro de
   pessoas (ao escolher a linha de Natal, o filtro de pessoas some). A

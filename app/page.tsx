@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { descricaoInicio, metadadosPagina, tituloInicio } from "@/lib/metadados";
 import { Hero } from "@/components/hero";
+import { Revelar } from "@/components/revelar";
 import { Secao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { AtalhosRedondos } from "@/components/atalhos-redondos";
 import { GradeCestas } from "@/components/grade-cestas";
@@ -255,11 +256,23 @@ export default function Home() {
         </div>
       </Secao>
 
-      {/* ————— conheça a Le Brunch: só texto, porque a Rebeca acabou de
-          aparecer, com a cesta, no "como funciona" logo acima ————— */}
+      {/* ————— conheça a Le Brunch, com o retrato que a Rebeca prefere
+          (o "como funciona" acima usa a foto dela com a cesta, do catálogo) ————— */}
       <section className="relative overflow-hidden bg-noite text-papel">
-        <div className="mx-auto grid w-full max-w-site gap-8 px-5 sm:px-8 py-12 sm:py-14 lg:py-16 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
-          <div className="flex flex-col gap-5">
+        <div className="mx-auto grid w-full max-w-site items-center gap-8 px-5 sm:px-8 py-12 sm:py-14 lg:py-16 lg:grid-cols-[0.7fr_1fr] lg:gap-16">
+          <Revelar>
+            <Image
+              src="/ensaio/rebeca-retrato.webp"
+              alt="Rebeca Santana, da Le Brunch, sentada de camisa branca e calça jeans, sorrindo com a mão no rosto"
+              width={853}
+              height={1280}
+              sizes="(min-width: 1024px) 28vw, 92vw"
+              style={{ objectPosition: "50% 30%" }}
+              className="cortina aspect-4/3 w-full rounded-2xl object-cover lg:aspect-4/5"
+            />
+          </Revelar>
+
+          <div className="flex flex-col gap-7">
             <p className="olho text-terra-400">Conheça a Le Brunch</p>
             <h2 className="titulo text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.98] text-balance">
               Toda cesta passa pelas mãos da{" "}
@@ -267,9 +280,6 @@ export default function Home() {
                 Rebeca
               </span>
             </h2>
-          </div>
-
-          <div className="flex flex-col gap-7">
             <div className="flex max-w-lg flex-col gap-4 text-[1.0625rem] leading-relaxed text-papel/75">
               <p>
                 A Le Brunch nasceu de uma vontade simples: fazer com que um
