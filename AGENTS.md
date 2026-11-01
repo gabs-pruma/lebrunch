@@ -86,9 +86,11 @@ projete e verifique no celular primeiro.
   com a coleção inteira num cartão, o texto embaixo da foto e não por
   cima, e quatro destaques ao lado); por faixa de preço (três blocos que
   levam ao `/cestas/` filtrado); as linhas em blocos de foto com etiqueta
-  clara por cima; como funciona (`#como-funciona`), como a
-  abertura do catálogo: a Rebeca com a cesta e os passos com as palavras
-  do catálogo (`comoFunciona`), sem texto antes; o "Conheça a Le Brunch",
+  clara por cima; como funciona (`#como-funciona`): os passos
+  com as palavras do catálogo (`comoFunciona`), sem texto antes, ao lado
+  de um celular animado que passa pelas etapas
+  (`components/como-funciona-animado.tsx`, sem foto: a Rebeca já aparece no
+  bloco seguinte); o "Conheça a Le Brunch",
   com o retrato de camisa branca que a Rebeca prefere (pedido dela) e o
   nome dela uma vez só, no título.
 - **Pedido de Natal vai direto para o WhatsApp**: nos modelos de Natal o

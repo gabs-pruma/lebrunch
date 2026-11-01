@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { descricaoInicio, metadadosPagina, tituloInicio } from "@/lib/metadados";
 import { Hero } from "@/components/hero";
+import { ComoFuncionaAnimado } from "@/components/como-funciona-animado";
 import { Revelar } from "@/components/revelar";
 import { Secao, Ornamento, BotaoLink, Olho } from "@/components/ui";
 import { AtalhosRedondos } from "@/components/atalhos-redondos";
@@ -16,7 +17,6 @@ import {
   IconeEstrela,
   IconeBrilho,
 } from "@/components/icones";
-import { FotoParallax } from "@/components/foto-parallax";
 import {
   cestas,
   cestasDaCategoria,
@@ -207,9 +207,8 @@ export default function Home() {
 
       {/* ————— como funciona ————— */}
       <Secao id="como-funciona" className="scroll-mt-32 xl:scroll-mt-24">
-        {/* como na abertura do catálogo: a Rebeca com a cesta e os passos.
-            Título em cima, e embaixo foto e passos lado a lado, da mesma
-            altura: a lista começa junto do topo da foto e termina com ela */}
+        {/* os passos do catálogo, ao lado de um celular que passa por eles
+            sozinho (a foto da Rebeca já aparece no bloco seguinte) */}
         <div className="flex flex-col gap-4 pb-10">
           <Olho>Como funciona</Olho>
           <h2 className="titulo text-[clamp(1.625rem,7vw,3.5rem)] text-balance">
@@ -220,40 +219,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1fr] lg:gap-16">
-          <FotoParallax
-            src="/ensaio/rebeca-cesta-1.webp"
-            alt="Rebeca Santana, da Le Brunch, sorrindo com uma cesta de vime com flores nas mãos"
-            width={1600}
-            height={2400}
-            foco="50% 30%"
-            sizes="(min-width: 1024px) 42vw, 92vw"
-            className="aspect-4/5 w-full rounded-2xl lg:aspect-auto lg:min-h-80"
-          />
-
-          <ol className="flex flex-col justify-between">
-            {comoFunciona.map((passo, i) => (
-              <li
-                key={passo.titulo}
-                className="flex gap-4 border-b borda-fina py-5 first:pt-0 last:border-0 last:pb-0"
-              >
-                {/* largura fixa: na manuscrita o "1" é mais estreito que o
-                    "2", e os títulos saíam cada um numa coluna */}
-                <span className="script w-7 shrink-0 text-center text-3xl leading-none text-terra-700">
-                  {i + 1}
-                </span>
-                <div className="flex flex-col gap-1.5">
-                  <h3 className="text-[1.0625rem]">{passo.titulo}</h3>
-                  {passo.texto ? (
-                    <p className="text-[0.9375rem] leading-relaxed text-tinta-suave">
-                      {passo.texto}
-                    </p>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ComoFuncionaAnimado passos={comoFunciona} />
       </Secao>
 
       {/* ————— conheça a Le Brunch, com o retrato que a Rebeca prefere

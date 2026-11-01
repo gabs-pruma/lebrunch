@@ -753,3 +753,17 @@ body {
 .tema-natal details summary:not(.modal-pedido *) {
   color: var(--color-papel);
 }
+
+/* ————— "como funciona": a barrinha da etapa enche no tempo da cena ————— */
+.barra-etapa {
+  animation: barra-etapa linear forwards;
+}
+
+@keyframes barra-etapa {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
