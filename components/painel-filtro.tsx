@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { clsx } from "@/lib/utils";
 import { semBarraFinal } from "@/lib/base";
+import { registrar } from "@/lib/analytics";
 import {
   categorias,
   faixasDePreco,
@@ -108,6 +109,7 @@ export function PainelFiltro({
           disabled={total === 0}
           onClick={() => {
             aoIr?.();
+            registrar("filtro", { ...filtros, resultados: total });
             router.push(enderecoFiltrado(filtros));
           }}
           className="inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center rounded-full bg-verde-900 px-5 text-[0.6875rem] tracking-[0.14em] text-papel uppercase transition-colors duration-300 hover:bg-verde-600 disabled:cursor-not-allowed disabled:opacity-40"

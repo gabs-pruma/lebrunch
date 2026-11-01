@@ -5,6 +5,7 @@ import { ModalPedido } from "@/components/modal-pedido";
 import { clsx } from "@/lib/utils";
 import { pedeDisponibilidade, type Cesta } from "@/data/cestas";
 import { linkWhatsApp, mensagens } from "@/data/site";
+import { registrar } from "@/lib/analytics";
 
 /**
  * Botão que abre o modal de pedido. Usado na página da cesta, para que o
@@ -48,7 +49,14 @@ export function BotaoPedido({
 
   return (
     <>
-      <button type="button" onClick={() => setAberto(true)} className={classes}>
+      <button
+        type="button"
+        onClick={() => {
+          setAberto(true);
+          registrar("view_item", { modelo: cesta.nome, linha: cesta.categoria, valor: cesta.preco });
+        }}
+        className={classes}
+      >
         {rotulo ?? "Quero esse modelo"}
       </button>
 

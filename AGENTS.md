@@ -174,6 +174,12 @@ projete e verifique no celular primeiro.
 - **Grades com número ímpar de itens**: evite deixar fileira órfã. Os
   depoimentos usam `columns-*` em vez de `grid` por isso.
 
+- **Google Analytics 4** (`G-S6RBGP6ZP1`, conta "Le Brunch"): carrega só
+  no domínio oficial (`components/analytics.tsx`), então prévia e
+  `localhost` não contam. Eventos: `generate_lead` (clique para o WhatsApp,
+  com o `modelo` tirado da mensagem pronta), `view_item` (modelo aberto) e
+  `filtro`. Evento novo passa por `registrar()` de `lib/analytics.ts`.
+
 ## Direção visual — o que evitar
 
 O site foi tirado de uma cara genérica de template. Estes vícios foram

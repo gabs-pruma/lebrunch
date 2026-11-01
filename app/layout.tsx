@@ -10,6 +10,7 @@ import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { FundoDecorativo } from "@/components/fundo-decorativo";
 import { DadosEstruturados } from "@/components/dados-estruturados";
 import { ObservadorDeRota } from "@/components/transicao";
+import { Analytics } from "@/components/analytics";
 import { site } from "@/data/site";
 
 /*
@@ -98,6 +99,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <WhatsAppFab />
         <DadosEstruturados />
         <ObservadorDeRota />
+        <Analytics />
       </body>
     </html>
   );

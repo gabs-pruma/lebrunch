@@ -7,6 +7,7 @@ import { Simbolo } from "@/components/marca";
 import { ModalPedido } from "@/components/modal-pedido";
 import { clsx } from "@/lib/utils";
 import { formatarPreco, type Cesta } from "@/data/cestas";
+import { registrar } from "@/lib/analytics";
 
 /**
  * Card de cesta. Clicar abre o modal já nas fotos do modelo — o instinto de
@@ -45,7 +46,10 @@ export function CestaCard({
     <article className="group relative flex w-full flex-col">
       <button
         type="button"
-        onClick={() => setAberto(true)}
+        onClick={() => {
+          setAberto(true);
+          registrar("view_item", { modelo: cesta.nome, linha: cesta.categoria, valor: cesta.preco });
+        }}
         aria-haspopup="dialog"
         className="flex flex-1 cursor-pointer flex-col text-left"
       >
