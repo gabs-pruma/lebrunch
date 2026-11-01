@@ -18,7 +18,9 @@ import {
  * em sincronia com a lista ao lado. Entrou no lugar da foto da Rebeca, que
  * já aparece logo abaixo (pedido do Gabriel, 02/11/2026).
  *
- * - Feito em HTML e CSS, não em GIF: nítido em qualquer tela e leve.
+ * - Feito em HTML e CSS, não em GIF: nítido em qualquer tela e leve. O
+ *   celular é desenhado em 13,5rem e ampliado com `zoom`, para o conteúdo
+ *   crescer junto (sem fundo atrás, pedido do Gabriel).
  * - Só avança quando está na tela; tocar numa etapa da lista mostra aquela
  *   cena e para o automático.
  * - Quem pediu menos movimento vê as cenas paradas e troca pela lista.
@@ -78,7 +80,7 @@ export function ComoFuncionaAnimado({ passos }: { passos: Passo[] }) {
       {/* ——— o celular ——— */}
       <div
         aria-hidden
-        className="relative flex flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl bg-creme px-6 py-10 lg:min-h-80"
+        className="relative flex flex-col items-center justify-center gap-6 [zoom:1.15] sm:[zoom:1.25] lg:[zoom:1.3]"
       >
         <Celular>
           <Cena ativa={ativo === 0}>
@@ -99,7 +101,7 @@ export function ComoFuncionaAnimado({ passos }: { passos: Passo[] }) {
         </Celular>
 
         {/* uma barrinha por etapa; a da vez enche no tempo da cena */}
-        <div className="flex w-full max-w-[15rem] gap-1.5">
+        <div className="flex w-full max-w-[13.5rem] gap-1.5">
           {passos.map((p, i) => (
             <span key={p.titulo} className="relative h-1 flex-1 overflow-hidden rounded-full bg-verde-900/12">
               <span
@@ -160,7 +162,7 @@ export function ComoFuncionaAnimado({ passos }: { passos: Passo[] }) {
 
 function Celular({ children }: { children: ReactNode }) {
   return (
-    <div className="relative aspect-[9/18] w-[13.5rem] rounded-[2.3rem] bg-verde-900 p-2 shadow-[0_30px_60px_-28px_rgba(0,30,27,0.55)] sm:w-[15rem]">
+    <div className="relative aspect-[9/18] w-[13.5rem] rounded-[2.3rem] bg-verde-900 p-2 shadow-[0_30px_60px_-28px_rgba(0,30,27,0.55)]">
       <div className="relative h-full overflow-hidden rounded-[1.85rem] bg-papel">
         <span className="absolute top-2 left-1/2 z-20 h-4 w-16 -translate-x-1/2 rounded-full bg-verde-900" />
         {children}
