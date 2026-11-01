@@ -22,7 +22,7 @@ export const historia = {
   desde: null as number | null,
 
   abertura:
-    "A Le Brunch existe para uma coisa só: fazer com que um café da manhã comum vire uma lembrança que a pessoa guarda.",
+    "A Le Brunch nasceu de uma vontade simples: fazer com que um momento simples se torne extraordinário.",
 
   paragrafos: [
     // REVISAR: substituir pelo relato real de como a Rebeca começou.

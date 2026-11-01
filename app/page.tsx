@@ -257,11 +257,11 @@ export default function Home() {
             <div className="relative">
               <Image
                 src="/ensaio/rebeca-retrato.webp"
-                alt="Rebeca Santana, da Le Brunch, de dólmã verde com a marca bordada, sorrindo de braços cruzados"
-                width={1600}
-                height={2400}
+                alt="Rebeca Santana, da Le Brunch, sentada de camisa branca e calça jeans, sorrindo com a mão no rosto"
+                width={853}
+                height={1280}
                 sizes="(min-width: 1024px) 28vw, 92vw"
-                style={{ objectPosition: "50% 25%" }}
+                style={{ objectPosition: "50% 30%" }}
                 className="cortina aspect-4/3 w-full rounded-2xl object-cover lg:aspect-4/5"
               />
             </div>
@@ -277,8 +277,8 @@ export default function Home() {
             </h2>
             <div className="flex max-w-lg flex-col gap-4 text-[1.0625rem] leading-relaxed text-papel/75">
               <p>
-                A Le Brunch nasceu de uma vontade simples: fazer com que um café
-                da manhã comum virasse uma lembrança que a pessoa guarda.
+                A Le Brunch nasceu de uma vontade simples: fazer com que um
+                momento simples se torne extraordinário.
               </p>
               <p>
                 Hoje a {site.fundadora.nome} está à frente de cada pedido —

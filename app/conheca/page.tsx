@@ -46,13 +46,13 @@ export default function ConhecaPage() {
                 className="absolute -top-5 -left-5 h-28 w-28 rounded-full bg-creme"
               />
               <Image
-                src="/ensaio/rebeca-cesta-2.webp"
-                alt="Rebeca Santana, da Le Brunch, de dólmã verde com a marca bordada, sorrindo para a cesta de flores que segura"
-                width={1600}
-                height={2400}
+                src="/ensaio/rebeca-retrato.webp"
+                alt="Rebeca Santana, da Le Brunch, sentada de camisa branca e calça jeans, sorrindo com a mão no rosto"
+                width={853}
+                height={1280}
                 loading="eager"
                 fetchPriority="high"
-                style={{ objectPosition: "50% 30%" }}
+                style={{ objectPosition: "50% 65%" }}
                 sizes="(min-width: 1024px) 45vw, 92vw"
                 className="relative aspect-4/5 w-full rounded-2xl object-cover"
               />

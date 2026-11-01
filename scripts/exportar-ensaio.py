@@ -42,6 +42,7 @@ FOTOS = {
     "comemore-5": 232, "comemore-6": 235,
     # a Brinde do ano todo usa as fotos sem a guirlanda; as com guirlanda são da de Natal
     "brinde-1": 79, "brinde-2": 97, "brinde-3": 98,
+    "brinde-4": 92, "brinde-5": 89, "brinde-6": 81, "brinde-7": 84,
     "primavera-1": 166, "primavera-2": 184, "primavera-3": 172, "primavera-4": 168, "primavera-5": 169,
     "extraordinario-1": 238, "extraordinario-2": 264, "extraordinario-3": 241,
     "extraordinario-4": 242, "extraordinario-5": 256, "extraordinario-6": 244, "extraordinario-7": 246,
@@ -56,10 +57,10 @@ FOTOS = {
     "natal-acrilico-panetone-4": 64, "natal-acrilico-panetone-5": 65,
     "natal-doces-1": 30, "natal-doces-2": 27, "natal-doces-3": 21, "natal-doces-4": 20, "natal-doces-5": 32,
     "natal-brinde-1": 110, "natal-brinde-2": 77, "natal-brinde-3": 103, "natal-brinde-4": 87,
+    "natal-brinde-5": 104, "natal-brinde-6": 106,
     # ——— composições e Rebeca ———
     "natal-mesa": 129, "natal-mesa-3": 129,
     "natal-rebeca": 123,
-    "rebeca-retrato": 138,
     "rebeca-cesta-1": 257, "rebeca-cesta-2": 259,
     "mesa-itens": 265,  # também é a versão café da Extraordinário
 }
@@ -68,11 +69,33 @@ FOTOS = {
 # catálogos de 31/10/2026 (capas de cesta fechada e uma da Comemore). Vêm da
 # pasta Highlights, ao lado do "gostei".
 CATALOGO = {231, 45, 13, 70, 50, 63}
+# Mais fotos da gaveta de frios (Brinde e Brinde de Natal), escolhidas pelo
+# Gabriel em 01/11/2026: no "gostei" só havia as que já estavam no site.
+CATALOGO |= {92, 89, 81, 84, 104, 106}
 HIGHLIGHTS = os.path.join(os.path.dirname(ORIGEM.rstrip("/")), "Highlights")
 
 # A foto larga da coleção de Natal sai recortada em paisagem do retrato
 # (no "gostei" não há foto deitada): (proporção, centro vertical do recorte).
 RECORTES = {"natal-mesa": (3 / 2, 0.6)}
+
+# Fotos de fora do ensaio, mandadas pela Rebeca. Saem como vieram (sem o
+# acerto de cor, que é calibrado para o ensaio) e sem aumentar.
+AVULSAS = {
+    # o retrato que ela prefere para as imagens dela (01/11/2026)
+    "rebeca-retrato": "~/LeBrunch/lebrunch-dev/fotos-avulsas/rebeca-retrato-2026-11.jpeg",
+}
+
+def exportar_avulsa(item):
+    destino, caminho = item
+    saida = os.path.join(DESTINO, f"{destino}.webp")
+    if os.path.exists(saida):
+        return
+    original = Image.open(os.path.expanduser(caminho))
+    perfil = original.info.get("icc_profile")
+    im = ImageOps.exif_transpose(original).convert("RGB")
+    if im.width > LARGURA:
+        im = im.resize((LARGURA, round(im.height * LARGURA / im.width)), Image.LANCZOS)
+    im.save(saida, "WEBP", quality=85, method=6, icc_profile=perfil)
 
 def achar(numero):
     pasta = HIGHLIGHTS if numero in CATALOGO else ORIGEM
@@ -107,4 +130,6 @@ if __name__ == "__main__":
     os.makedirs(DESTINO, exist_ok=True)
     with ProcessPoolExecutor() as ex:
         list(ex.map(exportar, FOTOS.items()))
-    print(len(FOTOS), "fotos em", os.path.abspath(DESTINO))
+    for item in AVULSAS.items():
+        exportar_avulsa(item)
+    print(len(FOTOS) + len(AVULSAS), "fotos em", os.path.abspath(DESTINO))
