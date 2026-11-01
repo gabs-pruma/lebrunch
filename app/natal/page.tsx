@@ -182,21 +182,20 @@ export default function NatalPage() {
           <div className="order-last flex flex-col gap-6 lg:order-first">
             <p className="olho text-ouro-claro">Embrulhado à mão</p>
             <h2 className="titulo text-[clamp(1.75rem,6vw,3.75rem)] leading-[1.02] text-balance">
-              O laço também é{" "}
-              <span className="script texto-ouro text-[1.1em] leading-none">presente</span>
+              A beleza de{" "}
+              <span className="script texto-ouro text-[1.1em] leading-none">agradecer</span>
             </h2>
             <p className="max-w-md text-[1.0625rem] leading-relaxed text-papel/75">
-              A magia do Natal está em agradecer. Agradecer a quem esteve junto
-              durante o ano: a família, um cliente especial, o funcionário que
-              merece reconhecimento. E desejar felicidade e saúde para o ano
-              que começa. Cada presente sai embrulhado à mão pela{" "}
-              {site.fundadora.nome}, para levar esse carinho até quem você
-              escolher.
+              A magia do Natal está em agradecer! Agradecer a quem esteve junto
+              durante o ano: a família, o amigo querido, um cliente especial, o
+              funcionário que merece reconhecimento. E desejar felicidade e
+              saúde para o ano que se inicia. Cada presente é cuidadosamente
+              preparado, para levar esse carinho até quem você escolher.
             </p>
             <ul className="flex flex-col gap-3 text-[0.9375rem] text-papel/80">
               <li className="flex items-center gap-3">
                 <IconeRelogio className="size-5 shrink-0 text-ouro" />
-                Consulte a disponibilidade — quanto antes, melhor para garantir a data
+                Consulte a disponibilidade
               </li>
               <li className="flex items-center gap-3">
                 <Simbolo className="h-4 w-4 shrink-0 text-ouro" />
