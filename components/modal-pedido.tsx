@@ -70,23 +70,21 @@ function BotaoFechar({ onClick, className }: { onClick: () => void; className?: 
   );
 }
 
-type Periodo = "cedo" | "manha" | "tarde";
+type Periodo = "manha" | "tarde";
 
 /**
- * Faixas de entrega. As entregas saem mais cedo que o horário de
- * atendimento: começam às 07:00. Sábado e domingo o atendimento encerra às
- * 13:00, então a faixa da tarde não é oferecida.
+ * Períodos de entrega, sem hora marcada. Temporário (nov/2026): até a Le
+ * Brunch ter carro próprio, o site não promete horário — com hora no site,
+ * o cliente chega com a hora pronta e fica difícil negociar. As faixas que
+ * havia (07:00–09:00, 09:00–12:00, 12:00–18:00) estão no histórico do git.
+ * Sábado e domingo a entrega é só de manhã, então a tarde não é oferecida.
  */
-const periodos: Record<
-  Periodo,
-  { rotulo: string; faixa: string; fimDeSemana: boolean }
-> = {
-  cedo: { rotulo: "Bem cedo", faixa: "07:00 – 09:00", fimDeSemana: true },
-  manha: { rotulo: "Manhã", faixa: "09:00 – 12:00", fimDeSemana: true },
-  tarde: { rotulo: "Tarde", faixa: "12:00 – 18:00", fimDeSemana: false },
+const periodos: Record<Periodo, { rotulo: string; fimDeSemana: boolean }> = {
+  manha: { rotulo: "Manhã", fimDeSemana: true },
+  tarde: { rotulo: "Tarde", fimDeSemana: false },
 };
 
-const ordemPeriodos: Periodo[] = ["cedo", "manha", "tarde"];
+const ordemPeriodos: Periodo[] = ["manha", "tarde"];
 
 /** Teto do recado: a mensagem inteira viaja numa URL de WhatsApp. */
 const LIMITE_OBS = 400;
@@ -227,7 +225,7 @@ export function ModalPedido({
     cesta: cesta.nome,
     preco: cesta.preco !== null ? formatarPreco(cesta.preco) : null,
     data: formatarData(data),
-    periodo: `${periodos[periodoEfetivo].rotulo} (${periodos[periodoEfetivo].faixa})`,
+    periodo: periodos[periodoEfetivo].rotulo,
     embalagem: embalagemEscolhida?.nome ?? null,
     adicionais: escolhidos.map((a) => ({
       nome: a.nome,
@@ -462,10 +460,10 @@ export function ModalPedido({
 
               {/* gavetas */}
               <div className="flex-1 overflow-y-auto overscroll-contain">
-                {/* data e hora */}
+                {/* data e período */}
                 <details open className="gaveta">
                   <summary>
-                    <span className="gaveta-titulo">Data e hora</span>
+                    <span className="gaveta-titulo">Data e período</span>
                     <span className="gaveta-resumo">
                       {formatarDataCurta(data)} · {periodos[periodoEfetivo].rotulo}
                     </span>
@@ -487,9 +485,9 @@ export function ModalPedido({
 
                     <fieldset className="mt-4 border-0 p-0">
                       <legend className="mb-2 text-[0.875rem] text-tinta-suave">
-                        Faixa de entrega
+                        Período de entrega
                       </legend>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-2 gap-2">
                         {ordemPeriodos.map((p) => {
                           const bloqueado = fimDeSemana && !periodos[p].fimDeSemana;
                           const marcado = periodoEfetivo === p;
@@ -514,16 +512,8 @@ export function ModalPedido({
                                 onChange={() => setPeriodo(p)}
                                 className="sr-only"
                               />
-                              <span className="text-[0.8125rem] leading-tight">
+                              <span className="text-[0.875rem] leading-tight">
                                 {periodos[p].rotulo}
-                              </span>
-                              <span
-                                className={clsx(
-                                  "mt-0.5 text-[0.6875rem] tabular-nums",
-                                  marcado ? "text-papel/70" : "text-tinta-suave",
-                                )}
-                              >
-                                {periodos[p].faixa}
                               </span>
                             </label>
                           );
@@ -534,7 +524,7 @@ export function ModalPedido({
                     <p className="mt-3 text-[0.8125rem] leading-relaxed text-tinta-suave">
                       {`Pedidos com ${antecedenciaDe(cesta)}.`}
                       {fimDeSemana
-                        ? " Aos sábados e domingos entregamos somente até as 13h."
+                        ? " Aos sábados e domingos entregamos só pela manhã."
                         : ""}
                     </p>
                   </div>
@@ -790,7 +780,7 @@ export function ModalPedido({
                   Confirmar pedido
                 </a>
                 <p className="mt-2.5 text-center text-[0.75rem] leading-relaxed text-tinta-suave">
-                  A mensagem já vai com a cesta, a data, a faixa
+                  A mensagem já vai com a cesta, a data, o período
                   {cesta.embalagens ? ", a embalagem" : ""} e o seu recado.
                   <br className="hidden sm:inline" />{" "}
                   {site.pagamento.aVista} à vista, ou{" "}

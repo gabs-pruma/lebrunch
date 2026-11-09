@@ -179,6 +179,14 @@ projete e verifique no celular primeiro.
   `localhost` não contam. Eventos: `generate_lead` (clique para o WhatsApp,
   com o `modelo` tirado da mensagem pronta), `view_item` (modelo aberto) e
   `filtro`. Evento novo passa por `registrar()` de `lib/analytics.ts`.
+- **Link do WhatsApp da bio do Instagram é `/whatsapp/`** (com
+  `utm_source=instagram&utm_medium=bio&utm_content=whatsapp`), nunca um
+  `wa.me` com texto: o app do Instagram entrega o texto codificado duas
+  vezes. A página monta `mensagens.instagram`, conta `whatsapp_instagram`
+  no GA4 (separado do `generate_lead`) e segue para o WhatsApp.
+- **Entrega sem hora marcada** (nov/2026, até a Le Brunch ter carro): o
+  modal oferece só Manhã e Tarde (fim de semana, só manhã), e o rodapé não
+  mostra horário de entrega. Hora no site vira compromisso com o cliente.
 
 ## Direção visual — o que evitar
 

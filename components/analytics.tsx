@@ -28,7 +28,7 @@ export function Analytics() {
     document.head.appendChild(script);
 
     const aoClicar = (e: MouseEvent) => {
-      const link = (e.target as Element | null)?.closest?.("a[href*='wa.me']");
+      const link = (e.target as Element | null)?.closest?.("a[href*='wa.me']:not([data-sem-lead])");
       if (!(link instanceof HTMLAnchorElement)) return;
       const modelo = modeloDaMensagem(link.href);
       registrar("generate_lead", {
