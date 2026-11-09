@@ -42,7 +42,7 @@ function texto(): string {
     `- Pedidos com ${atendimento.antecedencia}.${cestas.filter((c) => c.antecedenciaDias).map((c) => ` ${c.nome}: ${antecedenciaDe(c)}.`).join("")}`,
     `- A taxa de entrega é calculada pelo endereço. Preços abaixo não incluem o frete.`,
     `- Pagamento: ${pagamento.aVista} à vista, ou ${parcelado} (${pagamento.parcelado.ressalva}).`,
-    `- Atendimento: ${horarios.atendimento.map((h) => `${h.dias.toLowerCase()}, ${h.horas}`).join("; ")}. Entregas: ${horarios.entregas.map((h) => `${h.dias.toLowerCase()}, ${h.horas.toLowerCase()}`).join("; ")}.`,
+    `- Atendimento: ${horarios.atendimento.map((h) => `${h.dias.toLowerCase()}, ${h.horas}`).join("; ")}. Entregas: ${horarios.entregas.map((h) => `${h.dias.toLowerCase()}, ${h.horas}`).join("; ")}.`,
     `- Adicionais: ${adicionais.map((a) => `${a.nome} (${formatarPreco(a.preco)})`).join(", ")}.`,
     "",
   ];

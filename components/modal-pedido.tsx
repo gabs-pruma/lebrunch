@@ -76,12 +76,12 @@ type Periodo = "manha" | "tarde";
  * Períodos de entrega, sem hora marcada. Temporário (nov/2026): até a Le
  * Brunch ter carro próprio, o site não promete horário — com hora no site,
  * o cliente chega com a hora pronta e fica difícil negociar. As faixas que
- * havia (07:00–09:00, 09:00–12:00, 12:00–18:00) estão no histórico do git.
- * Sábado e domingo a entrega é só de manhã, então a tarde não é oferecida.
+ * havia (07:00–09:00, 09:00–12:00, 12:00–18:00, e só manhã no fim de
+ * semana) estão no histórico do git.
  */
-const periodos: Record<Periodo, { rotulo: string; fimDeSemana: boolean }> = {
-  manha: { rotulo: "Manhã", fimDeSemana: true },
-  tarde: { rotulo: "Tarde", fimDeSemana: false },
+const periodos: Record<Periodo, { rotulo: string }> = {
+  manha: { rotulo: "Manhã" },
+  tarde: { rotulo: "Tarde" },
 };
 
 const ordemPeriodos: Periodo[] = ["manha", "tarde"];
@@ -128,11 +128,6 @@ function formatarDataCurta(iso: string): string {
   });
 }
 
-function ehFimDeSemana(iso: string): boolean {
-  const dia = paraDataLocal(iso).getDay();
-  return dia === 0 || dia === 6;
-}
-
 export function ModalPedido({
   cesta,
   aberto,
@@ -173,9 +168,6 @@ export function ModalPedido({
   /** Quantidade escolhida de cada adicional, indexada pelo nome. */
   const [extras, setExtras] = useState<Record<string, number>>({});
 
-  const fimDeSemana = ehFimDeSemana(data);
-  const periodoEfetivo: Periodo =
-    fimDeSemana && !periodos[periodo].fimDeSemana ? "manha" : periodo;
 
   // Abre e fecha o <dialog> nativo conforme o estado do React.
   useEffect(() => {
@@ -225,7 +217,7 @@ export function ModalPedido({
     cesta: cesta.nome,
     preco: cesta.preco !== null ? formatarPreco(cesta.preco) : null,
     data: formatarData(data),
-    periodo: periodos[periodoEfetivo].rotulo,
+    periodo: periodos[periodo].rotulo,
     embalagem: embalagemEscolhida?.nome ?? null,
     adicionais: escolhidos.map((a) => ({
       nome: a.nome,
@@ -465,7 +457,7 @@ export function ModalPedido({
                   <summary>
                     <span className="gaveta-titulo">Data e período</span>
                     <span className="gaveta-resumo">
-                      {formatarDataCurta(data)} · {periodos[periodoEfetivo].rotulo}
+                      {formatarDataCurta(data)} · {periodos[periodo].rotulo}
                     </span>
                   </summary>
 
@@ -489,8 +481,7 @@ export function ModalPedido({
                       </legend>
                       <div className="grid grid-cols-2 gap-2">
                         {ordemPeriodos.map((p) => {
-                          const bloqueado = fimDeSemana && !periodos[p].fimDeSemana;
-                          const marcado = periodoEfetivo === p;
+                          const marcado = periodo === p;
                           return (
                             <label
                               key={p}
@@ -499,8 +490,6 @@ export function ModalPedido({
                                 marcado
                                   ? "border-verde-900 bg-verde-900 text-papel"
                                   : "border-verde-900/20 hover:border-verde-900/45",
-                                bloqueado &&
-                                  "cursor-not-allowed opacity-40 hover:border-verde-900/20",
                               )}
                             >
                               <input
@@ -508,7 +497,6 @@ export function ModalPedido({
                                 name={`periodo-${cesta.slug}`}
                                 value={p}
                                 checked={marcado}
-                                disabled={bloqueado}
                                 onChange={() => setPeriodo(p)}
                                 className="sr-only"
                               />
@@ -523,9 +511,6 @@ export function ModalPedido({
 
                     <p className="mt-3 text-[0.8125rem] leading-relaxed text-tinta-suave">
                       {`Pedidos com ${antecedenciaDe(cesta)}.`}
-                      {fimDeSemana
-                        ? " Aos sábados e domingos entregamos só pela manhã."
-                        : ""}
                     </p>
                   </div>
                 </details>

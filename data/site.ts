@@ -64,9 +64,9 @@ export const site = {
    * horário comercial, mas a entrega sai bem mais cedo. A separação evita a
    * dúvida de quem quer receber às 7h da manhã.
    *
-   * `atendimento` vem do perfil do Google. `entregas` reproduz os períodos
-   * oferecidos no modal de pedido — sem hora marcada até a Le Brunch ter
-   * carro próprio (nov/2026; antes eram 07:00–18:00 e 07:00–13:00).
+   * `atendimento` vem do perfil do Google. `entregas` reproduz as faixas
+   * oferecidas no modal de pedido.
+   * A CONFIRMAR: o horário final da entrega no fim de semana.
    */
   horarios: {
     atendimento: [
@@ -74,8 +74,8 @@ export const site = {
       { dias: "Sábado e domingo", horas: "09:00 – 13:00" },
     ],
     entregas: [
-      { dias: "Segunda a sexta", horas: "Manhã ou tarde" },
-      { dias: "Sábado e domingo", horas: "Só pela manhã" },
+      { dias: "Segunda a sexta", horas: "07:00 – 18:00" },
+      { dias: "Sábado e domingo", horas: "07:00 – 13:00" },
     ],
   },
 

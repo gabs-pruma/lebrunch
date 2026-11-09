@@ -619,7 +619,7 @@ export const comoFunciona: { titulo: string; texto?: string }[] = [
   },
   {
     titulo: "Peça com no mínimo 24h de antecedência",
-    texto: "E receba a sua cesta cuidadosamente montada no dia e no período escolhidos.",
+    texto: "E receba a sua cesta cuidadosamente montada no dia e no horário escolhidos.",
   },
   { titulo: "Desfrute de momentos inesquecíveis" },
 ];

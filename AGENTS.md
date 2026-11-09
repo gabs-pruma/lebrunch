@@ -185,8 +185,8 @@ projete e verifique no celular primeiro.
   vezes. A página monta `mensagens.instagram`, conta `whatsapp_instagram`
   no GA4 (separado do `generate_lead`) e segue para o WhatsApp.
 - **Entrega sem hora marcada** (nov/2026, até a Le Brunch ter carro): o
-  modal oferece só Manhã e Tarde (fim de semana, só manhã), e o rodapé não
-  mostra horário de entrega. Hora no site vira compromisso com o cliente.
+  modal oferece só Manhã e Tarde, sem hora e sem aviso extra, todos os
+  dias. Hora no site vira compromisso com o cliente.
 
 ## Direção visual — o que evitar
 
